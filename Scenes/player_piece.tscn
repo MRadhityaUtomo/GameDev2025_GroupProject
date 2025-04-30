@@ -1,0 +1,27 @@
+[gd_scene load_steps=6 format=3 uid="uid://3vppwekhnxr7"]
+
+[ext_resource type="Texture2D" uid="uid://dh7f8w27hmc63" path="res://icon.svg" id="1_3x1jv"]
+[ext_resource type="Script" path="res://Scripts/Player.gd" id="1_5heyv"]
+[ext_resource type="Script" path="res://Scripts/MovementManager.gd" id="3_ii2tr"]
+[ext_resource type="Script" path="res://Scripts/BombManager.gd" id="4_6l0lv"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_x5pdx"]
+
+[node name="PlayerPiece" type="CharacterBody2D"]
+scale = Vector2(2, 2)
+script = ExtResource("1_5heyv")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-4.76837e-07, 4.76837e-07)
+scale = Vector2(0.160156, 0.160156)
+texture = ExtResource("1_3x1jv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_x5pdx")
+
+[node name="MovementManager" type="Node2D" parent="." node_paths=PackedStringArray("player_body")]
+script = ExtResource("3_ii2tr")
+player_body = NodePath("..")
+
+[node name="BombManager" type="Node2D" parent="."]
+script = ExtResource("4_6l0lv")
