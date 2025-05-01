@@ -9,10 +9,6 @@ var target_position : Vector2
 @onready var BombMarker = $"../BombSpawnLocation"
 @onready var BombManager = $"../BombManager"
 
-
-
-
-
 func _ready():
 	target_position = player_body.global_position
 
@@ -26,6 +22,10 @@ func _physics_process(delta):
 		if player_body.global_position.distance_to(target_position) <= distance:
 			player_body.global_position = target_position
 			moving = false
+			
+			# Notify about movement completion - call this when the player completes a move
+			player_body.GlobalBombs.on_player_move(player_body.id)
+			print("Player ", player_body.id, " completed movement")
 		else:
 			player_body.velocity = direction * travel_speed
 			player_body.move_and_slide()
@@ -55,13 +55,14 @@ func handle_input():
 		moving = true
 		start_action_cooldown()
 		update_bomb_marker()  # move the bomb marker after moving direction changes
-		player_body.GlobalBombs.on_player_move(player_body.id)
-
+		
+		# We'll now trigger the bomb countdown when the movement is completed
+		# This is done in the moving section when player arrives at destination
 
 func start_action_cooldown():
 	player_body.action_cooldown_timer = player_body.action_cooldown_duration
 
 func update_bomb_marker():
-	# move marker relative to player’s current position + last_move_direction
+	# move marker relative to player's current position + last_move_direction
 	var new_marker_pos = player_body.global_position + player_body.last_move_direction * grid_size
 	BombMarker.global_position = new_marker_pos
