@@ -7,8 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://cowthuaj68hka" path="res://Scenes/bomb.tscn" id="5_yey61"]
 [ext_resource type="Texture2D" uid="uid://bjqvddit73fr8" path="res://Assets/Placeholder Tiles.png" id="6_a2i5t"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_x5pdx"]
-radius = 10.6667
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uruiu"]
+size = Vector2(26.6667, 26.6667)
 
 [node name="PlayerPiece" type="CharacterBody2D"]
 position = Vector2(-32, -32)
@@ -22,7 +22,7 @@ texture = ExtResource("2_4eato")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2(1.2, 1.2)
-shape = SubResource("CircleShape2D_x5pdx")
+shape = SubResource("RectangleShape2D_uruiu")
 
 [node name="MovementManager" type="Node2D" parent="." node_paths=PackedStringArray("player_body")]
 script = ExtResource("3_ii2tr")

@@ -7,10 +7,14 @@ extends Node
 var moving : bool = false
 var target_position : Vector2
 @onready var BombMarker = $"../BombSpawnLocation"
+@onready var BombManager = $"../BombManager"
+
+
+
+
 
 func _ready():
 	target_position = player_body.global_position
-	update_bomb_marker()  # place marker initially
 
 func _physics_process(delta):
 	if player_body.action_cooldown_timer > 0:
@@ -29,15 +33,19 @@ func _physics_process(delta):
 		if player_body.action_cooldown_timer <= 0:
 			handle_input()
 
+func can_move_to(target_pos: Vector2) -> bool:
+	var motion = target_pos - player_body.global_position
+	return not player_body.test_move(player_body.transform, motion)
+
 func handle_input():
 	var input_vector = Vector2.ZERO
-	if Input.is_action_pressed("ui_up"):
+	if Input.is_action_pressed(str(player_body.up_action)):
 		input_vector.y = -1
-	elif Input.is_action_pressed("ui_down"):
+	elif Input.is_action_pressed(str(player_body.down_action)):
 		input_vector.y = 1
-	elif Input.is_action_pressed("ui_left"):
+	elif Input.is_action_pressed(str(player_body.left_action)):
 		input_vector.x = -1
-	elif Input.is_action_pressed("ui_right"):
+	elif Input.is_action_pressed(str(player_body.right_action)):
 		input_vector.x = 1
 
 	if input_vector != Vector2.ZERO:
@@ -47,12 +55,8 @@ func handle_input():
 		moving = true
 		start_action_cooldown()
 		update_bomb_marker()  # move the bomb marker after moving direction changes
+		player_body.GlobalBombs.on_player_move(player_body.id)
 
-	#elif Input.is_action_just_pressed("ui_accept"):
-		#place_bomb()
-
-#func place_bomb():
-	#BombManager.place_bomb(BombMarker.global_position)
 
 func start_action_cooldown():
 	player_body.action_cooldown_timer = player_body.action_cooldown_duration
