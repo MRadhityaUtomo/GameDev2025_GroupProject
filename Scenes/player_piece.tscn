@@ -1,27 +1,43 @@
-[gd_scene load_steps=6 format=3 uid="uid://3vppwekhnxr7"]
+[gd_scene load_steps=8 format=3 uid="uid://3vppwekhnxr7"]
 
-[ext_resource type="Texture2D" uid="uid://dh7f8w27hmc63" path="res://icon.svg" id="1_3x1jv"]
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_5heyv"]
+[ext_resource type="Texture2D" uid="uid://muxlfx7u30ye" path="res://Assets/ChessPiece.png" id="2_4eato"]
 [ext_resource type="Script" path="res://Scripts/MovementManager.gd" id="3_ii2tr"]
 [ext_resource type="Script" path="res://Scripts/BombManager.gd" id="4_6l0lv"]
+[ext_resource type="PackedScene" uid="uid://cowthuaj68hka" path="res://Scenes/bomb.tscn" id="5_yey61"]
+[ext_resource type="Texture2D" uid="uid://bjqvddit73fr8" path="res://Assets/Placeholder Tiles.png" id="6_a2i5t"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_x5pdx"]
+radius = 10.6667
 
 [node name="PlayerPiece" type="CharacterBody2D"]
+position = Vector2(-32, -32)
 scale = Vector2(2, 2)
 script = ExtResource("1_5heyv")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(-4.76837e-07, 4.76837e-07)
-scale = Vector2(0.160156, 0.160156)
-texture = ExtResource("1_3x1jv")
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_4eato")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(1.2, 1.2)
 shape = SubResource("CircleShape2D_x5pdx")
 
 [node name="MovementManager" type="Node2D" parent="." node_paths=PackedStringArray("player_body")]
 script = ExtResource("3_ii2tr")
 player_body = NodePath("..")
 
-[node name="BombManager" type="Node2D" parent="."]
+[node name="BombManager" type="Node2D" parent="." node_paths=PackedStringArray("player_body")]
 script = ExtResource("4_6l0lv")
+player_body = NodePath("..")
+bomb_scene = ExtResource("5_yey61")
+
+[node name="BombSpawnLocation" type="Marker2D" parent="."]
+position = Vector2(32, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="BombSpawnLocation"]
+modulate = Color(0.277659, 0.475825, 1, 1)
+self_modulate = Color(0.408329, 0.408329, 0.408329, 1)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("6_a2i5t")

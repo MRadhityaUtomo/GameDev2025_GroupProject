@@ -2,18 +2,20 @@ extends Node
 
 @export var player_body : CharacterBody2D
 @export var grid_size : int = 64
-@export var travel_speed : int = 500  # pixels per second
+@export var travel_speed : int = 800  # pixels per second
 
 var moving : bool = false
 var target_position : Vector2
+@onready var BombMarker = $"../BombSpawnLocation"
 
 func _ready():
 	target_position = player_body.global_position
+	update_bomb_marker()  # place marker initially
 
 func _physics_process(delta):
 	if player_body.action_cooldown_timer > 0:
 		player_body.action_cooldown_timer -= delta
-		
+
 	if moving:
 		var direction = (target_position - player_body.global_position).normalized()
 		var distance = travel_speed * delta
@@ -39,10 +41,23 @@ func handle_input():
 		input_vector.x = 1
 
 	if input_vector != Vector2.ZERO:
+		player_body.last_move_direction = input_vector
 		var new_target = player_body.global_position + input_vector * grid_size
 		target_position = new_target
 		moving = true
 		start_action_cooldown()
+		update_bomb_marker()  # move the bomb marker after moving direction changes
+
+	#elif Input.is_action_just_pressed("ui_accept"):
+		#place_bomb()
+
+#func place_bomb():
+	#BombManager.place_bomb(BombMarker.global_position)
 
 func start_action_cooldown():
 	player_body.action_cooldown_timer = player_body.action_cooldown_duration
+
+func update_bomb_marker():
+	# move marker relative to player’s current position + last_move_direction
+	var new_marker_pos = player_body.global_position + player_body.last_move_direction * grid_size
+	BombMarker.global_position = new_marker_pos
