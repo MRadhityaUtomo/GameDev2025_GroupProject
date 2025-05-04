@@ -12,32 +12,46 @@ jobs:
     # Nama job (bisa lebih dari satu job dalam satu workflow)
     name: Export for Windows
     # Tentukan runner (mesin virtual) yang akan digunakan
-    runs-on: ubuntu-latest # Menggunakan Ubuntu, karena setup-godot menangani environment
+    runs-on: ubuntu-latest # Menggunakan Ubuntu
 
     steps:
       # Langkah 1: Checkout kode proyek Anda dari repositori
+      # Ini juga akan checkout windows_debug_x86_64.exe dan windows_release_x86_64.exe jika ada di root
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          lfs: true # Tambahkan ini jika Anda menggunakan Git LFS untuk aset besar
+          lfs: true # Gunakan jika template .exe atau aset lain ada di Git LFS
 
-      # Langkah 2: Setup Godot Export (menggunakan action komunitas)
-      # Action ini akan mengunduh Godot dan template ekspor yang diperlukan
-      - name: Set up Godot export templates
+      # Langkah 2: Setup Godot executable (tanpa template download)
+      - name: Set up Godot executable
         uses: chickensoft-games/setup-godot@v1
         with:
           version: '4.4.1' # Pastikan ini versi Godot yang Anda gunakan
-          use-mono: true   # Aktifkan ini karena Anda menggunakan versi Mono/C#
-          template-version: '4.4.1' # Explicitly set template version matching Godot version
-          cache-disabled: true # Disable cache to ensure fresh download of templates
+          use-mono: true   # Still needed to get the correct Godot Mono executable
 
-      # DEBUG: List contents of expected template directory AFTER setup
+      # Langkah 3: Copy checked-out templates to expected location
+      - name: Install Export Templates from Repository
+        run: |
+          # Define version and target directory
+          GODOT_VERSION="4.4.1"
+          TEMPLATE_DIR="/home/runner/.local/share/godot/export_templates/${GODOT_VERSION}.stable.mono"
+
+          echo "Creating template directory: ${TEMPLATE_DIR}"
+          mkdir -p "${TEMPLATE_DIR}"
+
+          echo "Copying templates from repository root..."
+          # Copy the files checked out in Step 1 to the location Godot expects
+          # Assumes the .exe files are in the root of your repository
+          cp windows_debug_x86_64.exe "${TEMPLATE_DIR}/"
+          cp windows_release_x86_64.exe "${TEMPLATE_DIR}/"
+
+      # DEBUG: List contents of expected template directory AFTER copying
       - name: Check for Export Templates
         run: |
           echo "Checking for templates in /home/runner/.local/share/godot/export_templates/4.4.1.stable.mono/"
           ls -la /home/runner/.local/share/godot/export_templates/4.4.1.stable.mono/ || echo "Directory not found or empty."
 
-      # Langkah 3: Ekspor Proyek Godot untuk Windows Desktop
+      # Langkah 4: Ekspor Proyek Godot untuk Windows Desktop
       - name: Export Godot project
         # Ganti 'YourGameName.exe' dengan nama executable yang Anda inginkan
         # Asumsi project.godot ada di root repo
@@ -46,7 +60,7 @@ jobs:
           # Export command assumes project.godot is in the current directory (repo root)
           godot --headless --export-release "Windows Desktop" artifacts/windows-build/YourGameName.exe .
 
-      # Langkah 4: Upload Artifact (hasil build)
+      # Langkah 5: Upload Artifact (hasil build)
       # Menyimpan file hasil build agar bisa diunduh dari halaman Actions
       - name: Upload Windows Artifact
         uses: actions/upload-artifact@v4
