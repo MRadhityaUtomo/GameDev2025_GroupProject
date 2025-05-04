@@ -27,7 +27,7 @@ jobs:
       - name: Set up Godot export templates
         uses: chickensoft-games/setup-godot@v1 # Action komunitas yang populer
         with:
-          godot-version: '4.4.1' # Ganti dengan versi Godot yang Anda gunakan
+          version: '4.4.1' # Ganti dengan versi Godot yang Anda gunakan
           # Optional: jika butuh .NET/C# support
           # use-mono: true
           # Optional: tentukan versi template jika berbeda
