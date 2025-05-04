@@ -37,7 +37,6 @@ jobs:
         # Ganti 'YourGameName.exe' dengan nama executable yang Anda inginkan
         run: |
           mkdir -p artifacts/windows-build  # Buat direktori output di root repo
-          cd GameDev2025_GroupProject      # Masuk ke direktori proyek Godot Anda
           godot --headless --export-release "Windows Desktop" ../artifacts/windows-build/YourGameName.exe .
 
       # Langkah 4: Upload Artifact (hasil build)
