@@ -1,28 +1,35 @@
 # Nama workflow yang akan tampil di tab Actions GitHub
-name: Godot Export Windows
+name: Godot Export Windows (Manual)
 
 # Pemicu (trigger) kapan workflow ini akan dijalankan
 on:
-  push:
-    branches: [ master ] # Jalankan saat ada push ke branch 'master' atau 'main'
   workflow_dispatch: # Memungkinkan menjalankan workflow secara manual dari tab Actions
+    inputs:
+      build_type:
+        description: 'Build type'
+        required: true
+        default: 'release'
+        type: choice
+        options:
+        - release
+        - debug
 
 jobs:
   export-windows:
     # Nama job (bisa lebih dari satu job dalam satu workflow)
-    name: Export for Windows
+    name: Export for Windows (${{ github.event.inputs.build_type }}) # Show build type in job name
     # Tentukan runner (mesin virtual) yang akan digunakan
     runs-on: ubuntu-latest # Menggunakan Ubuntu
 
     steps:
       # Langkah 1: Checkout kode proyek Anda dari repositori
-      # Ini juga akan checkout windows_debug_x86_64.exe dan windows_release_x86_64.exe jika ada di root
+      # Ini juga akan checkout folder ExportTemplates
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           lfs: true # Gunakan jika template .exe atau aset lain ada di Git LFS
 
-      # Langkah 2: Setup Godot executable (tanpa template download)
+      # Langkah 2: Setup Godot executable
       - name: Set up Godot executable
         uses: chickensoft-games/setup-godot@v1
         with:
@@ -39,11 +46,10 @@ jobs:
           echo "Creating template directory: ${TEMPLATE_DIR}"
           mkdir -p "${TEMPLATE_DIR}"
 
-          echo "Copying templates from repository root..."
-          # Copy the files checked out in Step 1 to the location Godot expects
-          # Assumes the .exe files are in the root of your repository
-          cp windows_debug_x86_64.exe "${TEMPLATE_DIR}/"
-          cp windows_release_x86_64.exe "${TEMPLATE_DIR}/"
+          echo "Copying templates from ExportTemplates/ directory..."
+          # Copy the files from the ExportTemplates subfolder
+          cp ExportTemplates/windows_debug_x86_64.exe "${TEMPLATE_DIR}/"
+          cp ExportTemplates/windows_release_x86_64.exe "${TEMPLATE_DIR}/"
 
       # DEBUG: List contents of expected template directory AFTER copying
       - name: Check for Export Templates
@@ -51,19 +57,31 @@ jobs:
           echo "Checking for templates in /home/runner/.local/share/godot/export_templates/4.4.1.stable.mono/"
           ls -la /home/runner/.local/share/godot/export_templates/4.4.1.stable.mono/ || echo "Directory not found or empty."
 
-      # Langkah 4: Ekspor Proyek Godot untuk Windows Desktop
-      - name: Export Godot project
-        # Ganti 'YourGameName.exe' dengan nama executable yang Anda inginkan
-        # Asumsi project.godot ada di root repo
+      # Langkah 4: Ekspor Proyek Godot untuk Windows Desktop (Conditional)
+      - name: Export Godot project (Release)
+        if: github.event.inputs.build_type == 'release'
+        # Ganti 'YourGameName' dengan nama executable yang Anda inginkan
         run: |
-          mkdir -p artifacts/windows-build  # Buat direktori output di root repo
-          # Export command assumes project.godot is in the current directory (repo root)
-          godot --headless --export-release "Windows Desktop" artifacts/windows-build/YourGameName.exe .
+          mkdir -p artifacts/windows-build-release  # Buat direktori output di root repo
+          godot --headless --export-release "Windows Desktop" artifacts/windows-build-release/YourGameName_release.exe .
+      - name: Export Godot project (Debug)
+        if: github.event.inputs.build_type == 'debug'
+        # Ganti 'YourGameName' dengan nama executable yang Anda inginkan
+        run: |
+          mkdir -p artifacts/windows-build-debug   # Buat direktori output di root repo
+          godot --headless --export-debug "Windows Desktop" artifacts/windows-build-debug/YourGameName_debug.exe .
+
 
       # Langkah 5: Upload Artifact (hasil build)
-      # Menyimpan file hasil build agar bisa diunduh dari halaman Actions
-      - name: Upload Windows Artifact
+      - name: Upload Windows Artifact (Release)
+        if: github.event.inputs.build_type == 'release'
         uses: actions/upload-artifact@v4
         with:
-          name: windows-build # Nama artifact yang akan muncul di GitHub
-          path: artifacts/windows-build # Path ke folder yang berisi hasil build (.exe dan .pck) relatif ke root repo
+          name: windows-build-release # Nama artifact yang akan muncul di GitHub
+          path: artifacts/windows-build-release # Path ke folder yang berisi hasil build
+      - name: Upload Windows Artifact (Debug)
+        if: github.event.inputs.build_type == 'debug'
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-build-debug # Nama artifact yang akan muncul di GitHub
+          path: artifacts/windows-build-debug # Path ke folder yang berisi hasil build
