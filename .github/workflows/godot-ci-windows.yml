@@ -4,7 +4,7 @@ name: Godot Export Windows
 # Pemicu (trigger) kapan workflow ini akan dijalankan
 on:
   push:
-    branches: [ master ] # Jalankan saat ada push ke branch 'main'
+    branches: [ master ] # Jalankan saat ada push ke branch 'master' atau 'main'
   workflow_dispatch: # Memungkinkan menjalankan workflow secara manual dari tab Actions
 
 jobs:
@@ -12,8 +12,7 @@ jobs:
     # Nama job (bisa lebih dari satu job dalam satu workflow)
     name: Export for Windows
     # Tentukan runner (mesin virtual) yang akan digunakan
-    # Kita butuh Windows untuk build .exe dan menjalankan Godot export
-    runs-on: ubuntu-latest # Kita akan gunakan container Docker Godot, jadi OS runner tidak terlalu krusial
+    runs-on: ubuntu-latest # Menggunakan Ubuntu, karena setup-godot menangani environment
 
     steps:
       # Langkah 1: Checkout kode proyek Anda dari repositori
@@ -23,31 +22,23 @@ jobs:
           lfs: true # Tambahkan ini jika Anda menggunakan Git LFS untuk aset besar
 
       # Langkah 2: Setup Godot Export (menggunakan action komunitas)
-      # Action ini akan mengunduh template ekspor Godot yang diperlukan
+      # Action ini akan mengunduh Godot dan template ekspor yang diperlukan
       - name: Set up Godot export templates
-        uses: chickensoft-games/setup-godot@v1 # Action komunitas yang populer
+        uses: chickensoft-games/setup-godot@v1
         with:
-          version: '4.4.1' # Ganti dengan versi Godot yang Anda gunakan
-          # Optional: jika butuh .NET/C# support
-          # use-mono: true
-          # Optional: tentukan versi template jika berbeda
-          # template-version: '4.2.2'
+          version: '4.4.1' # Pastikan ini versi Godot yang Anda gunakan
+          use-mono: true   # Aktifkan ini karena Anda menggunakan versi Mono/C#
           # Optional: tentukan cache untuk mempercepat build berikutnya
           # cache-key-prefix: ${{ github.job }}-${{ runner.os }}
 
       # Langkah 3: Ekspor Proyek Godot untuk Windows Desktop
       - name: Export Godot project
-        # Gunakan 'godot' command yang disediakan oleh action 'setup-godot'
-        # --headless: Menjalankan Godot tanpa editor GUI
-        # --export-release "Windows Desktop": Menjalankan preset ekspor bernama "Windows Desktop" dalam mode rilis
-        # ../artifacts/windows-build/YourGameName.exe: Path output untuk file .exe
-        # ../YourGameName: Path ke direktori utama proyek Godot Anda (jika file .yml tidak di root)
-        # Sesuaikan '../YourGameName' jika struktur proyek Anda berbeda
-        # Sesuaikan "Windows Desktop" jika nama preset ekspor Anda berbeda
-        # Sesuaikan 'YourGameName.exe' dengan nama game Anda
+        # Ganti 'GameDev2025_GroupProject' jika nama folder proyek Anda berbeda
+        # Ganti 'YourGameName.exe' dengan nama executable yang Anda inginkan
         run: |
-          mkdir -p ../artifacts/windows-build
-          godot --headless --export-release "Windows Desktop" ../artifacts/windows-build/YourGameName.exe ../GameDev2025_GroupProject
+          mkdir -p artifacts/windows-build  # Buat direktori output di root repo
+          cd GameDev2025_GroupProject      # Masuk ke direktori proyek Godot Anda
+          godot --headless --export-release "Windows Desktop" ../artifacts/windows-build/YourGameName.exe .
 
       # Langkah 4: Upload Artifact (hasil build)
       # Menyimpan file hasil build agar bisa diunduh dari halaman Actions
@@ -55,4 +46,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: windows-build # Nama artifact yang akan muncul di GitHub
-          path: ../artifacts/windows-build # Path ke folder yang berisi hasil build (.exe dan .pck)
+          path: artifacts/windows-build # Path ke folder yang berisi hasil build (.exe dan .pck) relatif ke root repo
