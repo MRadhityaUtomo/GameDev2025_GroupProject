@@ -1,9 +1,9 @@
 [gd_scene load_steps=8 format=3 uid="uid://3vppwekhnxr7"]
 
-[ext_resource type="Script" path="res://Scripts/Player.gd" id="1_5heyv"]
+[ext_resource type="Script" uid="uid://bvpbsltbk1ovn" path="res://Scripts/Player.gd" id="1_5heyv"]
 [ext_resource type="Texture2D" uid="uid://muxlfx7u30ye" path="res://Assets/ChessPiece.png" id="2_4eato"]
-[ext_resource type="Script" path="res://Scripts/MovementManager.gd" id="3_ii2tr"]
-[ext_resource type="Script" path="res://Scripts/BombManager.gd" id="4_6l0lv"]
+[ext_resource type="Script" uid="uid://ds1jhdlon08rw" path="res://Scripts/MovementManager.gd" id="3_ii2tr"]
+[ext_resource type="Script" uid="uid://d2prhul35vk57" path="res://Scripts/BombManager.gd" id="4_6l0lv"]
 [ext_resource type="PackedScene" uid="uid://cowthuaj68hka" path="res://Scenes/bomb.tscn" id="5_yey61"]
 [ext_resource type="Texture2D" uid="uid://bjqvddit73fr8" path="res://Assets/Placeholder Tiles.png" id="6_a2i5t"]
 
