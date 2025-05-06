@@ -1,0 +1,40 @@
+[gd_scene load_steps=4 format=3 uid="uid://hg36ixdquu4x"]
+
+[ext_resource type="Script" uid="uid://hg7p2skfya2w" path="res://Scenes/GlobalBombManager.gd" id="1_wmmkt"]
+[ext_resource type="PackedScene" uid="uid://bj4e03gbjjotf" path="res://Scenes/dynamic_tiles.tscn" id="2_toqyy"]
+[ext_resource type="PackedScene" uid="uid://3vppwekhnxr7" path="res://Scenes/player_piece.tscn" id="3_lquhd"]
+
+[node name="TileTesting" type="Node2D"]
+position = Vector2(128, 128)
+
+[node name="GlobalBombManager" type="Node2D" parent="."]
+script = ExtResource("1_wmmkt")
+
+[node name="DynamicTiles" parent="." instance=ExtResource("2_toqyy")]
+position = Vector2(-128, -128)
+
+[node name="PlayerPiece" parent="." node_paths=PackedStringArray("GlobalBombs") instance=ExtResource("3_lquhd")]
+z_index = 1
+position = Vector2(64, 128)
+collision_layer = 2
+collision_mask = 2
+id = 1
+up_action = "w"
+down_action = "s"
+left_action = "a"
+right_action = "d"
+bomb_action = "p1Interact"
+GlobalBombs = NodePath("../GlobalBombManager")
+
+[node name="Camera2D" type="Camera2D" parent="PlayerPiece"]
+
+[node name="PlayerPiece2" parent="." node_paths=PackedStringArray("GlobalBombs") instance=ExtResource("3_lquhd")]
+z_index = 1
+position = Vector2(64, 128)
+id = 2
+up_action = "ui_up"
+down_action = "ui_down"
+left_action = "ui_left"
+right_action = "ui_right"
+bomb_action = "ui_accept"
+GlobalBombs = NodePath("../GlobalBombManager")
