@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://dhum5fo0uryru"]
+
+[ext_resource type="Texture2D" uid="uid://crioxjxe8plok" path="res://Assets/TempDiffrentTiles/Group 8.png" id="1_4vc8e"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2e0d6"]
+
+[node name="PowerUpTile" type="Node2D"]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+scale = Vector2(3.24, 3.28)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_2e0d6")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(1, 1.00533)
+texture = ExtResource("1_4vc8e")
