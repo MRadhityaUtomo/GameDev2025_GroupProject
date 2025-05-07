@@ -39,15 +39,40 @@ func can_move_to(target_pos: Vector2) -> bool:
 
 func handle_input():
 	var input_vector = Vector2.ZERO
-	if Input.is_action_pressed(str(player_body.up_action)):
-		input_vector.y = -1
-	elif Input.is_action_pressed(str(player_body.down_action)):
-		input_vector.y = 1
-	elif Input.is_action_pressed(str(player_body.left_action)):
-		input_vector.x = -1
-	elif Input.is_action_pressed(str(player_body.right_action)):
-		input_vector.x = 1
-
+	
+	if player_body.diagonal_mode_active:
+		# Diagonal-only mode movement
+		if Input.is_action_pressed(str(player_body.up_action)):
+			# W key - move top left
+			input_vector = Vector2(-1, -1)
+		elif Input.is_action_pressed(str(player_body.down_action)):
+			# S key - move bottom right
+			input_vector = Vector2(1, 1)
+		elif Input.is_action_pressed(str(player_body.left_action)):
+			# A key - move bottom left
+			input_vector = Vector2(-1, 1)
+		elif Input.is_action_pressed(str(player_body.right_action)):
+			# D key - move top right
+			input_vector = Vector2(1, -1)
+	else:
+		# Normal movement
+		# Handle vertical input
+		if Input.is_action_pressed(str(player_body.up_action)):
+			input_vector.y = -1
+		elif Input.is_action_pressed(str(player_body.down_action)):
+			input_vector.y = 1
+			
+		# Handle horizontal input
+		if Input.is_action_pressed(str(player_body.left_action)):
+			input_vector.x = -1
+		elif Input.is_action_pressed(str(player_body.right_action)):
+			input_vector.x = 1
+		
+		# If player doesn't have diagonal movement, prevent diagonal movement
+		if input_vector.x != 0 and input_vector.y != 0 and not player_body.has_diagonal_movement:
+			# Prioritize horizontal movement
+			input_vector.y = 0
+	
 	if input_vector != Vector2.ZERO:
 		player_body.last_move_direction = input_vector
 		var new_target = player_body.global_position + input_vector * grid_size

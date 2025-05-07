@@ -16,6 +16,8 @@ extends CharacterBody2D
 
 var action_cooldown_timer : float = 0.0
 var last_move_direction : Vector2 = Vector2.ZERO
+var has_diagonal_movement : bool = false  # Added for diagonal movement powerup
+var diagonal_mode_active : bool = false  # New variable for diagonal-only mode
 
 func _ready():
 	pass
