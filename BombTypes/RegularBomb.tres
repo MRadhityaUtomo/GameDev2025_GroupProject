@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="BombType" load_steps=2 format=3 uid="uid://cbtmv54csgsxk"]
+
+[ext_resource type="Script" uid="uid://c7gl1ubsyvok8" path="res://resources/BombResource.gd" id="1_t717d"]
+
+[resource]
+script = ExtResource("1_t717d")
+name = "Standard Bomb"
+countdown_time = 3
+explosion_radius = 2
+explosion_color = Color(1, 0.270588, 0, 1)
+chain_reaction = true
+pattern = 0
+has_particles = false

@@ -1,9 +1,9 @@
 [gd_scene load_steps=8 format=3 uid="uid://3vppwekhnxr7"]
 
-[ext_resource type="Script" path="res://Scripts/Player.gd" id="1_5heyv"]
+[ext_resource type="Script" uid="uid://bdm4nj5fid4dk" path="res://Scripts/Player.gd" id="1_5heyv"]
 [ext_resource type="Texture2D" uid="uid://muxlfx7u30ye" path="res://Assets/ChessPiece.png" id="2_4eato"]
-[ext_resource type="Script" path="res://Scripts/MovementManager.gd" id="3_ii2tr"]
-[ext_resource type="Script" path="res://Scripts/BombManager.gd" id="4_6l0lv"]
+[ext_resource type="Script" uid="uid://40nstcdy4jxx" path="res://Scripts/MovementManager.gd" id="3_ii2tr"]
+[ext_resource type="Script" uid="uid://dlps7scn1rfcb" path="res://Scripts/BombManager.gd" id="4_6l0lv"]
 [ext_resource type="PackedScene" uid="uid://cowthuaj68hka" path="res://Scenes/bomb.tscn" id="5_yey61"]
 [ext_resource type="Texture2D" uid="uid://bjqvddit73fr8" path="res://Assets/Placeholder Tiles.png" id="6_a2i5t"]
 
@@ -38,6 +38,6 @@ position = Vector2(32, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="BombSpawnLocation"]
 modulate = Color(0.277659, 0.475825, 1, 1)
-self_modulate = Color(0.408329, 0.408329, 0.408329, 1)
+self_modulate = Color(0.454902, 0.454902, 0.454902, 0.254902)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("6_a2i5t")

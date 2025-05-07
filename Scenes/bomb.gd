@@ -9,14 +9,11 @@ signal bomb_exploded(position, bomb_ref)
 
 func _ready():
 	global_position = global_position.snapped(Vector2(grid_size, grid_size))
-	print("Bomb placed by player ", owner_player_id, " with countdown: ", countdown)
 
 func trigger_countdown():
 	countdown -= 1
-	print("Bomb owned by player ", owner_player_id, " countdown reduced to: ", countdown)
 	
 	if countdown <= 0:
-		print("Bomb owned by player ", owner_player_id, " is exploding!")
 		call_deferred("explode")
 
 func explode():
