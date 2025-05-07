@@ -57,3 +57,5 @@ target_position = Vector2(9.82285e-05, -44)
 [node name="RayCast2D4" type="RayCast2D" parent="Node"]
 rotation = 0.00374382
 target_position = Vector2(-44, -9.82285e-05)
+
+[node name="PowerUpManager" type="Node2D" parent="."]
