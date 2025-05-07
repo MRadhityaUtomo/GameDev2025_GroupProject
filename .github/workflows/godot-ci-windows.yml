@@ -47,13 +47,13 @@ jobs:
         if: github.event.inputs.build_type == 'release'
         run: |
           mkdir -p artifacts/windows-build-release
-          godot --headless --export-release "Windows Desktop" artifacts/windows-build-release/YourGameName_release.exe .
+          godot --headless --export-release "Windows Desktop" artifacts/windows-build-release/${{ secrets.GAME_NAME }}_release.exe .
 
       - name: Export Godot project (Debug)
         if: github.event.inputs.build_type == 'debug'
         run: |
           mkdir -p artifacts/windows-build-debug
-          godot --headless --export-debug "Windows Desktop" artifacts/windows-build-debug/YourGameName_debug.exe .
+          godot --headless --export-debug "Windows Desktop" artifacts/windows-build-debug/${{ secrets.GAME_NAME }}_debug.exe .
 
       - name: Upload Windows Artifact (Release)
         if: github.event.inputs.build_type == 'release'
