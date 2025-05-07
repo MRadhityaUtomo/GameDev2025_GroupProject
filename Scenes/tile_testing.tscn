@@ -8,6 +8,7 @@
 position = Vector2(128, 128)
 
 [node name="GlobalBombManager" type="Node2D" parent="."]
+position = Vector2(-128, -128)
 script = ExtResource("1_wmmkt")
 
 [node name="DynamicTiles" parent="." instance=ExtResource("2_toqyy")]
@@ -15,7 +16,7 @@ position = Vector2(-128, -128)
 
 [node name="PlayerPiece" parent="." node_paths=PackedStringArray("GlobalBombs") instance=ExtResource("3_lquhd")]
 z_index = 1
-position = Vector2(64, 128)
+position = Vector2(352, 224)
 collision_layer = 2
 collision_mask = 2
 id = 1
@@ -27,10 +28,11 @@ bomb_action = "p1Interact"
 GlobalBombs = NodePath("../GlobalBombManager")
 
 [node name="Camera2D" type="Camera2D" parent="PlayerPiece"]
+position = Vector2(16, 16)
 
 [node name="PlayerPiece2" parent="." node_paths=PackedStringArray("GlobalBombs") instance=ExtResource("3_lquhd")]
 z_index = 1
-position = Vector2(64, 128)
+position = Vector2(160, 224)
 id = 2
 up_action = "ui_up"
 down_action = "ui_down"

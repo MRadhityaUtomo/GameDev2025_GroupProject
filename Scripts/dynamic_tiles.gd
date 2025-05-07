@@ -27,7 +27,7 @@ func replace_tile_with_object(tile_pos: Vector2i, object_scene: PackedScene, par
 	
 	if object_scene:
 		var obj = object_scene.instantiate()
-		var ob_pos = map_to_local(tile_pos) + Vector2(half_cell_size)
+		var ob_pos = map_to_local(tile_pos)
 		
 		if parent == null:
 			parent = get_tree().current_scene

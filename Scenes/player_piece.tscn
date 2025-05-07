@@ -37,7 +37,23 @@ bomb_scene = ExtResource("5_yey61")
 position = Vector2(32, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="BombSpawnLocation"]
-modulate = Color(0.277659, 0.475825, 1, 1)
+modulate = Color(0.278431, 0.47451, 1, 0.27451)
 self_modulate = Color(0.408329, 0.408329, 0.408329, 1)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("6_a2i5t")
+
+[node name="Node" type="Node2D" parent="."]
+rotation = 1.57079
+
+[node name="RayCast2D" type="RayCast2D" parent="Node"]
+target_position = Vector2(-9.72748e-05, 44)
+
+[node name="RayCast2D2" type="RayCast2D" parent="Node"]
+target_position = Vector2(44, 9.82285e-05)
+
+[node name="RayCast2D3" type="RayCast2D" parent="Node"]
+target_position = Vector2(9.82285e-05, -44)
+
+[node name="RayCast2D4" type="RayCast2D" parent="Node"]
+rotation = 0.00374382
+target_position = Vector2(-44, -9.82285e-05)
