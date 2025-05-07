@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="chess_movement_prototype"
-run/main_scene="res://Scenes/main_testing.tscn"
+run/main_scene="uid://cdpkljgvn0mmj"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
