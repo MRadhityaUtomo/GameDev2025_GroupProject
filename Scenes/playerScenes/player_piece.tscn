@@ -4,11 +4,11 @@
 [ext_resource type="Texture2D" uid="uid://muxlfx7u30ye" path="res://Assets/ChessPiece.png" id="2_4eato"]
 [ext_resource type="Script" uid="uid://ds1jhdlon08rw" path="res://Scripts/MovementManager.gd" id="3_ii2tr"]
 [ext_resource type="Script" uid="uid://d2prhul35vk57" path="res://Scripts/BombManager.gd" id="4_6l0lv"]
-[ext_resource type="PackedScene" uid="uid://cowthuaj68hka" path="res://Scenes/bomb.tscn" id="5_yey61"]
+[ext_resource type="PackedScene" uid="uid://cowthuaj68hka" path="res://Scenes/bombscene/bomb.tscn" id="5_yey61"]
 [ext_resource type="Texture2D" uid="uid://bjqvddit73fr8" path="res://Assets/Placeholder Tiles.png" id="6_a2i5t"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uruiu"]
-size = Vector2(26.6667, 26.6667)
+size = Vector2(20, 20)
 
 [node name="PlayerPiece" type="CharacterBody2D"]
 position = Vector2(-32, -32)

@@ -1,11 +1,11 @@
 [gd_scene load_steps=6 format=4 uid="uid://byimxqm6okbeg"]
 
-[ext_resource type="Texture2D" uid="uid://bjqvddit73fr8" path="res://Assets/Placeholder Tiles.png" id="1_vq7cg"]
-[ext_resource type="PackedScene" uid="uid://3vppwekhnxr7" path="res://Scenes/player_piece.tscn" id="2_f6kjc"]
-[ext_resource type="Script" uid="uid://hg7p2skfya2w" path="res://Scenes/GlobalBombManager.gd" id="3_fdoh7"]
+[ext_resource type="Texture2D" uid="uid://bjqvddit73fr8" path="res://Assets/Placeholder Tiles.png" id="1_hf467"]
+[ext_resource type="PackedScene" uid="uid://3vppwekhnxr7" path="res://Scenes/playerScenes/player_piece.tscn" id="2_ag2be"]
+[ext_resource type="Script" uid="uid://hg7p2skfya2w" path="res://Scripts/GlobalBombManager.gd" id="3_jhc1d"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_j5ugg"]
-texture = ExtResource("1_vq7cg")
+texture = ExtResource("1_hf467")
 texture_region_size = Vector2i(64, 64)
 0:0/0 = 0
 
@@ -21,7 +21,7 @@ texture_filter = 1
 tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAACAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAAHAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAJAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAABAAEAAAAAAAAAAAACAAEAAAAAAAAAAAADAAEAAAAAAAAAAAAEAAEAAAAAAAAAAAAFAAEAAAAAAAAAAAAGAAEAAAAAAAAAAAAHAAEAAAAAAAAAAAAIAAEAAAAAAAAAAAAJAAEAAAAAAAAAAAAAAAIAAAAAAAAAAAABAAIAAAAAAAAAAAACAAIAAAAAAAAAAAADAAIAAAAAAAAAAAAEAAIAAAAAAAAAAAAFAAIAAAAAAAAAAAAGAAIAAAAAAAAAAAAHAAIAAAAAAAAAAAAIAAIAAAAAAAAAAAAJAAIAAAAAAAAAAAAAAAMAAAAAAAAAAAABAAMAAAAAAAAAAAACAAMAAAAAAAAAAAADAAMAAAAAAAAAAAAEAAMAAAAAAAAAAAAFAAMAAAAAAAAAAAAGAAMAAAAAAAAAAAAHAAMAAAAAAAAAAAAIAAMAAAAAAAAAAAAJAAMAAAAAAAAAAAA=")
 tile_set = SubResource("TileSet_kqb1h")
 
-[node name="PlayerPiece" parent="." node_paths=PackedStringArray("GlobalBombs") instance=ExtResource("2_f6kjc")]
+[node name="PlayerPiece" parent="." node_paths=PackedStringArray("GlobalBombs") instance=ExtResource("2_ag2be")]
 position = Vector2(32, 32)
 collision_layer = 2
 collision_mask = 2
@@ -33,7 +33,7 @@ right_action = "d"
 bomb_action = "p1Interact"
 GlobalBombs = NodePath("../GlobalBombManager")
 
-[node name="PlayerPiece2" parent="." node_paths=PackedStringArray("GlobalBombs") instance=ExtResource("2_f6kjc")]
+[node name="PlayerPiece2" parent="." node_paths=PackedStringArray("GlobalBombs") instance=ExtResource("2_ag2be")]
 position = Vector2(608, 224)
 id = 2
 up_action = "ui_up"
@@ -44,4 +44,4 @@ bomb_action = "ui_accept"
 GlobalBombs = NodePath("../GlobalBombManager")
 
 [node name="GlobalBombManager" type="Node2D" parent="."]
-script = ExtResource("3_fdoh7")
+script = ExtResource("3_jhc1d")

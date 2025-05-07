@@ -11,17 +11,28 @@ config_version=5
 [application]
 
 config/name="chess_movement_prototype"
-run/main_scene="res://Scenes/main_testing.tscn"
+run/main_scene="res://Scenes/playableScenes/main_testing.tscn"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
 [display]
 
-window/size/viewport_width=960
-window/size/viewport_height=540
+window/size/viewport_width=800
+window/size/viewport_height=90
 window/size/window_width_override=1920
 window/size/window_height_override=1080
 window/stretch/mode="viewport"
+
+[file_customization]
+
+folder_colors={
+"res://Scenes/": "green",
+"res://Scenes/bombscene/": "red",
+"res://Scenes/playableScenes/": "blue",
+"res://Scenes/playerScenes/": "gray",
+"res://Scenes/tilescenes/": "yellow",
+"res://Scripts/": "yellow"
+}
 
 [input]
 

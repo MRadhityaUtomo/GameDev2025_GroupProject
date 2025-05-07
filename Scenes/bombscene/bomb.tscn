@@ -1,16 +1,16 @@
 [gd_scene load_steps=4 format=3 uid="uid://cowthuaj68hka"]
 
-[ext_resource type="Script" uid="uid://back7mxj0bw8f" path="res://Scenes/bomb.gd" id="1_g228v"]
-[ext_resource type="Texture2D" uid="uid://dgojj1trqwts3" path="res://Assets/Bomb.png" id="1_n1drg"]
+[ext_resource type="Script" uid="uid://back7mxj0bw8f" path="res://Scripts/bomb.gd" id="1_lv1d2"]
+[ext_resource type="Texture2D" uid="uid://dgojj1trqwts3" path="res://Assets/Bomb.png" id="2_6l548"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8cvx1"]
 size = Vector2(64, 64)
 
 [node name="Bomb" type="Area2D"]
-script = ExtResource("1_g228v")
+script = ExtResource("1_lv1d2")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_n1drg")
+texture = ExtResource("2_6l548")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_8cvx1")

@@ -1,9 +1,12 @@
 extends TileMapLayer
 class_name DynamicTiles
 
+@export var tile1 = preload("res://Scenes/tilescenes/walkable_tile.tscn")
+@export var tile2 = preload("res://Scenes/tilescenes/border_tile.tscn")
+
 @export var TILE_SCENES := {
-	1: preload("res://Scenes/walkable_tile.tscn"),
-	2: preload("res://Scenes/border_tile.tscn")	
+	1: tile1,
+	2: tile2	
 }
 
 @onready var half_cell_size := tile_set.tile_size / 2
@@ -22,6 +25,7 @@ func replace_tiles_with_scenes(scene_dictionary: Dictionary = TILE_SCENES):
 			replace_tile_with_object(tile_pos, object_scene)
 
 func replace_tile_with_object(tile_pos: Vector2i, object_scene: PackedScene, parent: Node = null):
+	print(tile_pos)
 	if get_cell_source_id(tile_pos) != -1:
 		set_cell(tile_pos, -1)
 	
