@@ -32,14 +32,19 @@ func handle_input() -> bool:
 	return false
 
 func can_execute() -> bool:
-	if not manager or not manager.Raycast: 
-		printerr("DiagonalOnlyMovementStrategy: Manager atau Raycast tidak ditemukan!")
+	if not manager or not manager.player_body: 
+		printerr("BishopMovementStrategy: Manager atau player_body tidak ditemukan!")
 		return false
 	if _current_input_vector == Vector2.ZERO: return false
 	
-	manager.Raycast.target_position = _current_input_vector * (manager.grid_size * 2/3) 
-	manager.Raycast.force_raycast_update()
-	return !manager.Raycast.is_colliding()
+	if not manager.dynamic_tiles_node:
+		printerr("BishopMovementStrategy: manager.dynamic_tiles_node is null!")
+		return false
+		
+	var target_center_world_pos = manager.player_body.global_position + _current_input_vector * manager.grid_size
+	var target_tile_map_coords = manager.dynamic_tiles_node.local_to_map(manager.dynamic_tiles_node.to_local(target_center_world_pos))
+		
+	return manager.is_grid_cell_walkable(target_tile_map_coords)
 
 func enter():
 	if not manager or not manager.player_body: return

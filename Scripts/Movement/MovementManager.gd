@@ -5,14 +5,17 @@ extends Node
 @export var travel_speed : int = 800
 
 @onready var BombMarker = $"../BombSpawnLocation"
-@onready var Raycast = $"../RayCast2D"
+
+@onready var dynamic_tiles_node: TileMapLayer = player_body.get_parent().get_node_or_null("DynamicTiles") if player_body and player_body.get_parent() else null
+
+@export var walkable_source_ids: Array[int] = [1]
 
 enum MovementMode { 
 	KING_MOVEMENT,
 	BISHOP_MOVEMENT,
 	QUEEN_MOVEMENT
 }
-var current_movement_mode: MovementMode = MovementMode.BISHOP_MOVEMENT
+var current_movement_mode: MovementMode = MovementMode.QUEEN_MOVEMENT
 
 var king_movement_strategy: KingMovementStrategy
 var bishop_movement_strategy: BishopMovementStrategy
@@ -31,6 +34,9 @@ func _ready():
 		printerr("MovementManager: player_body belum di-assign di Inspector!")
 		set_physics_process(false)
 		return
+
+	if not dynamic_tiles_node:
+		printerr("MovementManager: DynamicTiles node not found. Path should be player_body.get_parent().get_node('DynamicTiles'). Check scene structure.")
 
 	if not "action_cooldown_timer" in player_body:
 		player_body.action_cooldown_timer = 0.0
@@ -150,3 +156,31 @@ func update_bomb_marker():
 		BombMarker.global_position = new_marker_pos
 	elif BombMarker: 
 		BombMarker.global_position = player_body.global_position
+
+
+func is_grid_cell_walkable(target_tile_map_coords: Vector2i) -> bool:
+	if not dynamic_tiles_node:
+		printerr("MovementManager.is_grid_cell_walkable: dynamic_tiles_node is null.")
+		return false
+
+	var source_id = dynamic_tiles_node.get_cell_source_id(target_tile_map_coords)
+	
+	if dynamic_tiles_node.get("TILE_SCENES") != null:
+		var tile_scenes_dict = dynamic_tiles_node.get("TILE_SCENES")
+		if tile_scenes_dict.has(source_id):
+			var scene_packed = tile_scenes_dict[source_id]
+			if scene_packed is PackedScene:
+				print("Checking walkability for tile (Source ID: %d, Type: %s)" % [source_id, scene_packed.resource_path])
+			else:
+				print("Checking walkability for tile (Source ID: %d, Type: Non-PackedScene value)" % source_id)
+		elif source_id == -1:
+			print("Checking walkability for an empty tile (Source ID: -1)")
+		else:
+			print("Checking walkability for tile with unknown Source ID: %d" % source_id)
+	else:
+		print("Checking walkability for tile (Source ID: %d, TILE_SCENES not accessible)" % source_id)
+
+	if source_id in walkable_source_ids:
+		return true
+	else:
+		return false

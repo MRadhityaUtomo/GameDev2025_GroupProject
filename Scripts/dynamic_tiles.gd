@@ -23,8 +23,8 @@ func replace_tiles_with_scenes(scene_dictionary: Dictionary = TILE_SCENES):
             replace_tile_with_object(tile_pos, object_scene)
 
 func replace_tile_with_object(tile_pos: Vector2i, object_scene: PackedScene, parent: Node = null):
-    if get_cell_source_id(tile_pos) != -1:
-        set_cell(tile_pos, -1)
+    # if get_cell_source_id(tile_pos) != -1:
+    #     set_cell(tile_pos, -1) 
     
     if object_scene:
         var obj = object_scene.instantiate()

@@ -1,7 +1,5 @@
-# res://Scripts/Movement/Strategies/BaseMovementStrategy.gd
-# Pastikan file ini ada di path yang benar.
 class_name BaseMovementStrategy
-extends RefCounted # Menggunakan RefCounted karena strategi tidak perlu menjadi Node sendiri di scene tree
+extends RefCounted
 
 # Referensi ke MovementManager agar strategi bisa mengakses properti seperti player_body, grid_size, dll.
 var manager: Node 
