@@ -18,4 +18,4 @@ var action_cooldown_timer : float = 0.0
 var last_move_direction : Vector2 = Vector2.ZERO
 
 func _ready():
-	pass
+    pass
