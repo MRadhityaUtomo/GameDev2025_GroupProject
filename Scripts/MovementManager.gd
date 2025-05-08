@@ -54,15 +54,11 @@ func handle_input():
 		target_position = new_target
 		moving = true
 		start_action_cooldown()
-		update_bomb_marker()  # move the bomb marker after moving direction changes
+		update_bomb_marker()  
 		
-		# We'll now trigger the bomb countdown when the movement is completed
-		# This is done in the moving section when player arrives at destination
-
 func start_action_cooldown():
 	player_body.action_cooldown_timer = player_body.action_cooldown_duration
 
 func update_bomb_marker():
-	# move marker relative to player's current position + last_move_direction
 	var new_marker_pos = player_body.global_position + player_body.last_move_direction * grid_size
 	BombMarker.global_position = new_marker_pos

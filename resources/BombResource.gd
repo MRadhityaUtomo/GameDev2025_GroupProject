@@ -1,71 +1,43 @@
 class_name BombType
 extends Resource
 
-## Base class for different bomb types
+enum ExplosionPattern { CROSS, DIAG }
 
-
-#still 1st ver, change for more modular approacj
-# Core Properties
+@export var grid_size : int = 64
 @export var name: String = "Standard Bomb"
-@export var countdown_time: int = 3
 @export var explosion_radius: int = 2
 @export var explosion_scene: PackedScene
-
-# Visual Properties
-@export var bomb_texture: Texture2D
-@export var explosion_color: Color = Color.ORANGE_RED
-
-# Special Properties
-@export var chain_reaction: bool = true  # Whether this bomb can trigger other bombs
-
-# Pattern Definition
-enum ExplosionPattern { CROSS, SQUARE, X_SHAPE, STAR, SINGLE }
 @export var pattern: ExplosionPattern = ExplosionPattern.CROSS
 
-# Optional effects
-@export var has_particles: bool = false
-@export var particle_effect: PackedScene
+# INI RESOURCE BUAT BOMB, pattern bombnya meledak di handle disini
 
-# Get direction vectors based on the pattern
 func get_explosion_directions() -> Array:
 	match pattern:
 		ExplosionPattern.CROSS:
-			return [
-				Vector2.UP,
-				Vector2.DOWN,
-				Vector2.LEFT,
-				Vector2.RIGHT
-			]
-		ExplosionPattern.SQUARE:
-			return [
-				Vector2.UP, Vector2.DOWN, Vector2.LEFT, Vector2.RIGHT,
-				Vector2(1, 1), Vector2(1, -1), Vector2(-1, 1), Vector2(-1, -1)
-			]
-		ExplosionPattern.X_SHAPE:
-			return [
-				Vector2(1, 1),
-				Vector2(1, -1),
-				Vector2(-1, 1),
-				Vector2(-1, -1)
-			]
-		ExplosionPattern.STAR:
-			return [
-				Vector2.UP, Vector2.DOWN, Vector2.LEFT, Vector2.RIGHT,
-				Vector2(1, 1), Vector2(1, -1), Vector2(-1, 1), Vector2(-1, -1)
-			]
-		ExplosionPattern.SINGLE:
-			return []
-	
-	# Default
-	return [Vector2.UP, Vector2.DOWN, Vector2.LEFT, Vector2.RIGHT]
+			return [Vector2.UP, Vector2.DOWN, Vector2.LEFT, Vector2.RIGHT]
+		ExplosionPattern.DIAG:
+			return [Vector2(1, 1), Vector2(-1, 1), Vector2(1, -1), Vector2(-1, -1)]
+	return []
 
-# Handle special effect setup for this bomb type
-func apply_effects(explosion_instance: Node2D) -> void:
-	# Apply color modulation
-	if explosion_instance.has_node("Sprite2D"):
-		explosion_instance.get_node("Sprite2D").modulate = explosion_color
+func spawn_explosions(origin_position: Vector2, parent_scene: Node):
+	var directions = get_explosion_directions()
+	var viewport_size = parent_scene.get_viewport_rect().size
+	var max_cells_x = int(viewport_size.x / grid_size) + 2  
+	var max_cells_y = int(viewport_size.y / grid_size) + 2  
+	var max_cells = max(max_cells_x, max_cells_y)
 	
-	# Add particles if needed
-	if has_particles and particle_effect != null:
-		var particles = particle_effect.instantiate()
-		explosion_instance.add_child(particles)
+	_spawn_explosion_at(origin_position, parent_scene)
+	# Sampe ujung screen buat sknrg
+	for dir in directions:
+		for i in range(1, max_cells):
+			var pos = origin_position + dir * i * grid_size
+			if pos.x >= -grid_size and pos.x <= viewport_size.x + grid_size and \
+			   pos.y >= -grid_size and pos.y <= viewport_size.y + grid_size:
+				_spawn_explosion_at(pos, parent_scene)
+			else:
+				break
+
+func _spawn_explosion_at(pos: Vector2, parent_scene: Node):
+	var explosion = explosion_scene.instantiate()
+	explosion.global_position = pos - Vector2(grid_size*2, grid_size*2)
+	parent_scene.add_child(explosion)

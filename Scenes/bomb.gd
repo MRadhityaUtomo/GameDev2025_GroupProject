@@ -4,10 +4,12 @@ extends Area2D
 @export var countdown : int = 3
 @export var explosion_radius : int = 2
 @export var owner_player_id : int
+@export var bomb_type: BombType
 
 signal bomb_exploded(position, bomb_ref)
 
 func _ready():
+	add_to_group("bombs")
 	global_position = global_position.snapped(Vector2(grid_size, grid_size))
 
 func trigger_countdown():
@@ -17,6 +19,5 @@ func trigger_countdown():
 		call_deferred("explode")
 
 func explode():
-	# Important: emit signal before freeing to pass our reference
 	bomb_exploded.emit(global_position, self)
 	queue_free()
