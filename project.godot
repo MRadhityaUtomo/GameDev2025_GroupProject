@@ -10,13 +10,8 @@ config_version=5
 
 [application]
 
-<<<<<<< HEAD
-config/name="Explosive Playout"
-run/main_scene="res://Scenes/main_testing.tscn"
-=======
 config/name="chess_movement_prototype"
 run/main_scene="uid://cdpkljgvn0mmj"
->>>>>>> 2454b3b308d864addc237cc7584458067aaf528e
 config/features=PackedStringArray("4.4", "Forward Plus")
 boot_splash/show_image=false
 boot_splash/fullsize=false
