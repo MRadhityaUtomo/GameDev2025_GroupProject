@@ -10,15 +10,25 @@ config_version=5
 
 [application]
 
-config/name="chess_movement_prototype"
+config/name="Explosive Playout"
 run/main_scene="res://Scenes/main_testing.tscn"
 config/features=PackedStringArray("4.4", "Forward Plus")
-config/icon="res://icon.svg"
+boot_splash/show_image=false
+boot_splash/fullsize=false
+boot_splash/use_filter=false
+config/icon="uid://bgglbyv24lh2q"
 
 [display]
 
 window/size/viewport_width=960
 window/size/viewport_height=540
+window/stretch/aspect="expand"
+
+[file_customization]
+
+folder_colors={
+"res://Scenes/UI/": "teal"
+}
 
 [input]
 
