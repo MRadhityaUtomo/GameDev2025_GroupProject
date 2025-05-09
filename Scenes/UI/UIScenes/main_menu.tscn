@@ -50,6 +50,7 @@ expand_mode = 1
 stretch_mode = 4
 
 [node name="warning_screen" type="Control" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -70,8 +71,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 62.0
-offset_right = -62.0
+offset_left = 87.0
+offset_right = -87.0
 grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
@@ -79,7 +80,7 @@ alignment = 1
 [node name="default_label" parent="warning_screen/VBoxContainer" instance=ExtResource("2_wwvqu")]
 layout_mode = 2
 theme_override_colors/default_color = Color(0.207843, 0.207843, 0.207843, 1)
-theme_override_font_sizes/bold_font_size = 21
+theme_override_font_sizes/bold_font_size = 39
 text = "[b]WARNING – READ BEFORE PLAYING[/b]"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -89,11 +90,13 @@ custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 texture = ExtResource("3_5sa3m")
 expand_mode = 1
-stretch_mode = 4
+stretch_mode = 5
 
 [node name="default_label2" parent="warning_screen/VBoxContainer" instance=ExtResource("2_wwvqu")]
 layout_mode = 2
 theme_override_colors/default_color = Color(0.207843, 0.207843, 0.207843, 1)
+theme_override_font_sizes/normal_font_size = 30
+theme_override_font_sizes/bold_font_size = 30
 text = "This game contains flashing lights, rapid visual effects, and fast-paced action that may potentially trigger seizures or loss of consciousness in individuals with photosensitive epilepsy. A very small percentage of people may experience seizures or other symptoms, even if they have no prior history of epilepsy. If you or a member of your family has a medical history of seizures, epilepsy, or similar neurological conditions, please consult a doctor before playing.
 
 If at any point during gameplay you experience symptoms such as eye discomfort, blurred or altered vision, dizziness, headache, nausea, muscle twitching, involuntary movements, disorientation, or loss of awareness, [b]stop playing IMMEDIATELY[/b] and consult a medical professional. The game’s high-speed visuals and explosive effects may also cause motion sickness or physical discomfort. Discontinue use if you feel any pain or unease, especially in your eyes, hands, wrists, or other areas. Resume only once the symptoms have subsided and after medical advice, if needed.
@@ -103,7 +106,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="main_menu" type="Control" parent="."]
-visible = false
 z_index = 100
 layout_mode = 1
 anchors_preset = 15
@@ -152,7 +154,7 @@ theme_override_constants/margin_bottom = 100
 
 [node name="Brect" parent="main_menu/MarginContainer" instance=ExtResource("4_rasm3")]
 z_index = 100
-custom_minimum_size = Vector2(100, 20)
+custom_minimum_size = Vector2(100, 50)
 layout_mode = 2
 
 [node name="default_label2" parent="main_menu/MarginContainer/Brect" instance=ExtResource("2_wwvqu")]
@@ -165,6 +167,7 @@ offset_bottom = 0.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/normal_font_size = 31
 text = "Copulate
 "
 horizontal_alignment = 1

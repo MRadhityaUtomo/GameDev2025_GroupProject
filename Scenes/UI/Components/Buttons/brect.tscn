@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://d3fsr3dge7nqx"]
+[gd_scene load_steps=2 format=3 uid="uid://d3fsr3dge7nqx"]
+
+[ext_resource type="Script" uid="uid://c7wytq4ic1gbk" path="res://Scenes/UI/UIScripts/Components/button.gd" id="1_v7q38"]
 
 [node name="Brect" type="Button"]
 anchors_preset = 15
@@ -10,3 +12,4 @@ offset_right = -459.5
 offset_bottom = -254.5
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_v7q38")
