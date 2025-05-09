@@ -12,13 +12,13 @@ config_version=5
 
 config/name="chess_movement_prototype"
 run/main_scene="res://Scenes/playableScenes/main_testing.tscn"
-config/features=PackedStringArray("4.4", "Forward Plus")
+config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 
 [display]
 
-window/size/viewport_width=800
-window/size/viewport_height=90
+window/size/viewport_width=1200
+window/size/viewport_height=800
 window/size/window_width_override=1920
 window/size/window_height_override=1080
 window/stretch/mode="viewport"

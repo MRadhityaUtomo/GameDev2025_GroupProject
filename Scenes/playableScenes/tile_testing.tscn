@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://hg36ixdquu4x"]
 
-[ext_resource type="Script" uid="uid://hg7p2skfya2w" path="res://Scripts/GlobalBombManager.gd" id="1_eao42"]
+[ext_resource type="Script" path="res://Scripts/GlobalBombManager.gd" id="1_eao42"]
 [ext_resource type="PackedScene" uid="uid://bj4e03gbjjotf" path="res://Scenes/tilescenes/dynamic_tiles.tscn" id="2_s022u"]
 [ext_resource type="PackedScene" uid="uid://3vppwekhnxr7" path="res://Scenes/playerScenes/player_piece.tscn" id="3_eel5w"]
-[ext_resource type="Script" uid="uid://co7ogp6gbqmwi" path="res://Scripts/power_up_manager.gd" id="4_0dvad"]
+[ext_resource type="Script" path="res://Scripts/power_up_manager.gd" id="4_0dvad"]
 
 [node name="TileTesting" type="Node2D"]
 position = Vector2(128, 128)
@@ -14,6 +14,7 @@ script = ExtResource("1_eao42")
 
 [node name="DynamicTiles" parent="." instance=ExtResource("2_s022u")]
 position = Vector2(-128, -128)
+max_radius = 6
 
 [node name="PlayerPiece" parent="." node_paths=PackedStringArray("GlobalBombs") instance=ExtResource("3_eel5w")]
 z_index = 1
@@ -29,7 +30,8 @@ bomb_action = "p1Interact"
 GlobalBombs = NodePath("../GlobalBombManager")
 
 [node name="Camera2D" type="Camera2D" parent="PlayerPiece"]
-position = Vector2(16, 16)
+position = Vector2(1, 1.5)
+zoom = Vector2(0.5, 0.5)
 
 [node name="PlayerPiece2" parent="." node_paths=PackedStringArray("GlobalBombs") instance=ExtResource("3_eel5w")]
 z_index = 1
