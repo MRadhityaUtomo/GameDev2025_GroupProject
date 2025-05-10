@@ -36,8 +36,31 @@ func _physics_process(delta):
 
 
 func handle_input():
-	if Input.is_action_just_pressed(str(player_body.bomb_action)) and player_body.CanPlace:
-		place_bomb(BombMarker.global_position)
+	if Input.is_action_just_pressed(str(player_body.bomb_action)):
+		# Update the CanPlace status before attempting to place bomb
+		update_can_place_status()
+		
+		if player_body.CanPlace:
+			place_bomb(BombMarker.global_position)
+
+func update_can_place_status():
+	# Use the same raycast from MovementManager
+	var raycast = $"../RayCast2D"
+	
+	# Set raycast direction to check where we want to place the bomb
+	raycast.target_position = player_body.last_move_direction * (grid_size * 2/3)
+	
+	# Force the raycast to update
+	raycast.force_raycast_update()
+	
+	# Update the CanPlace flag - can't place if hitting a wall/border
+	player_body.CanPlace = !raycast.is_colliding()
+	
+	# Debug output
+	if raycast.is_colliding():
+		print("Can't place bomb - wall/border detected")
+	else:
+		print("Bomb placement valid")
 
 
 func on_bomb_exploded(position: Vector2, bomb_ref):

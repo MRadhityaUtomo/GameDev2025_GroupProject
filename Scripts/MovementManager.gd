@@ -52,6 +52,7 @@ func can_move_to(input_vector: Vector2) -> bool:
 
 func handle_input():
 	var input_vector = Vector2.ZERO
+	# Check if bomb placement is valid
 	if Input.is_action_pressed(str(player_body.up_action)):
 		input_vector.y = -1
 	elif Input.is_action_pressed(str(player_body.down_action)):
@@ -76,3 +77,16 @@ func start_action_cooldown():
 func update_bomb_marker():
 	var new_marker_pos = player_body.global_position + player_body.last_move_direction * grid_size
 	BombMarker.global_position = new_marker_pos
+	
+	# Check if we can place a bomb at the marker position
+	check_bomb_placement_valid()
+
+func check_bomb_placement_valid():
+	# Set raycast direction with shorter length
+	Raycast.target_position = player_body.last_move_direction * (grid_size * 2 / 3)
+	
+	# Force the raycast to update
+	Raycast.force_raycast_update()
+	
+	# Update the CanPlace flag
+	player_body.CanPlace = !Raycast.is_colliding()

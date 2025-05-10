@@ -58,12 +58,11 @@ func is_position_blocked(pos: Vector2, parent_scene: Node) -> bool:
 	return false
 
 func _spawn_explosion_at(pos: Vector2, parent_scene: Node):
-	# Don't snap again - bombs are already placed on grid
+	# Create the explosion instance
 	var explosion = explosion_scene.instantiate()
-	
-	# Apply a correction to align the explosions with the actual grid positions
-	# Move explosions 2 tiles up-left (-128, -128) to compensate for the offset
-	explosion.global_position = pos - Vector2(grid_size*2, grid_size*2)
-	
 	parent_scene.add_child(explosion)
+	
+	# Use global_position directly since pos is already in global coordinates
+	explosion.global_position = pos
+	
 	print("Explosion spawned at corrected position: ", explosion.global_position)
