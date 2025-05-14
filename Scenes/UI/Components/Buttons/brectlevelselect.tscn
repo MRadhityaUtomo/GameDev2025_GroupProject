@@ -1,0 +1,195 @@
+[gd_scene load_steps=16 format=3 uid="uid://bdrxgm7bhh624"]
+
+[ext_resource type="Texture2D" uid="uid://6peopgp1jim7" path="res://Scenes/UI/UIAssets/Button/BRectOutline.png" id="2_3ivo4"]
+[ext_resource type="Shader" uid="uid://ci71jivtcth1a" path="res://Scenes/UI/UIAssets/Shader/pattern.gdshader" id="2_4c8mr"]
+[ext_resource type="Texture2D" uid="uid://dilt7sp7iqmco" path="res://Scenes/UI/UIAssets/BG/BGPatternBlue.png" id="2_dx8yw"]
+[ext_resource type="Script" uid="uid://c7wytq4ic1gbk" path="res://Scenes/UI/UIScripts/Components/button.gd" id="3_3sbb0"]
+[ext_resource type="PackedScene" uid="uid://bunuilmma82bm" path="res://Scenes/UI/Components/Font/default_label.tscn" id="3_cmw60"]
+[ext_resource type="Texture2D" uid="uid://b3fwljtqyuep4" path="res://Scenes/UI/UIAssets/Button/Mask/BStarMask.png" id="3_ps82v"]
+[ext_resource type="Texture2D" uid="uid://dkv3rss7ogob6" path="res://Scenes/UI/UIAssets/Button/BStarOutline.png" id="4_dx8yw"]
+[ext_resource type="Texture2D" uid="uid://dl1ehwkdmi3ym" path="res://Scenes/UI/UIAssets/BG/BGPatternYellow.png" id="6_4c8mr"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6jmn0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3ivo4"]
+bg_color = Color(0.972549, 0.945098, 0.866667, 1)
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jbc24"]
+shader = ExtResource("2_4c8mr")
+shader_parameter/scroll_speed = Vector2(0.1, 0.05)
+shader_parameter/time_offset = 0.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4c8mr"]
+texture = ExtResource("2_dx8yw")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jbc24"]
+texture = ExtResource("3_ps82v")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ojhm6"]
+texture = ExtResource("6_4c8mr")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4c8mr"]
+bg_color = Color(0.52549, 0.627451, 0.882353, 1)
+
+[node name="Brectlevelselect" type="Button"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_6jmn0")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_6jmn0")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_6jmn0")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_6jmn0")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_6jmn0")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_6jmn0")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_6jmn0")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_6jmn0")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_6jmn0")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_6jmn0")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_6jmn0")
+script = ExtResource("3_3sbb0")
+
+[node name="Rect" type="Panel" parent="."]
+clip_children = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 51.9999
+offset_top = 300.0
+offset_right = -40.0001
+offset_bottom = -279.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3ivo4")
+
+[node name="Rect" type="Panel" parent="Rect"]
+clip_children = 2
+texture_repeat = 2
+material = SubResource("ShaderMaterial_jbc24")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1.0
+offset_bottom = 1188.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_4c8mr")
+
+[node name="OutlineRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 250.0
+offset_right = -1124.0
+offset_bottom = -528.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(3.41349, 3.41349)
+texture = ExtResource("2_3ivo4")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="MaskStar" type="Panel" parent="."]
+clip_children = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 630.0
+offset_top = 25.0
+offset_right = -613.0
+offset_bottom = -518.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_jbc24")
+
+[node name="Rect" type="Panel" parent="MaskStar"]
+clip_children = 2
+texture_repeat = 2
+material = SubResource("ShaderMaterial_jbc24")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1152.0
+offset_bottom = 1152.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_ojhm6")
+
+[node name="Rect2" type="Panel" parent="MaskStar"]
+visible = false
+clip_children = 2
+texture_repeat = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1152.0
+offset_bottom = 1152.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_4c8mr")
+
+[node name="Star Outline" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 600.0
+offset_top = 2.0
+offset_right = -878.0
+offset_bottom = -778.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(3.41349, 3.41349)
+texture = ExtResource("4_dx8yw")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="default_label" parent="." instance=ExtResource("3_cmw60")]
+z_index = 100
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 145.0
+offset_right = 0.0
+offset_bottom = -634.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.333333, 0.333333, 0.333333, 1)
+theme_override_font_sizes/normal_font_size = 100
+text = "1
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="default_label2" parent="." instance=ExtResource("3_cmw60")]
+z_index = 100
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.333333, 0.333333, 0.333333, 1)
+theme_override_font_sizes/normal_font_size = 100
+text = "Click To Play"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="." to="." method="_on_Button_pressed"]

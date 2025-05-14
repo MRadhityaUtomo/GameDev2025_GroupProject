@@ -1,10 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://cmvnchnwlaptp"]
+[gd_scene load_steps=8 format=3 uid="uid://cmvnchnwlaptp"]
 
 [ext_resource type="Script" uid="uid://clkawu35ynvgc" path="res://Scenes/UI/UIScripts/main_menu.gd" id="1_3holw"]
-[ext_resource type="Texture2D" uid="uid://bgglbyv24lh2q" path="res://Scenes/UI/UIAssets/title_game.png" id="1_uwldd"]
 [ext_resource type="PackedScene" uid="uid://bunuilmma82bm" path="res://Scenes/UI/Components/Font/default_label.tscn" id="2_wwvqu"]
+[ext_resource type="Texture2D" uid="uid://bmlrwkrgxqjjm" path="res://Scenes/UI/UIAssets/TGame.png" id="2_ysqiy"]
 [ext_resource type="Texture2D" uid="uid://cykao2adb4k16" path="res://Scenes/UI/UIAssets/line.png" id="3_5sa3m"]
 [ext_resource type="PackedScene" uid="uid://d3fsr3dge7nqx" path="res://Scenes/UI/Components/Buttons/brect.tscn" id="4_rasm3"]
+[ext_resource type="Texture2D" uid="uid://babgssp644p8m" path="res://Scenes/UI/UIAssets/BG/BGMenu.png" id="5_ysqiy"]
+[ext_resource type="AudioStream" uid="uid://bx8dggg5njpeg" path="res://Assets/Audio/MAUDIO-Aftertune - Travel The World (Original Mix).wav" id="7_ebowy"]
 
 [node name="main_menu" type="Control"]
 layout_mode = 3
@@ -17,6 +19,14 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_3holw")
 
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [node name="title_screen" type="Control" parent="."]
 visible = false
 layout_mode = 1
@@ -25,6 +35,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+metadata/_edit_use_anchors_ = true
 
 [node name="ColorRect" type="ColorRect" parent="title_screen"]
 layout_mode = 1
@@ -34,18 +45,18 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TextureRect" type="TextureRect" parent="title_screen"]
+[node name="TextureRect2" type="TextureRect" parent="title_screen"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 309.0
-offset_top = 170.0
-offset_right = -308.0
-offset_bottom = -177.0
+offset_left = 582.0
+offset_top = 332.0
+offset_right = -552.0
+offset_bottom = -306.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_uwldd")
+texture = ExtResource("2_ysqiy")
 expand_mode = 1
 stretch_mode = 4
 
@@ -57,6 +68,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+metadata/_edit_use_anchors_ = true
 
 [node name="ColorRect" type="ColorRect" parent="warning_screen"]
 layout_mode = 1
@@ -80,7 +92,8 @@ alignment = 1
 [node name="default_label" parent="warning_screen/VBoxContainer" instance=ExtResource("2_wwvqu")]
 layout_mode = 2
 theme_override_colors/default_color = Color(0.207843, 0.207843, 0.207843, 1)
-theme_override_font_sizes/bold_font_size = 39
+theme_override_font_sizes/normal_font_size = 30
+theme_override_font_sizes/bold_font_size = 30
 text = "[b]WARNING – READ BEFORE PLAYING[/b]"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -122,21 +135,77 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+color = Color(0.780392, 0.913725, 1, 1)
 
-[node name="TextureRect" type="TextureRect" parent="main_menu"]
+[node name="BGMenu" type="TextureRect" parent="main_menu"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 309.0
-offset_top = 170.0
-offset_right = -308.0
-offset_bottom = -177.0
+offset_left = -499.0
+offset_top = -750.0
+offset_right = 388.0
+offset_bottom = 536.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_uwldd")
+texture = ExtResource("5_ysqiy")
 expand_mode = 1
 stretch_mode = 4
+
+[node name="TGame" type="TextureRect" parent="main_menu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 430.0
+offset_top = 271.0
+offset_right = -450.0
+offset_bottom = -224.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -0.0650559
+texture = ExtResource("2_ysqiy")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Control" type="Control" parent="main_menu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BPlay" parent="main_menu/Control" instance=ExtResource("4_rasm3")]
+z_index = 100
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.371875
+anchor_top = 0.751111
+anchor_right = 1.37188
+anchor_bottom = 1.75111
+offset_left = -6.0
+offset_right = 54.0
+offset_bottom = 10.0
+scale = Vector2(0.263074, 0.10836)
+target_scene = "res://Scenes/UI/UIScenes/level_select.tscn"
+
+[node name="default_label3" parent="main_menu/Control" instance=ExtResource("2_wwvqu")]
+z_index = 100
+layout_mode = 2
+offset_left = 600.0
+offset_top = 706.0
+offset_right = 1000.0
+offset_bottom = 744.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.333333, 0.333333, 0.333333, 1)
+theme_override_font_sizes/normal_font_size = 31
+text = "Click To Play"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="main_menu"]
 z_index = 100
@@ -148,16 +217,18 @@ anchor_bottom = 1.0
 offset_top = -8.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_constants/margin_left = 400
-theme_override_constants/margin_right = 400
-theme_override_constants/margin_bottom = 100
+theme_override_constants/margin_left = 600
+theme_override_constants/margin_right = 600
+theme_override_constants/margin_bottom = 150
 
-[node name="Brect" parent="main_menu/MarginContainer" instance=ExtResource("4_rasm3")]
+[node name="BPlay" parent="main_menu/MarginContainer" instance=ExtResource("4_rasm3")]
+visible = false
 z_index = 100
 custom_minimum_size = Vector2(100, 50)
 layout_mode = 2
 
-[node name="default_label2" parent="main_menu/MarginContainer/Brect" instance=ExtResource("2_wwvqu")]
+[node name="default_label2" parent="main_menu/MarginContainer/BPlay" instance=ExtResource("2_wwvqu")]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -166,9 +237,11 @@ offset_right = 0.0
 offset_bottom = 0.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_colors/default_color = Color(0.333333, 0.333333, 0.333333, 1)
 theme_override_font_sizes/normal_font_size = 31
-text = "Copulate
-"
+text = "Click To Play"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="main_menu"]
+stream = ExtResource("7_ebowy")

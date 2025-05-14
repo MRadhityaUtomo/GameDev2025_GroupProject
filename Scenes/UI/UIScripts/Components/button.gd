@@ -1,15 +1,13 @@
 extends Button
 
-# Exported variable for the scene path, so it can be set in the editor
 @export var target_scene : String
 
-# Called when the button is clicked
 func _on_Button_pressed() -> void:
 	if target_scene != "":
-		var scene = load(target_scene)  # Load the target scene
+		var scene = load(target_scene)
 		if scene:
-			get_tree().change_scene_to(scene)  # Change to the target scene
+			get_tree().change_scene_to_packed(scene)
 		else:
-			print("Failed to load the scene:", target_scene)
+			push_error("Failed to load the scene: " + target_scene)
 	else:
-		print("Target scene is not set!")
+		push_warning("Target scene is not set!")
