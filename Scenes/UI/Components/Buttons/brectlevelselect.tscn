@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bdrxgm7bhh624"]
+[gd_scene load_steps=17 format=3 uid="uid://bdrxgm7bhh624"]
 
 [ext_resource type="Texture2D" uid="uid://6peopgp1jim7" path="res://Scenes/UI/UIAssets/Button/BRectOutline.png" id="2_3ivo4"]
 [ext_resource type="Shader" uid="uid://ci71jivtcth1a" path="res://Scenes/UI/UIAssets/Shader/pattern.gdshader" id="2_4c8mr"]
@@ -18,6 +18,9 @@ corner_radius_top_right = 100
 corner_radius_bottom_right = 100
 corner_radius_bottom_left = 100
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ojhm6"]
+bg_color = Color(0.972549, 0.945098, 0.866667, 1)
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jbc24"]
 shader = ExtResource("2_4c8mr")
 shader_parameter/scroll_speed = Vector2(0.1, 0.05)
@@ -29,11 +32,11 @@ texture = ExtResource("2_dx8yw")
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jbc24"]
 texture = ExtResource("3_ps82v")
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ojhm6"]
-texture = ExtResource("6_4c8mr")
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4c8mr"]
 bg_color = Color(0.52549, 0.627451, 0.882353, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ojhm6"]
+texture = ExtResource("6_4c8mr")
 
 [node name="Brectlevelselect" type="Button"]
 anchors_preset = 15
@@ -68,7 +71,19 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_3ivo4")
 
-[node name="Rect" type="Panel" parent="Rect"]
+[node name="RectNormal" type="Panel" parent="Rect"]
+clip_children = 2
+texture_repeat = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ojhm6")
+
+[node name="RectHover" type="Panel" parent="Rect"]
+visible = false
 clip_children = 2
 texture_repeat = 2
 material = SubResource("ShaderMaterial_jbc24")
@@ -112,7 +127,21 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_jbc24")
 
-[node name="Rect" type="Panel" parent="MaskStar"]
+[node name="RectNormal" type="Panel" parent="MaskStar"]
+clip_children = 2
+texture_repeat = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1152.0
+offset_bottom = 1152.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_4c8mr")
+
+[node name="RectHover" type="Panel" parent="MaskStar"]
+visible = false
 clip_children = 2
 texture_repeat = 2
 material = SubResource("ShaderMaterial_jbc24")
@@ -125,20 +154,6 @@ offset_bottom = 1152.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_ojhm6")
-
-[node name="Rect2" type="Panel" parent="MaskStar"]
-visible = false
-clip_children = 2
-texture_repeat = 2
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = 1152.0
-offset_bottom = 1152.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_4c8mr")
 
 [node name="Star Outline" type="TextureRect" parent="."]
 layout_mode = 1
@@ -192,4 +207,6 @@ text = "Click To Play"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
 [connection signal="pressed" from="." to="." method="_on_Button_pressed"]
