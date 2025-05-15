@@ -15,6 +15,7 @@ collision_mask = 4
 script = ExtResource("1_5heyv")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0, 0, 0, 1)
 position = Vector2(-4.76837e-07, 4.76837e-07)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_4eato")
@@ -23,6 +24,7 @@ texture = ExtResource("2_4eato")
 position = Vector2(4.76837e-07, -4.76837e-07)
 scale = Vector2(1.2, 1.2)
 shape = SubResource("RectangleShape2D_uruiu")
+debug_color = Color(0, 0.813219, 0.272163, 0.42)
 
 [node name="MovementManager" type="Node2D" parent="." node_paths=PackedStringArray("player_body")]
 script = ExtResource("3_ii2tr")

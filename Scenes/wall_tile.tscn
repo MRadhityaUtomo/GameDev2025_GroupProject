@@ -7,6 +7,10 @@ size = Vector2(14.8148, 14.6341)
 
 [node name="WallTile" type="Node2D" groups=["walls"]]
 
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(1, 1.00533)
+texture = ExtResource("1_07dip")
+
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 scale = Vector2(3.24, 3.28)
 collision_layer = 2
@@ -15,7 +19,3 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(1.47172e-07, -2.90754e-07)
 shape = SubResource("RectangleShape2D_2e0d6")
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(1, 1.00533)
-texture = ExtResource("1_07dip")
