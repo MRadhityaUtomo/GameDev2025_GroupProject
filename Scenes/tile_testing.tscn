@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://cdpkljgvn0mmj"]
+[gd_scene load_steps=4 format=3 uid="uid://cqy8mr1kene0b"]
 
 [ext_resource type="Script" uid="uid://hg7p2skfya2w" path="res://Scenes/GlobalBombManager.gd" id="1_wmmkt"]
 [ext_resource type="PackedScene" uid="uid://bj4e03gbjjotf" path="res://Scenes/dynamic_tiles.tscn" id="2_toqyy"]
