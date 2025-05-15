@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://yijb75sqliw3"]
 
-[ext_resource type="Script" path="res://Scripts/walkable_tile.gd" id="1_2e0d6"]
+[ext_resource type="Script" uid="uid://21tq5bp6qn5g" path="res://Scripts/walkable_tile.gd" id="1_2e0d6"]
 [ext_resource type="Texture2D" uid="uid://b8ayv7kwqd0ix" path="res://Assets/TempDiffrentTiles/Group 5.png" id="1_e5um4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2e0d6"]
