@@ -7,12 +7,8 @@ extends Node
 @onready var BombMarker = $"../BombSpawnLocation"
 @onready var Raycast = $"../RayCast2D"
 
-enum MovementMode { 
-	KING_MOVEMENT,
-	BISHOP_MOVEMENT,
-	QUEEN_MOVEMENT
-}
-var current_movement_mode: MovementMode = MovementMode.BISHOP_MOVEMENT
+
+var current_movement_mode: MovementMode.Type = MovementMode.Type.BISHOP_MOVEMENT
 
 var king_movement_strategy: KingMovementStrategy
 var bishop_movement_strategy: BishopMovementStrategy
@@ -50,8 +46,8 @@ func _ready():
 	_update_active_logic_strategy()
 	
 	
-	print("MovementManager siap. Mode awal: ", MovementMode.keys()[current_movement_mode])
-	movement_mode_changed.emit(MovementMode.keys()[current_movement_mode])
+	print("MovementManager siap. Mode awal: ", MovementMode.Type.keys()[current_movement_mode])
+	movement_mode_changed.emit(MovementMode.Type.keys()[current_movement_mode])
 
 
 func _unhandled_input(event: InputEvent):
@@ -60,23 +56,23 @@ func _unhandled_input(event: InputEvent):
 
 	var mode_changed = false
 	if event.is_action_pressed("switch_to_king"): 
-		if current_movement_mode != MovementMode.KING_MOVEMENT:
-			current_movement_mode = MovementMode.KING_MOVEMENT
+		if current_movement_mode != MovementMode.Type.KING_MOVEMENT:
+			current_movement_mode = MovementMode.Type.KING_MOVEMENT
 			mode_changed = true
 			
 	elif event.is_action_pressed("switch_to_bishop"): 
-		if current_movement_mode != MovementMode.BISHOP_MOVEMENT:
-			current_movement_mode = MovementMode.BISHOP_MOVEMENT
+		if current_movement_mode != MovementMode.Type.BISHOP_MOVEMENT:
+			current_movement_mode = MovementMode.Type.BISHOP_MOVEMENT
 			mode_changed = true
 			
 	elif event.is_action_pressed("switch_to_queen"): 
-		if current_movement_mode != MovementMode.QUEEN_MOVEMENT:
-			current_movement_mode = MovementMode.QUEEN_MOVEMENT
+		if current_movement_mode != MovementMode.Type.QUEEN_MOVEMENT:
+			current_movement_mode = MovementMode.Type.QUEEN_MOVEMENT
 			mode_changed = true
 	
 	if mode_changed:
 		_update_active_logic_strategy() 
-		var mode_name = MovementMode.keys()[current_movement_mode]
+		var mode_name = MovementMode.Type.keys()[current_movement_mode]
 		movement_mode_changed.emit(mode_name) 
 		print("MovementManager: Mode diubah ke -> ", mode_name)
 		get_viewport().set_input_as_handled() 
@@ -84,11 +80,11 @@ func _unhandled_input(event: InputEvent):
 
 func _update_active_logic_strategy():
 	match current_movement_mode:
-		MovementMode.KING_MOVEMENT:
+		MovementMode.Type.KING_MOVEMENT:
 			active_movement_logic_strategy = king_movement_strategy
-		MovementMode.BISHOP_MOVEMENT:
+		MovementMode.Type.BISHOP_MOVEMENT:
 			active_movement_logic_strategy = bishop_movement_strategy
-		MovementMode.QUEEN_MOVEMENT:
+		MovementMode.Type.QUEEN_MOVEMENT:
 			active_movement_logic_strategy = queen_movement_strategy
 	
 	if current_movement_strategy and current_movement_strategy.is_moving() and current_movement_strategy != active_movement_logic_strategy:

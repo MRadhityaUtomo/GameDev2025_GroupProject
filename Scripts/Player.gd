@@ -12,10 +12,37 @@ extends CharacterBody2D
 @export var right_action : String
 @export var bomb_action : String
 
+@onready var hurtBox = $CollisionShape2D
+@onready var sprite = $Sprite2D
+
+var isInvincible = false
+var CanPlace = true
+var original_modulate := Color(1, 1, 1)  
+@export var current_bomb_type : BombType
+
 @export var GlobalBombs: Node2D
 
 var action_cooldown_timer : float = 0.0
 var last_move_direction : Vector2 = Vector2.ZERO
 
 func _ready():
-    pass
+	add_to_group("player")
+	pass
+	
+func invincible():
+	print("test")
+	hurtBox.disabled = true
+	isInvincible = true
+	await get_tree().create_timer(2).timeout
+	hurtBox.disabled = false
+	isInvincible = false
+
+func takedamage():	
+	hp -= 1
+	if hp <= 0:
+		die()
+	self.invincible()
+	
+func die():
+	queue_free()
+	
