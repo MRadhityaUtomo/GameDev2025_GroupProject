@@ -8,6 +8,7 @@ size = Vector2(9.87654, 9.7561)
 [node name="BorderTile" type="Node2D" groups=["borders"]]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.0705882)
 scale = Vector2(1, 1.00533)
 texture = ExtResource("1_cht04")
 

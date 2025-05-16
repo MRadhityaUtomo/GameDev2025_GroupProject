@@ -2,7 +2,7 @@ extends Node
 
 @export var player_body : CharacterBody2D
 @export var grid_size : int = 64
-@export var travel_speed : int = 800  # pixels per second
+@export var travel_speed : int = 1200  # pixels per second
 
 var moving : bool = false
 var target_position : Vector2

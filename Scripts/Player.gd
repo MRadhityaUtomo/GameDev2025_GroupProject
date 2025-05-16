@@ -14,6 +14,7 @@ extends CharacterBody2D
 
 @onready var hurtBox = $CollisionShape2D
 @onready var sprite = $Sprite2D
+@onready var animations = $AnimatedSprite2D
 
 var isInvincible = false
 var CanPlace = true
@@ -42,6 +43,11 @@ func takedamage():
 	if hp <= 0:
 		die()
 	self.invincible()
+	animations.play("hurt")
+	await animations.animation_finished
+	animations.play("idle")
+
+	
 	
 func die():
 	queue_free()

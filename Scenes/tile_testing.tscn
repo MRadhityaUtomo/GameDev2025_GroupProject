@@ -16,7 +16,7 @@ position = Vector2(-128, -128)
 
 [node name="PlayerPiece" parent="." node_paths=PackedStringArray("GlobalBombs") instance=ExtResource("3_lquhd")]
 z_index = 1
-position = Vector2(224, 288)
+position = Vector2(-32, 288)
 id = 1
 up_action = "w"
 down_action = "s"
@@ -28,7 +28,7 @@ GlobalBombs = NodePath("../GlobalBombManager")
 
 [node name="PlayerPiece2" parent="." node_paths=PackedStringArray("GlobalBombs") instance=ExtResource("3_lquhd")]
 z_index = 1
-position = Vector2(480, 224)
+position = Vector2(608, 288)
 id = 2
 up_action = "ui_up"
 down_action = "ui_down"
