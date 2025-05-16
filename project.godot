@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="chess_movement_prototype"
-run/main_scene="uid://cdpkljgvn0mmj"
+run/main_scene="uid://cqy8mr1kene0b"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -53,6 +53,11 @@ p1Interact={
 p2Interact={
 "deadzone": 0.5,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":47,"key_label":0,"unicode":47,"location":0,"echo":false,"script":null)
+]
+}
+h={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":72,"key_label":0,"unicode":104,"location":0,"echo":false,"script":null)
 ]
 }
 

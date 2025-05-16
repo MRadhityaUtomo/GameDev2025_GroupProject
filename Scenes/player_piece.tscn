@@ -11,6 +11,7 @@
 size = Vector2(22.5, 22.5)
 
 [node name="PlayerPiece" type="CharacterBody2D"]
+z_index = 10
 scale = Vector2(2, 2)
 collision_mask = 4
 script = ExtResource("1_5heyv")
