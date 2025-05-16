@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=4 uid="uid://byimxqm6okbeg"]
+[gd_scene load_steps=9 format=4 uid="uid://byimxqm6okbeg"]
 
 [ext_resource type="Texture2D" uid="uid://bjqvddit73fr8" path="res://Assets/Placeholder Tiles.png" id="1_vq7cg"]
 [ext_resource type="PackedScene" uid="uid://3vppwekhnxr7" path="res://Scenes/player_piece.tscn" id="2_f6kjc"]
+[ext_resource type="Resource" uid="uid://dd4dspq0f8xc7" path="res://BombTypes/RegularBomb.tres" id="3_afgk5"]
 [ext_resource type="Script" uid="uid://hg7p2skfya2w" path="res://Scenes/GlobalBombManager.gd" id="3_fdoh7"]
 [ext_resource type="Script" uid="uid://c1fc1ea1ndvpt" path="res://Scripts/PowerupManager.gd" id="4_08lpa"]
-[ext_resource type="PackedScene" uid="uid://cqchp542b5355" path="res://Scenes/power_up.tscn" id="5_hy0qm"]
+[ext_resource type="PackedScene" uid="uid://bxe55fy7t83uf" path="res://Scenes/power_up.tscn" id="5_hy0qm"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_j5ugg"]
 texture = ExtResource("1_vq7cg")
@@ -32,6 +33,7 @@ down_action = "s"
 left_action = "a"
 right_action = "d"
 bomb_action = "p1Interact"
+current_bomb_type = ExtResource("3_afgk5")
 GlobalBombs = NodePath("../GlobalBombManager")
 
 [node name="PlayerPiece2" parent="." node_paths=PackedStringArray("GlobalBombs") instance=ExtResource("2_f6kjc")]
@@ -42,6 +44,7 @@ down_action = "ui_down"
 left_action = "ui_left"
 right_action = "ui_right"
 bomb_action = "ui_accept"
+current_bomb_type = ExtResource("3_afgk5")
 GlobalBombs = NodePath("../GlobalBombManager")
 
 [node name="GlobalBombManager" type="Node2D" parent="."]

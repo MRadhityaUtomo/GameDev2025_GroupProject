@@ -11,14 +11,17 @@ config_version=5
 [application]
 
 config/name="chess_movement_prototype"
-run/main_scene="res://Scenes/main_testing.tscn"
+run/main_scene="uid://cqy8mr1kene0b"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
 [display]
 
-window/size/viewport_width=960
-window/size/viewport_height=540
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/size/window_width_override=1920
+window/size/window_height_override=1080
+window/stretch/mode="canvas_items"
 
 [input]
 
@@ -61,3 +64,4 @@ h={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+environment/defaults/default_clear_color=Color(0.0785534, 0.103852, 0.123174, 1)
