@@ -27,7 +27,6 @@ func _physics_process(delta):
 			
 			# Notify about movement completion - call this when the player completes a move
 			player_body.GlobalBombs.on_player_move(player_body.id)
-			print("Player ", player_body.id, " completed movement")
 		else:
 			player_body.velocity = direction * travel_speed
 			player_body.move_and_slide()
@@ -63,6 +62,10 @@ func handle_input():
 		input_vector.x = 1
 
 	if input_vector != Vector2.ZERO:
+		# Flip the sprite based on horizontal movement direction
+		if input_vector.x != 0 and player_body.has_node("AnimatedSprite2D"):
+			player_body.get_node("AnimatedSprite2D").flip_h = (input_vector.x < 0)
+		
 		if can_move_to(input_vector):
 			player_body.last_move_direction = input_vector
 			var new_target = player_body.global_position + input_vector * grid_size

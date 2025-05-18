@@ -1,12 +1,47 @@
-[gd_scene load_steps=5 format=3 uid="uid://cdpkljgvn0mmj"]
+[gd_scene load_steps=10 format=3 uid="uid://cdpkljgvn0mmj"]
 
+[ext_resource type="Texture2D" uid="uid://d3gu44bvto4fj" path="res://Assets/background_temp.png" id="1_m8f3l"]
 [ext_resource type="Script" uid="uid://hg7p2skfya2w" path="res://Scenes/GlobalBombManager.gd" id="1_wmmkt"]
 [ext_resource type="PackedScene" uid="uid://bj4e03gbjjotf" path="res://Scenes/dynamic_tiles.tscn" id="2_toqyy"]
 [ext_resource type="PackedScene" uid="uid://3vppwekhnxr7" path="res://Scenes/player_piece.tscn" id="3_lquhd"]
 [ext_resource type="Resource" uid="uid://dd4dspq0f8xc7" path="res://BombTypes/RegularBomb.tres" id="4_toqyy"]
+[ext_resource type="SpriteFrames" uid="uid://dneu7xno7w1ek" path="res://Scenes/player1anims.tres" id="5_gkl82"]
+[ext_resource type="Shader" uid="uid://b03r8gwgpxqyk" path="res://Scenes/crt.gdshader" id="5_lquhd"]
+[ext_resource type="SpriteFrames" uid="uid://xeim4427l12d" path="res://Scenes/player2anims.tres" id="7_nughl"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m8f3l"]
+shader = ExtResource("5_lquhd")
+shader_parameter/overlay = true
+shader_parameter/scanlines_opacity = 0.1
+shader_parameter/scanlines_width = 0.5
+shader_parameter/grille_opacity = 0.0
+shader_parameter/resolution = Vector2(960, 540)
+shader_parameter/pixelate = true
+shader_parameter/roll = true
+shader_parameter/roll_speed = 1.0
+shader_parameter/roll_size = 10.0
+shader_parameter/roll_variation = 5.0
+shader_parameter/distort_intensity = 0.002
+shader_parameter/noise_opacity = 0.0
+shader_parameter/noise_speed = 0.0
+shader_parameter/static_noise_intensity = 0.05
+shader_parameter/aberration = 0.00500005
+shader_parameter/brightness = 1.0
+shader_parameter/discolor = false
+shader_parameter/warp_amount = 1.0
+shader_parameter/clip_warp = true
+shader_parameter/vignette_intensity = 0.0
+shader_parameter/vignette_opacity = 0.0
 
 [node name="TileTesting" type="Node2D"]
 position = Vector2(672, 256)
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = -672.0
+offset_top = -248.0
+offset_right = 1248.0
+offset_bottom = 832.0
+texture = ExtResource("1_m8f3l")
 
 [node name="GlobalBombManager" type="Node2D" parent="."]
 script = ExtResource("1_wmmkt")
@@ -23,6 +58,7 @@ down_action = "s"
 left_action = "a"
 right_action = "d"
 bomb_action = "p1Interact"
+animationSet = ExtResource("5_gkl82")
 current_bomb_type = ExtResource("4_toqyy")
 GlobalBombs = NodePath("../GlobalBombManager")
 
@@ -35,6 +71,18 @@ down_action = "ui_down"
 left_action = "ui_left"
 right_action = "ui_right"
 bomb_action = "ui_accept"
+animationSet = ExtResource("7_nughl")
 current_bomb_type = ExtResource("4_toqyy")
 GlobalBombs = NodePath("../GlobalBombManager")
-metadata/_edit_group_ = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(288, 285)
+zoom = Vector2(1.1, 1.1)
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = 11
+material = SubResource("ShaderMaterial_m8f3l")
+offset_left = -588.0
+offset_top = -208.0
+offset_right = 1156.0
+offset_bottom = 776.0
