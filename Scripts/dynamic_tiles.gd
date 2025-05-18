@@ -1,6 +1,11 @@
 extends TileMapLayer
 class_name DynamicTiles
 
+enum BorderType {
+	circle,
+	rectangle
+}
+
 @onready var half_cell_size := tile_set.tile_size / 2
 @onready var shrinking_time_label = $ShrinkingTimeLabel
 @export var trap_spawn_rate = 2
@@ -8,6 +13,7 @@ class_name DynamicTiles
 @export var max_radius = 7
 @export var center = Vector2i(6, 6)
 @export var shrinking_time = 30
+@export var border_type: BorderType = BorderType.circle
 
 var current_radius
 var current_shrinking_time
@@ -18,7 +24,11 @@ func _ready():
 	current_radius = max_radius
 	current_shrinking_time = shrinking_time
 	shrinking_time_label.text = "Time Until Shrinking %d" % [current_shrinking_time]
-	draw_border(center.x, center.y, current_radius)
+	if border_type == BorderType.circle:
+		draw_circle_border(center.x, center.y, current_radius)
+	elif border_type == BorderType.rectangle:
+		draw_rectange_border(center.x, center.y, current_radius)
+	fill_walkable(center.x, center.y)
 	
 func get_trap_amount():
 	return len(get_used_cells_by_id(0, Vector2i(0, 0), 3))
@@ -37,7 +47,7 @@ func _on_trap_timer_timeout() -> void:
 		for i in range(trap_amount_limit - get_trap_amount()):
 			spawn_trap()
 
-func draw_border(center_x, center_y, radius):
+func draw_circle_border(center_x, center_y, radius):
 	var points := {}
 	var r_min = pow(radius - 0.5, 2)
 	var r_max = pow(radius + 0.5, 2)
@@ -55,14 +65,53 @@ func draw_border(center_x, center_y, radius):
 
 			if dist_sq >= r_min and dist_sq < r_max:
 				points[Vector2(x, y)] = true
-
-		var prev_borders_tiles = get_used_cells_by_id(0, Vector2i(0, 0), 2)
-		for tiles in prev_borders_tiles:
-			erase_cell(tiles)
 		
 		for point in points.keys():
 			set_cell(point, 0, Vector2i(0, 0), 2)
 
+func draw_rectange_border(center_x, center_y, radius):
+	var center = Vector2i(center_x, center_y)
+	var left = center + Vector2i(-radius, 0)
+	var right = center + Vector2i(radius, 0)
+	var up = center + Vector2i(0, -radius)
+	var down = center + Vector2i(0, radius)
+	for i in range(radius + 1):
+		set_cell(left + Vector2i(0, -i), 0, Vector2i(0, 0), 2)
+		set_cell(left + Vector2i(0, i), 0, Vector2i(0, 0), 2)
+		
+		set_cell(right + Vector2i(0, -i), 0, Vector2i(0, 0), 2)
+		set_cell(right + Vector2i(0, i), 0, Vector2i(0, 0), 2)
+		
+		set_cell(up + Vector2i(-i, 0), 0, Vector2i(0, 0), 2)
+		set_cell(up + Vector2i(i, 0), 0, Vector2i(0, 0), 2)
+		
+		set_cell(down + Vector2i(-i, 0), 0, Vector2i(0, 0), 2)
+		set_cell(down + Vector2i(i, 0), 0, Vector2i(0, 0), 2)
+		
+
+func fill_walkable(center_x, center_y):
+	var tile_to_fill = [Vector2i(center_x, center_y)]
+	while len(tile_to_fill) > 0:
+		var tile_pos = tile_to_fill.pop_front()
+		if get_cell_source_id(tile_pos) == -1:
+			set_cell(tile_pos, 0, Vector2i(0, 0), 1)
+			var up = tile_pos + Vector2i(0, -1)
+			var down = tile_pos + Vector2i(0, 1)
+			var right = tile_pos + Vector2i(1, 0)
+			var left = tile_pos + Vector2i(-1, 0)
+			if get_cell_source_id(up) == -1:
+				tile_to_fill.push_back(up)
+			if get_cell_source_id(down) == -1:
+				tile_to_fill.push_back(down)
+			if get_cell_source_id(right) == -1:
+				tile_to_fill.push_back(right)
+			if get_cell_source_id(left) == -1:
+				tile_to_fill.push_back(left)
+							
+func remove_border():
+	var borders_tiles = get_used_cells_by_id(0, Vector2i(0, 0), 2)
+	for tiles in borders_tiles:
+		erase_cell(tiles)
 
 func _on_shrinking_timer_timeout() -> void:
 	current_shrinking_time -= 1
@@ -72,4 +121,8 @@ func _on_shrinking_timer_timeout() -> void:
 		shrinking_time_label.text = "Time Until Shrinking %d" % [current_shrinking_time]
 		if current_radius > 1:
 			current_radius -= 1
-			draw_border(center.x, center.y, current_radius)
+			remove_border()
+			if border_type == BorderType.circle:
+				draw_circle_border(center.x, center.y, current_radius)
+			elif border_type == BorderType.rectangle:
+				draw_rectange_border(center.x, center.y, current_radius)

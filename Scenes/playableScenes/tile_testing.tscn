@@ -14,7 +14,6 @@ script = ExtResource("1_eao42")
 
 [node name="DynamicTiles" parent="." instance=ExtResource("2_s022u")]
 position = Vector2(-128, -128)
-max_radius = 6
 
 [node name="PlayerPiece" parent="." node_paths=PackedStringArray("GlobalBombs") instance=ExtResource("3_eel5w")]
 z_index = 1
