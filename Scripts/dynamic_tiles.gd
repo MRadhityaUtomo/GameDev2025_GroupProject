@@ -1,3 +1,4 @@
+@tool
 extends TileMapLayer
 class_name DynamicTiles
 
@@ -14,22 +15,65 @@ enum BorderType {
 @export var center = Vector2i(6, 6)
 @export var shrinking_time = 30
 @export var border_type: BorderType = BorderType.circle
+@export var update_in_editor: bool = false: set = _update_in_editor
 
 var current_radius
 var current_shrinking_time
 
+func set_max_radius(value):
+	max_radius = value
+	if Engine.is_editor_hint():
+		_update_tiles()
+		
+func set_center(value):
+	center = value
+	if Engine.is_editor_hint():
+		_update_tiles()
+		
+func set_border_type(value):
+	border_type = value
+	if Engine.is_editor_hint():
+		_update_tiles()
+		
+func _update_in_editor(value):
+	update_in_editor = value
+	if Engine.is_editor_hint() and value:
+		_update_tiles()
+		update_in_editor = false
 
-func _ready():
-	await get_tree().process_frame
+func _update_tiles():
+	# Clear existing tiles
+	clear()
+	
+	# Set up radius
 	current_radius = max_radius
-	current_shrinking_time = shrinking_time
-	shrinking_time_label.text = "Time Until Shrinking %d" % [current_shrinking_time]
+	
+	# Draw border based on type
 	if border_type == BorderType.circle:
 		draw_circle_border(center.x, center.y, current_radius)
 	elif border_type == BorderType.rectangle:
 		draw_rectange_border(center.x, center.y, current_radius)
-	fill_walkable(center.x, center.y)
 	
+	# Fill walkable area
+	fill_walkable(center.x, center.y)
+
+func _ready():
+	if not Engine.is_editor_hint():
+		# Only run game-specific initialization in play mode
+		await get_tree().process_frame
+		current_radius = max_radius
+		current_shrinking_time = shrinking_time
+		if shrinking_time_label:
+			shrinking_time_label.text = "Time Until Shrinking %d" % [current_shrinking_time]
+		if border_type == BorderType.circle:
+			draw_circle_border(center.x, center.y, current_radius)
+		elif border_type == BorderType.rectangle:
+			draw_rectange_border(center.x, center.y, current_radius)
+		fill_walkable(center.x, center.y)
+	else:
+		# Initial setup in the editor
+		_update_tiles()
+
 func get_trap_amount():
 	return len(get_used_cells_by_id(0, Vector2i(0, 0), 3))
 	
@@ -88,7 +132,6 @@ func draw_rectange_border(center_x, center_y, radius):
 		set_cell(down + Vector2i(-i, 0), 0, Vector2i(0, 0), 2)
 		set_cell(down + Vector2i(i, 0), 0, Vector2i(0, 0), 2)
 		
-
 func fill_walkable(center_x, center_y):
 	var tile_to_fill = [Vector2i(center_x, center_y)]
 	while len(tile_to_fill) > 0:
