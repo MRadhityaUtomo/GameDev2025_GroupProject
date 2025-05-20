@@ -1,8 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://d3fsr3dge7nqx"]
+[gd_scene load_steps=8 format=3 uid="uid://d3fsr3dge7nqx"]
 
 [ext_resource type="Texture2D" uid="uid://cgkx0w8vuy7yo" path="res://Scenes/UI/UIAssets/Button/BRect_H.png" id="1_ow5y5"]
 [ext_resource type="Script" uid="uid://c7wytq4ic1gbk" path="res://Scenes/UI/UIScripts/Components/button.gd" id="1_v7q38"]
 [ext_resource type="Texture2D" uid="uid://b2w2d8pa7i45d" path="res://Scenes/UI/UIAssets/Button/BRect.png" id="2_dx1h2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ow5y5"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xi6lh"]
 texture = ExtResource("1_ow5y5")
@@ -10,6 +12,8 @@ expand_margin_left = 10.0
 expand_margin_top = 20.0
 expand_margin_right = 10.0
 expand_margin_bottom = 20.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2evwi"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dx1h2"]
 texture = ExtResource("2_dx1h2")
@@ -24,8 +28,12 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ow5y5")
 theme_override_styles/hover = SubResource("StyleBoxTexture_xi6lh")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_2evwi")
 theme_override_styles/normal = SubResource("StyleBoxTexture_dx1h2")
 script = ExtResource("1_v7q38")
 
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
 [connection signal="pressed" from="." to="." method="_on_Button_pressed"]

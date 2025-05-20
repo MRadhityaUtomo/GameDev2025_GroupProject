@@ -18,6 +18,10 @@ boot_splash/fullsize=false
 boot_splash/use_filter=false
 config/icon="uid://bgglbyv24lh2q"
 
+[autoload]
+
+get_tree_transition="*res://Scenes/UI/UIScenes/transition.tscn"
+
 [display]
 
 window/size/viewport_width=1600

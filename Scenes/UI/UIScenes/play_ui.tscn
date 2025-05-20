@@ -1,4 +1,19 @@
-[gd_scene format=3 uid="uid://djnjtf7d6stl1"]
+[gd_scene load_steps=15 format=3 uid="uid://djnjtf7d6stl1"]
+
+[ext_resource type="Script" uid="uid://clx1ipbukk4ei" path="res://Scenes/UI/UIScripts/play_ui.gd" id="1_12tgd"]
+[ext_resource type="Texture2D" uid="uid://b2kechd7qg8xq" path="res://Scenes/UI/UIAssets/BG/BGRect.png" id="1_nw1oc"]
+[ext_resource type="PackedScene" uid="uid://dtg2wlxdjktm6" path="res://Scenes/UI/Components/Buttons/bstar.tscn" id="2_karjq"]
+[ext_resource type="Texture2D" uid="uid://dwuu6ujsorn0w" path="res://Scenes/UI/UIAssets/PlayUI/Ready (1).png" id="4_nw1oc"]
+[ext_resource type="Texture2D" uid="uid://dmqhhpxd37r3j" path="res://Scenes/UI/UIAssets/PlayUI/Heart.png" id="5_cyk1x"]
+[ext_resource type="PackedScene" uid="uid://bunuilmma82bm" path="res://Scenes/UI/Components/Font/default_label.tscn" id="5_gbnmi"]
+[ext_resource type="Texture2D" uid="uid://is2ar38de1ds" path="res://Scenes/UI/UIAssets/PlayUI/Ready (2).png" id="5_pcq31"]
+[ext_resource type="Texture2D" uid="uid://c7hxd6wpw2fkj" path="res://Scenes/UI/UIAssets/PlayUI/Move.png" id="6_fwwyg"]
+[ext_resource type="Texture2D" uid="uid://ctyd6xk834da5" path="res://Scenes/UI/UIAssets/Power/MoveDiagonal.png" id="7_8jkkp"]
+[ext_resource type="Texture2D" uid="uid://c87t6ihqbb8ft" path="res://Scenes/UI/UIAssets/PlayUI/Time.png" id="7_gbnmi"]
+[ext_resource type="Texture2D" uid="uid://c31aek3pgqjex" path="res://Scenes/UI/UIAssets/PlayUI/PowUp.png" id="8_0wt4e"]
+[ext_resource type="PackedScene" uid="uid://cdkigd0b56gm8" path="res://Scenes/UI/UIScenes/p1tall.tscn" id="8_xtakj"]
+[ext_resource type="PackedScene" uid="uid://c1k7elicvjavn" path="res://Scenes/UI/UIScenes/p2tall.tscn" id="9_cyk1x"]
+[ext_resource type="Texture2D" uid="uid://b58m2i2ghsmgg" path="res://Scenes/UI/UIAssets/Power/PowUpDiagonalBomb.png" id="9_hdpaw"]
 
 [node name="play_ui" type="Control"]
 layout_mode = 3
@@ -7,3 +22,400 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_12tgd")
+
+[node name="Main" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Time" type="Control" parent="Main"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 680.0
+offset_top = 24.0
+offset_right = 680.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.146628, 0.146628)
+
+[node name="OutlineRect" type="TextureRect" parent="Main/Time"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_gbnmi")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="minute" parent="Main/Time/OutlineRect" instance=ExtResource("5_gbnmi")]
+z_index = 100
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -340.999
+offset_top = 68.1998
+offset_right = -340.999
+offset_bottom = 68.1998
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.984314, 0.776471, 0.411765, 1)
+theme_override_colors/font_outline_color = Color(0.333333, 0.333333, 0.333333, 1)
+theme_override_constants/outline_size = 50
+theme_override_font_sizes/normal_font_size = 400
+text = "60"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="seconds" parent="Main/Time/OutlineRect" instance=ExtResource("5_gbnmi")]
+z_index = 100
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 327.359
+offset_top = 68.1998
+offset_right = 327.359
+offset_bottom = 68.1998
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.984314, 0.776471, 0.411765, 1)
+theme_override_colors/font_outline_color = Color(0.333333, 0.333333, 0.333333, 1)
+theme_override_constants/outline_size = 50
+theme_override_font_sizes/normal_font_size = 400
+text = "60"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PTall" type="Control" parent="Main"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="P1" type="Control" parent="Main/PTall"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="P1Tall" parent="Main/PTall/P1" instance=ExtResource("8_xtakj")]
+position = Vector2(-200, 868)
+scale = Vector2(5.25927, 5.25927)
+
+[node name="TexHeart" type="TextureRect" parent="Main/PTall/P1"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 64.0
+offset_top = 156.0
+offset_right = 64.0
+offset_bottom = 156.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.145328, 0.145328)
+texture = ExtResource("5_cyk1x")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="RTLCount" parent="Main/PTall/P1/TexHeart" instance=ExtResource("5_gbnmi")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.972549, 0.945098, 0.866667, 1)
+theme_override_colors/font_outline_color = Color(0.333333, 0.333333, 0.333333, 1)
+theme_override_constants/outline_size = 50
+theme_override_font_sizes/normal_font_size = 400
+text = "3"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TexMove" type="TextureRect" parent="Main/PTall/P1"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 109.0
+offset_top = 700.0
+offset_right = 109.0
+offset_bottom = 700.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.145328, 0.145328)
+texture = ExtResource("6_fwwyg")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TexItem" type="TextureRect" parent="Main/PTall/P1/TexMove"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 227.073
+offset_top = 144.501
+offset_right = 227.073
+offset_bottom = 144.501
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("7_8jkkp")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TexPowUp" type="TextureRect" parent="Main/PTall/P1"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 297.0
+offset_top = 700.0
+offset_right = 297.0
+offset_bottom = 700.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.145328, 0.145328)
+texture = ExtResource("8_0wt4e")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TexItem" type="TextureRect" parent="Main/PTall/P1/TexPowUp"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 227.073
+offset_top = 144.501
+offset_right = 227.073
+offset_bottom = 144.501
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("9_hdpaw")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="P2" type="Control" parent="Main/PTall"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="P2Tall" parent="Main/PTall/P2" instance=ExtResource("9_cyk1x")]
+position = Vector2(1700, 900)
+rotation = 3.14159
+scale = Vector2(5.25928, -5.25928)
+
+[node name="Heart" type="TextureRect" parent="Main/PTall/P2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1284.0
+offset_top = 166.0
+offset_right = 1284.0
+offset_bottom = 166.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.145328, 0.145328)
+texture = ExtResource("5_cyk1x")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Count" parent="Main/PTall/P2/Heart" instance=ExtResource("5_gbnmi")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.972549, 0.945098, 0.866667, 1)
+theme_override_colors/font_outline_color = Color(0.333333, 0.333333, 0.333333, 1)
+theme_override_constants/outline_size = 50
+theme_override_font_sizes/normal_font_size = 400
+text = "3"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TexMove" type="TextureRect" parent="Main/PTall/P2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1030.0
+offset_top = 700.0
+offset_right = 1030.0
+offset_bottom = 700.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.145328, 0.145328)
+texture = ExtResource("6_fwwyg")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TexItem" type="TextureRect" parent="Main/PTall/P2/TexMove"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 227.073
+offset_top = 144.501
+offset_right = 227.073
+offset_bottom = 144.501
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("7_8jkkp")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TexPowUp" type="TextureRect" parent="Main/PTall/P2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1218.0
+offset_top = 700.0
+offset_right = 1218.0
+offset_bottom = 700.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.145328, 0.145328)
+texture = ExtResource("8_0wt4e")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TexItem" type="TextureRect" parent="Main/PTall/P2/TexPowUp"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 227.073
+offset_top = 144.501
+offset_right = 227.073
+offset_bottom = 144.501
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("9_hdpaw")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Ready" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Ready(1)" type="Sprite2D" parent="Ready"]
+position = Vector2(350, 450)
+scale = Vector2(0.648906, 0.648906)
+texture = ExtResource("4_nw1oc")
+
+[node name="default_label" parent="Ready/Ready(1)" instance=ExtResource("5_gbnmi")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -235.781
+offset_top = -220.371
+offset_right = -235.781
+offset_bottom = -220.371
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.972549, 0.945098, 0.866667, 1)
+theme_override_colors/font_outline_color = Color(0.333333, 0.333333, 0.333333, 1)
+theme_override_constants/outline_size = 24
+theme_override_font_sizes/normal_font_size = 100
+text = "P1
+Ready"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Ready(2)" type="Sprite2D" parent="Ready"]
+position = Vector2(1250, 450)
+rotation = -3.14159
+scale = Vector2(0.648906, 0.648906)
+texture = ExtResource("5_pcq31")
+
+[node name="default_label" parent="Ready/Ready(2)" instance=ExtResource("5_gbnmi")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 508.548
+offset_top = 197.255
+offset_right = 508.548
+offset_bottom = 197.255
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 3.14159
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.972549, 0.945098, 0.866667, 1)
+theme_override_colors/font_outline_color = Color(0.333333, 0.333333, 0.333333, 1)
+theme_override_constants/outline_size = 24
+theme_override_font_sizes/normal_font_size = 100
+text = "P2
+Ready"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Tutorial" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BgRect" type="Sprite2D" parent="Tutorial"]
+position = Vector2(794, 443)
+scale = Vector2(0.887065, 0.744049)
+texture = ExtResource("1_nw1oc")
+
+[node name="Control" type="Control" parent="Tutorial"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1235.0
+offset_top = 111.0
+offset_right = 1235.0
+offset_bottom = 111.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.186789, 0.186789)
+
+[node name="Bstar" parent="Tutorial/Control" instance=ExtResource("2_karjq")]
+layout_mode = 1
+target_node_path = NodePath("../..")
+signal_receiver_path = NodePath("../../..")
