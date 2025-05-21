@@ -9,8 +9,6 @@ size = Vector2(32, 32)
 [node name="PowerUpTile" type="Node2D"]
 z_index = -10
 script = ExtResource("1_k4ayf")
-float_amplitude = null
-float_speed = null
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.5, 0.5)

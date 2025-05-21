@@ -220,6 +220,7 @@ func reset_movement_mode():
 	else:
 		print("Player 2 is changing movement mode to -> ", mode_name)
 		PlayUI.ui_instance.set_p2_move_icon(mode_name)
+	PlayUI.ui_instance.stop_powerup_timer(player_body.id, "MOVEMENT")
 	current_movement_mode = MovementMode.Type.KING_MOVEMENT
 	_update_active_logic_strategy()
 	movement_mode_changed.emit(mode_name)

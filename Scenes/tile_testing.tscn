@@ -123,14 +123,6 @@ offset_right = 1920.0
 offset_bottom = 1080.0
 
 [node name="play_ui" parent="CanvasLayer" instance=ExtResource("20_ooln7")]
-expressionP1 = "neutral"
-expressionP2 = "neutral"
-heartP1 = 3
-heartP2 = 3
-move_icon_p1 = "KING_MOVEMENT"
-powup_icon_p1 = "PowUpNormalBomb"
-move_icon_p2 = "KING_MOVEMENT"
-powup_icon_p2 = "PowUpNormalBomb"
 
 [node name="CanvasLayer2" type="CanvasLayer" parent="."]
 

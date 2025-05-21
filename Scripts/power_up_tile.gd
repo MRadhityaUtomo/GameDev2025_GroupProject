@@ -41,22 +41,25 @@ func _process(delta: float) -> void:
 
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
+	
 	if body is Player:
 		# Handle movement powerups
 		if powerup_resource:
 			var movement_manager = body.get_node_or_null("MovementManager")
 			if movement_manager:
 				# Pass the powerup's custom duration
-				movement_manager.change_movement_mode(powerup_resource.movement_type, powerup_resource.duration)
+				var duration = powerup_resource.duration
+				movement_manager.change_movement_mode(powerup_resource.movement_type, duration)
+				body.powerup_activated(powerup_resource.id_name, duration)
 				print("Player collected movement powerup: " + powerup_resource.display_name + 
-					  " (Duration: " + str(powerup_resource.duration) + "s)")
-				body.powerup_activated(powerup_resource.id_name)
+					  " (Duration: " + str(duration) + "s)")
 		
 		# Handle bomb powerups
 		elif bomb_resource:
-			body.change_bomb_type(bomb_resource, bomb_resource.duration)
-			print("Player collected bomb powerup: " + bomb_resource.name)
-			body.powerup_activated(bomb_resource.id_name)
+			print("DA BOMB IS " + bomb_resource.id_name)
+			var duration = bomb_resource.duration
+			body.change_bomb_type(bomb_resource, duration)
+			body.powerup_activated(bomb_resource.id_name, duration)
 			
 		
 		# Remove after collection

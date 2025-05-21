@@ -169,4 +169,4 @@ position = Vector2(0, -32)
 sprite_frames = SubResource("SpriteFrames_qa8sr")
 animation = &"stage3"
 autoplay = "stage1"
-frame_progress = 0.962765
+frame_progress = 0.971217
