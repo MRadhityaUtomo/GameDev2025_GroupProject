@@ -119,55 +119,24 @@ func _on_trap_timer_timeout() -> void:
 
 #comment
 
+# Modify draw_circle_border to handle non-explosion case only
 func draw_circle_border(center_x, center_y, radius, spawn_explosions=false):
 	var center = Vector2(center_x, center_y)
-	# Adjust these radius values to be more inclusive at corners
-	var r_max = (radius + 0.7) * (radius + 0.7)  # Slightly larger outer boundary
-	var r_min = (radius - 0.7) * (radius - 0.7)  # Slightly smaller inner boundary
+	var r_max = (radius + 0.7) * (radius + 0.7)
+	var r_min = (radius - 0.7) * (radius - 0.7)
 	var points = {}
 	
-	# Scan a slightly larger area to catch all relevant corner tiles
 	for x in range(center_x - radius - 1, center_x + radius + 2):
 		for y in range(center_y - radius - 1, center_y + radius + 2):
 			var dist_sq = (x - center.x) * (x - center.x) + (y - center.y) * (y - center.y)
-			
-			# More inclusive radius check to catch corner tiles
 			if dist_sq >= r_min and dist_sq <= r_max:
 				points[Vector2(x, y)] = true
 	
-	# If we're spawning explosions, show warnings first
+	# If we need explosions, use the dedicated function instead
 	if spawn_explosions and border_explosion_scene and not Engine.is_editor_hint():
-		# Create warning animations at all points
-		var warning_animations = []
-		for point in points.keys():
-			var warning = $warning.duplicate()
-			warning.visible = true
-			warning.position = map_to_local(point)
-			add_child(warning)
-			warning.play("default")
-			warning_animations.append(warning)
-		
-		# Wait a short time for warning effect
-		get_tree().create_timer(1.5).timeout.connect(func():
-			# Spawn explosions after warning
-			$sfx.play()
-			for i in range(warning_animations.size()):
-				var point = points.keys()[i]
-				var warning = warning_animations[i]
-				
-				# Create explosion
-				var explosion = border_explosion_scene.instantiate()
-				explosion.position = map_to_local(point)
-				add_child(explosion)
-				
-				# Remove warning animation
-				warning.queue_free()
-				
-				# Set the border tile
-				set_border_tile(point)
-		)
+		show_circle_border_warnings(center_x, center_y, radius)
 	else:
-		# If no explosions, just set border tiles immediately
+		# Otherwise immediately set border tiles
 		for point in points.keys():
 			set_border_tile(point)
 		
@@ -358,19 +327,73 @@ func _on_shrinking_timer_timeout() -> void:
 		if current_shrinking_time <= 0:
 			current_shrinking_time = shrinking_time
 			if current_radius > 1:
-				current_radius -= 1
-				remove_border()
+				# Calculate new radius but don't apply it yet
+				var new_radius = current_radius - 1
+				
 				if border_type == BorderType.circle:
-					draw_circle_border(center.x, center.y, current_radius, true) # Added 'true' to spawn explosions
+					# First, show warnings at future border positions
+					show_circle_border_warnings(center.x, center.y, new_radius)
 				elif border_type == BorderType.rectangle:
-					draw_rectange_border(center.x, center.y, current_radius)
-				update_edge_sprites()
+					# For rectangle type, immediately update (or implement similar warning system)
+					remove_border()
+					draw_rectange_border(center.x, center.y, new_radius)
+					update_edge_sprites()
+					current_radius = new_radius
 				
 				# Signal that the border has shrunk
 				border_shrunk.emit(current_radius)
 				
 			current_shrinking_stage += 1
 
+# New function to handle the warning phase
+func show_circle_border_warnings(center_x, center_y, radius):
+	var center = Vector2(center_x, center_y)
+	var r_max = (radius + 0.7) * (radius + 0.7)
+	var r_min = (radius - 0.7) * (radius - 0.7)
+	var points = {}
+	
+	# Calculate points for the new border
+	for x in range(center_x - radius - 1, center_x + radius + 2):
+		for y in range(center_y - radius - 1, center_y + radius + 2):
+			var dist_sq = (x - center.x) * (x - center.x) + (y - center.y) * (y - center.y)
+			if dist_sq >= r_min and dist_sq <= r_max:
+				points[Vector2(x, y)] = true
+	
+	# Show warnings first - keep old border intact
+	var warning_animations = []
+	for point in points.keys():
+		var warning = $warning.duplicate()
+		warning.visible = true
+		warning.position = map_to_local(point)
+		add_child(warning)
+		warning.play("default")
+		warning_animations.append(warning)
+	
+	# After warning finishes, remove old border and create new one
+	get_tree().create_timer(1.5).timeout.connect(func():
+		$sfx.play()
+		# NOW remove the old border
+		remove_border()
+		
+		for i in range(warning_animations.size()):
+			var point = points.keys()[i]
+			var warning = warning_animations[i]
+			
+			# Create explosion
+			var explosion = border_explosion_scene.instantiate()
+			explosion.position = map_to_local(point)
+			add_child(explosion)
+			
+			# Remove warning animation
+			warning.queue_free()
+			
+			# Set the border tile
+			set_border_tile(point)
+		
+		# Update after all the new border tiles are set
+		update_edge_sprites()
+		current_radius = radius  # Update the radius AFTER creating new border
+	)
 func get_random_walkable_tile_position() -> Vector2:
 	# Get all walkable tile positions
 	var walkable_tiles = get_used_cells_by_id(0, Vector2i(0, 0), 1)
