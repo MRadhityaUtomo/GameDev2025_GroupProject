@@ -161,6 +161,13 @@ func change_movement_mode(new_mode: MovementMode.Type, duration: float = 10.0):
     if current_movement_strategy and current_movement_strategy.is_moving():
         # Schedule the change after movement completes
         var mode_name = MovementMode.Type.keys()[new_mode]
+        print("MovementManager: Queuing movement change to -> ", mode_name)
+        if player_body.id == 1:
+            print("Player 1 is changing movement mode to -> ", mode_name)
+            PlayUI.ui_instance.set_p1_move_icon(mode_name)
+        else:
+            print("Player 2 is changing movement mode to -> ", mode_name)
+            PlayUI.ui_instance.set_p2_move_icon(mode_name)
         print("Movement change queued: Will change to " + mode_name + " after current movement completes")
         
         # Use a one-shot timer to change the mode after movement completes
@@ -206,7 +213,13 @@ func change_movement_mode(new_mode: MovementMode.Type, duration: float = 10.0):
 
 func reset_movement_mode():
     print("Powerup duration ended, reverting to KING_MOVEMENT")
+    var mode_name = "KING_MOVEMENT"
+    if player_body.id == 1:
+        print("Player 1 is changing movement mode to -> ", mode_name)
+        PlayUI.ui_instance.set_p1_move_icon(mode_name)
+    else:
+        print("Player 2 is changing movement mode to -> ", mode_name)
+        PlayUI.ui_instance.set_p2_move_icon(mode_name)
     current_movement_mode = MovementMode.Type.KING_MOVEMENT
     _update_active_logic_strategy()
-    var mode_name = MovementMode.Type.keys()[current_movement_mode]
     movement_mode_changed.emit(mode_name)
