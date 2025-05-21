@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cmvnchnwlaptp"]
+[gd_scene load_steps=12 format=3 uid="uid://cmvnchnwlaptp"]
 
 [ext_resource type="Script" uid="uid://clkawu35ynvgc" path="res://Scenes/UI/UIScripts/main_menu.gd" id="1_3holw"]
 [ext_resource type="PackedScene" uid="uid://bunuilmma82bm" path="res://Scenes/UI/Components/Font/default_label.tscn" id="2_wwvqu"]
@@ -7,6 +7,10 @@
 [ext_resource type="PackedScene" uid="uid://d3fsr3dge7nqx" path="res://Scenes/UI/Components/Buttons/brect.tscn" id="4_rasm3"]
 [ext_resource type="Texture2D" uid="uid://babgssp644p8m" path="res://Scenes/UI/UIAssets/BG/BGMenu.png" id="5_ysqiy"]
 [ext_resource type="AudioStream" uid="uid://bx8dggg5njpeg" path="res://Assets/Audio/MAUDIO-Aftertune - Travel The World (Original Mix).wav" id="7_ebowy"]
+[ext_resource type="PackedScene" uid="uid://c1rae5g8uefoi" path="res://Scenes/UI/Components/Buttons/bcircle.tscn" id="8_p7lwl"]
+[ext_resource type="Texture2D" uid="uid://y61r1syhadsx" path="res://Scenes/UI/UIAssets/Card/VersionNoticeCard.png" id="9_jskml"]
+[ext_resource type="Texture2D" uid="uid://bjkrljx6nwxut" path="res://Scenes/UI/UIAssets/Card/CreditsCard.png" id="10_5x7d4"]
+[ext_resource type="PackedScene" uid="uid://dtg2wlxdjktm6" path="res://Scenes/UI/Components/Buttons/bstar.tscn" id="11_l688a"]
 
 [node name="main_menu" type="Control"]
 layout_mode = 3
@@ -30,7 +34,6 @@ grow_vertical = 2
 mouse_filter = 1
 
 [node name="title_screen" type="Control" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -126,6 +129,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="main_menu" type="Control" parent="."]
+visible = false
 z_index = 100
 layout_mode = 1
 anchors_preset = 15
@@ -144,17 +148,17 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-color = Color(0.780392, 0.913725, 1, 1)
+color = Color(0.0431373, 0.0313726, 0.286275, 1)
 
 [node name="BGMenu" type="TextureRect" parent="main_menu"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -499.0
-offset_top = -750.0
-offset_right = 388.0
-offset_bottom = 536.0
+offset_left = -405.0
+offset_top = -733.0
+offset_right = 482.0
+offset_bottom = 553.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -179,6 +183,20 @@ texture = ExtResource("2_ysqiy")
 expand_mode = 1
 stretch_mode = 4
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="main_menu"]
+stream = ExtResource("7_ebowy")
+
+[node name="VBoxContainer" type="Control" parent="main_menu"]
+visible = false
+z_index = 110
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
 [node name="Control" type="Control" parent="main_menu"]
 layout_mode = 1
 anchors_preset = 15
@@ -186,56 +204,174 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
+mouse_filter = 1
+
+[node name="Credit" type="Control" parent="main_menu/Control"]
+visible = false
+z_index = 300
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="CreditsCard" type="TextureRect" parent="main_menu/Control/Credit"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -555.0
+offset_top = -423.5
+offset_right = 555.0
+offset_bottom = 423.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_5x7d4")
+
+[node name="Control" type="Control" parent="main_menu/Control/Credit"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1305.0
+offset_top = 69.0
+offset_right = 1305.0
+offset_bottom = 69.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.151589, 0.151589)
+mouse_filter = 1
+
+[node name="Bstar" parent="main_menu/Control/Credit/Control" instance=ExtResource("11_l688a")]
+layout_mode = 1
+mouse_filter = 1
+target_node_path = NodePath("../..")
+
+[node name="VersionNotice" type="Control" parent="main_menu/Control"]
+visible = false
+z_index = 300
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="VersionNoticeCard" type="TextureRect" parent="main_menu/Control/VersionNotice"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -555.0
+offset_top = -423.5
+offset_right = 555.0
+offset_bottom = 423.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("9_jskml")
+
+[node name="Control" type="Control" parent="main_menu/Control/VersionNotice"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1305.0
+offset_top = 69.0
+offset_right = 1305.0
+offset_bottom = 69.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.151589, 0.151589)
+mouse_filter = 1
+
+[node name="Bstar" parent="main_menu/Control/VersionNotice/Control" instance=ExtResource("11_l688a")]
+layout_mode = 1
+mouse_filter = 1
+target_node_path = NodePath("../..")
+
+[node name="Control" type="Control" parent="main_menu/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1694.0
+offset_top = 51.0
+offset_right = 1694.0
+offset_bottom = 51.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.106405, 0.106405)
+mouse_filter = 1
+
+[node name="Bcircle" parent="main_menu/Control/Control" instance=ExtResource("8_p7lwl")]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 1
+mouse_filter = 1
+target_node_path = NodePath("../../Credit")
+icon_name = "Credits"
+
+[node name="Control2" type="Control" parent="main_menu/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1694.0
+offset_top = 155.0
+offset_right = 1694.0
+offset_bottom = 155.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.106405, 0.106405)
+mouse_filter = 1
+
+[node name="Bcircle" parent="main_menu/Control/Control2" instance=ExtResource("8_p7lwl")]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 1
+mouse_filter = 1
+target_node_path = NodePath("../../VersionNotice")
+icon_name = "Version"
+
+[node name="Control3" type="Control" parent="main_menu/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1694.0
+offset_top = 258.0
+offset_right = 1694.0
+offset_bottom = 258.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.106405, 0.106405)
+mouse_filter = 1
+
+[node name="Bcircle" parent="main_menu/Control/Control3" instance=ExtResource("8_p7lwl")]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 1
+mouse_filter = 1
+target_node_path = NodePath("../../Credit")
+icon_name = "LogOut"
 
 [node name="BPlay" parent="main_menu/Control" instance=ExtResource("4_rasm3")]
 z_index = 102
 custom_minimum_size = Vector2(100, 50)
 layout_mode = 1
-offset_left = 545.0
-offset_top = 654.0
-offset_right = -560.0
-offset_bottom = -149.0
+offset_left = 679.0
+offset_top = 760.0
+offset_right = -674.0
+offset_bottom = -227.0
+scale = Vector2(1.05922, 1.05922)
 target_scene = "res://Scenes/UI/UIScenes/level_select.tscn"
 
-[node name="default_label3" parent="main_menu/Control" instance=ExtResource("2_wwvqu")]
+[node name="default_label3" parent="main_menu/Control/BPlay" instance=ExtResource("2_wwvqu")]
 z_index = 102
-layout_mode = 2
-offset_left = 592.0
-offset_top = 683.0
-offset_right = 992.0
-offset_bottom = 721.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme_override_colors/default_color = Color(0.333333, 0.333333, 0.333333, 1)
-theme_override_font_sizes/normal_font_size = 31
-text = "Click To Play"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="MarginContainer" type="MarginContainer" parent="main_menu"]
-z_index = 100
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -8.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_constants/margin_left = 600
-theme_override_constants/margin_right = 600
-theme_override_constants/margin_bottom = 150
-
-[node name="BPlay" parent="main_menu/MarginContainer" instance=ExtResource("4_rasm3")]
-visible = false
-z_index = 100
-custom_minimum_size = Vector2(100, 50)
-layout_mode = 2
-
-[node name="default_label2" parent="main_menu/MarginContainer/BPlay" instance=ExtResource("2_wwvqu")]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -244,11 +380,9 @@ offset_right = 0.0
 offset_bottom = 0.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme_override_colors/default_color = Color(0.333333, 0.333333, 0.333333, 1)
 theme_override_font_sizes/normal_font_size = 31
 text = "Click To Play"
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="main_menu"]
-stream = ExtResource("7_ebowy")

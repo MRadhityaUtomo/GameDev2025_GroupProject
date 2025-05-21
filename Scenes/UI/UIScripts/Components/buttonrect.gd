@@ -1,6 +1,8 @@
 extends Button
 
 @export var target_scene: String
+@export var label_text_1: String = "Default Text 1"
+@export var label_text_2: String = "Default Text 2"
 
 @onready var rect_normal = $Rect/RectNormal
 @onready var rect_hover = $Rect/RectHover
@@ -8,12 +10,17 @@ extends Button
 @onready var mask_hover = $MaskStar/RectHover
 @onready var label1 = $default_label
 @onready var label2 = $default_label2
+@onready var audio_player = $AudioStreamPlayer 
 
 var tween: Tween
 
 func _ready():
 	# Set pivot to center so scaling looks natural
 	pivot_offset = size / 2
+
+	# Set label texts from export variables
+	label1.text = label_text_1
+	label2.text = label_text_2
 
 	# Ensure only the "normal" visuals are visible at start
 	rect_hover.modulate.a = 0.0
@@ -28,11 +35,13 @@ func _ready():
 
 	# Create the tween node for scaling
 	tween = create_tween()
-	tween.kill() # Kill it immediately, we'll reuse later
+	tween.kill()
+
 
 
 
 func _on_Button_pressed() -> void:
+	audio_player.play()
 	if target_scene != "":
 		#var scene = load(target_scene)
 		#if scene:

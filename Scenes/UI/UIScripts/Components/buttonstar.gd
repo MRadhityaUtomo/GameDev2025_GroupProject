@@ -2,7 +2,6 @@ extends Button
 
 signal custom_pressed_signal
 
-# Exported paths to allow configuration from the editor
 @export_node_path("Control") var target_node_path: NodePath
 @export_node_path("Node") var signal_receiver_path: NodePath
 @export var target_scene: String
@@ -10,6 +9,7 @@ signal custom_pressed_signal
 @onready var mask_normal = $MaskStar/RectNormal
 @onready var mask_hover = $MaskStar/RectHover
 @onready var label1 = $default_label
+@onready var audio_player = $AudioStreamPlayer 
 
 var tween: Tween
 
@@ -37,6 +37,7 @@ func _ready():
 
 
 func _on_Button_pressed() -> void:
+	audio_player.play()
 	emit_signal("custom_pressed_signal")
 	if target_node_path != NodePath(""):
 		var node_to_hide = get_node_or_null(target_node_path)
@@ -60,13 +61,19 @@ func _animate_hide_node(node: Node):
 	# Set pivot offset to center for smooth scaling
 	control_node.pivot_offset = control_node.size / 2.0
 
-	# Create a tween for hiding with scale down and fade out
-	var node_tween = create_tween()
-	node_tween.tween_property(control_node, "scale", Vector2(0.0, 0.0), 0.3).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
-	node_tween.tween_property(control_node, "modulate:a", 0.0, 0.3)
+	var original_scale := control_node.scale  # Save the original scale
 
-	# Optionally disable the node after animation
-	node_tween.tween_callback(Callable(control_node, "hide"))
+	# Create tween to scale down and fade out
+	var node_tween = create_tween()
+	node_tween.tween_property(control_node, "scale", Vector2.ZERO, 0.3).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	node_tween.parallel().tween_property(control_node, "modulate:a", 0.0, 0.3)
+
+	# After finished, hide and reset scale (but keep it hidden)
+	node_tween.tween_callback(Callable(func():
+		control_node.hide()
+		control_node.scale = original_scale  # Reset the scale silently
+		control_node.modulate.a = 1.0  # Reset alpha so it's ready next time
+	))
 
 
 

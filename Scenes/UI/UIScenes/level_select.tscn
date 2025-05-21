@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://dw2tsbdfbscxf"]
+[gd_scene load_steps=4 format=3 uid="uid://dw2tsbdfbscxf"]
 
 [ext_resource type="PackedScene" uid="uid://bdrxgm7bhh624" path="res://Scenes/UI/Components/Buttons/brectlevelselect.tscn" id="1_td2q0"]
+[ext_resource type="Texture2D" uid="uid://chsrqhu2dnun4" path="res://Scenes/UI/UIAssets/ScreenshootLevel/Screenshot 2025-05-21 195602.png" id="1_un2mf"]
+[ext_resource type="PackedScene" uid="uid://bunuilmma82bm" path="res://Scenes/UI/Components/Font/default_label.tscn" id="3_ldwp1"]
 
 [node name="level_select" type="Control"]
 layout_mode = 3
@@ -13,13 +15,14 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 metadata/_edit_use_anchors_ = true
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="ImageRect" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+texture = ExtResource("1_un2mf")
 metadata/_edit_use_anchors_ = true
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
@@ -48,21 +51,47 @@ custom_minimum_size = Vector2(1600, 900)
 layout_mode = 2
 size_flags_horizontal = 3
 target_scene = "res://Scenes/tile_testing.tscn"
+label_text_1 = "1"
+label_text_2 = "Arcade Meadow"
 metadata/_edit_use_anchors_ = true
 
 [node name="Brectlevelselect4" parent="ScrollContainer/HBoxContainer" instance=ExtResource("1_td2q0")]
 custom_minimum_size = Vector2(1600, 900)
 layout_mode = 2
 size_flags_horizontal = 3
-target_scene = "res://Scenes/tile_testing.tscn"
+label_text_1 = "2"
+label_text_2 = "Coming Soon"
 metadata/_edit_use_anchors_ = true
 
 [node name="Brectlevelselect2" parent="ScrollContainer/HBoxContainer" instance=ExtResource("1_td2q0")]
 custom_minimum_size = Vector2(1600, 900)
 layout_mode = 2
+label_text_1 = "3"
+label_text_2 = "Coming Soon"
 metadata/_edit_use_anchors_ = true
 
 [node name="Brectlevelselect3" parent="ScrollContainer/HBoxContainer" instance=ExtResource("1_td2q0")]
 custom_minimum_size = Vector2(1600, 900)
 layout_mode = 2
+label_text_1 = "4"
+label_text_2 = "Coming Soon"
 metadata/_edit_use_anchors_ = true
+
+[node name="default_label" parent="." instance=ExtResource("3_ldwp1")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.972549, 0.945098, 0.866667, 1)
+theme_override_colors/font_outline_color = Color(0.333333, 0.333333, 0.333333, 1)
+theme_override_constants/outline_size = 24
+theme_override_font_sizes/normal_font_size = 100
+theme_override_font_sizes/bold_font_size = 100
+text = "
+[b]Level Select[/b]"
+horizontal_alignment = 1

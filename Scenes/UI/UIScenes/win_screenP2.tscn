@@ -1,0 +1,131 @@
+[gd_scene load_steps=10 format=3 uid="uid://xibah504m7sf"]
+
+[ext_resource type="Script" uid="uid://uo6l3iqmnu2s" path="res://Scenes/UI/UIScripts/Components/StatusScreen.gd" id="1_cxodp"]
+[ext_resource type="Shader" uid="uid://e3oxmp7fc20y" path="res://Scenes/UI/UIAssets/Shader/patternxy.gdshader" id="1_u5u3m"]
+[ext_resource type="Texture2D" uid="uid://djn5ft5uisry2" path="res://Scenes/UI/UIAssets/BG/BGPatternBlue2.png" id="2_cxodp"]
+[ext_resource type="Texture2D" uid="uid://cq3jvr4ir8exs" path="res://Scenes/UI/UIAssets/Player/P2Win.png" id="3_u5u3m"]
+[ext_resource type="PackedScene" uid="uid://bunuilmma82bm" path="res://Scenes/UI/Components/Font/default_label.tscn" id="4_q6ibb"]
+[ext_resource type="Texture2D" uid="uid://6peopgp1jim7" path="res://Scenes/UI/UIAssets/Button/BRectOutline.png" id="5_bsa06"]
+[ext_resource type="PackedScene" uid="uid://d3tddc5evf43b" path="res://Scenes/UI/Components/Buttons/brectnew.tscn" id="6_c5pqu"]
+[ext_resource type="AudioStream" uid="uid://y8ds11tfcej2" path="res://Scenes/UI/Components/Buttons/AudioAssets/Win.mp3" id="8_vrqxx"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ymvcf"]
+shader = ExtResource("1_u5u3m")
+shader_parameter/scroll_speed = Vector2(0.1, 0.1)
+shader_parameter/time_offset = 0.0
+
+[node name="level_select" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_cxodp")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_ymvcf")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -450.0
+offset_top = -175.0
+offset_right = 450.0
+offset_bottom = 175.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+texture = ExtResource("2_cxodp")
+
+[node name="P1Win" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 288.0
+offset_right = 288.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_u5u3m")
+stretch_mode = 5
+
+[node name="P1Win2" parent="." instance=ExtResource("4_q6ibb")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 298.0
+offset_top = 19.0
+offset_right = -1027.0
+offset_bottom = -341.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.6643, 0.7462, 0.91, 1)
+theme_override_colors/font_outline_color = Color(0.333333, 0.333333, 0.333333, 1)
+theme_override_constants/outline_size = 24
+theme_override_font_sizes/normal_font_size = 50
+theme_override_font_sizes/bold_font_size = 200
+text = "[b]P2
+WINS[/b]"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 608.0
+offset_bottom = 608.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.217675
+color = Color(0.611211, 0.79774, 0.93994, 1)
+
+[node name="OutlineRect" type="TextureRect" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -262.384
+offset_top = -102.761
+offset_right = -262.384
+offset_bottom = -102.761
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.22735, 1.12235)
+texture = ExtResource("5_bsa06")
+expand_mode = 1
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 688.0
+offset_bottom = 688.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.315024, 0.362466)
+
+[node name="Brectlevelselect" parent="Control" instance=ExtResource("6_c5pqu")]
+layout_mode = 1
+offset_left = 216.99
+offset_right = 216.99
+target_scene = "C:/Users/samue/Documents/DL File/Col/UI/GameDev/Gamejam Kelompok/GameDev2025_GroupProject/Scenes/UI/UIScenes/main_menu2.tscn"
+label_text_2 = "Back to Menu"
+
+[node name="Brectlevelselect2" parent="Control" instance=ExtResource("6_c5pqu")]
+layout_mode = 1
+offset_left = 2256.2
+offset_right = 2256.2
+target_scene = "res://Scenes/tile_testing.tscn"
+label_text_2 = "Play Again"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_vrqxx")

@@ -8,7 +8,14 @@ extends Control
 @onready var bg_menu = $main_menu/BGMenu
 @onready var t_game = $main_menu/TGame
 @onready var b_play = $main_menu/Control
+@onready var buttons_list = $main_menu/VBoxContainer
 @onready var menu_music = $main_menu/AudioStreamPlayer
+var original_scale_bg_menu: Vector2
+var original_scale_t_game: Vector2
+var original_scale_b_play: Vector2
+var original_scale_buttons_list: Vector2
+
+
 
 @onready var transition_timer = Timer.new()
 @onready var tween = create_tween()
@@ -26,15 +33,25 @@ func _ready():
 	main_menu.modulate.a = 0.0
 
 	# Ensure scaling from center by setting pivot_offset to half size
+# Ensure scaling from center by setting pivot_offset to half size
 	await get_tree().process_frame  # Wait one frame so sizes are updated
 	bg_menu.pivot_offset = bg_menu.size / 2
 	t_game.pivot_offset = t_game.size / 2
 	b_play.pivot_offset = b_play.size / 2
+	buttons_list.pivot_offset = buttons_list.size / 2
 
-	# Set initial scale
+	# 🔹 Store original scales
+	original_scale_bg_menu = bg_menu.scale
+	original_scale_t_game = t_game.scale
+	original_scale_b_play = b_play.scale
+	original_scale_buttons_list = buttons_list.scale
+
+	# Set initial scale to 0 for animation
 	bg_menu.scale = Vector2.ZERO
 	t_game.scale = Vector2.ZERO
 	b_play.scale = Vector2.ZERO
+	buttons_list.scale = Vector2.ZERO
+
 
 	# Fade in title screen
 	_tween_fade(title_screen, 1.0)
@@ -54,7 +71,7 @@ func _fade_out_title():
 	await tween.finished
 
 	transition_timer.timeout.connect(_fade_out_warning)
-	transition_timer.start(5.0)
+	transition_timer.start(3.0)
 
 func _fade_out_warning():
 	transition_timer.timeout.disconnect(_fade_out_warning)
@@ -74,9 +91,10 @@ func _fade_out_warning():
 
 	# Slower scale in for menu elements
 	var menu_tween = create_tween()
-	menu_tween.tween_property(bg_menu, "scale", Vector2.ONE, 1.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	menu_tween.parallel().tween_property(t_game, "scale", Vector2.ONE, 1.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	menu_tween.parallel().tween_property(b_play, "scale", Vector2.ONE, 1.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	menu_tween.tween_property(bg_menu, "scale", original_scale_bg_menu, 1.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	menu_tween.parallel().tween_property(t_game, "scale", original_scale_t_game, 1.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	menu_tween.parallel().tween_property(b_play, "scale", original_scale_b_play, 1.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	menu_tween.parallel().tween_property(buttons_list, "scale", original_scale_buttons_list, 1.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 	await menu_tween.finished
 

@@ -1,25 +1,53 @@
-[gd_scene load_steps=4 format=3 uid="uid://c1rae5g8uefoi"]
+[gd_scene load_steps=7 format=3 uid="uid://c1rae5g8uefoi"]
 
-[ext_resource type="Script" uid="uid://ce47vbv62ygf1" path="res://Scenes/UI/UIScripts/Components/buttonrect.gd" id="1_s622w"]
-[ext_resource type="Texture2D" uid="uid://da54xvqf03n4" path="res://Scenes/UI/UIAssets/Button/BGbutton.png" id="2_s622w"]
+[ext_resource type="Script" uid="uid://7cksv64n3ct1" path="res://Scenes/UI/UIScripts/Components/buttoncircle.gd" id="1_s622w"]
+[ext_resource type="Texture2D" uid="uid://ctnk6r42pgqbb" path="res://Scenes/UI/UIAssets/Button/BGButton.png" id="2_s622w"]
 [ext_resource type="Texture2D" uid="uid://57gss000fwb5" path="res://Scenes/UI/UIAssets/Icon/Settings.png" id="3_ai1lw"]
+[ext_resource type="AudioStream" uid="uid://c1c4o61tek8kc" path="res://Scenes/UI/Components/Buttons/AudioAssets/buttonUI.mp3" id="4_ai1lw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_s622w"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ai1lw"]
 
 [node name="Bcircle" type="Button"]
+z_index = 110
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 459.5
-offset_top = 254.5
-offset_right = -459.5
-offset_bottom = -254.5
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_s622w")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_ai1lw")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_ai1lw")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_ai1lw")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ai1lw")
 script = ExtResource("1_s622w")
 
-[node name="BGbutton" type="Sprite2D" parent="."]
-position = Vector2(506.5, 282)
+[node name="BGbutton" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("2_s622w")
+stretch_mode = 5
 
-[node name="Settings" type="Sprite2D" parent="."]
-position = Vector2(506.5, 282)
+[node name="Icon" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 167.0
+offset_bottom = -167.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("3_ai1lw")
+stretch_mode = 5
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_ai1lw")
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[connection signal="pressed" from="." to="." method="_on_Button_pressed"]

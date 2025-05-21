@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://djnjtf7d6stl1"]
+[gd_scene load_steps=35 format=3 uid="uid://djnjtf7d6stl1"]
 
 [ext_resource type="Script" uid="uid://clx1ipbukk4ei" path="res://Scenes/UI/UIScripts/play_ui.gd" id="1_12tgd"]
 [ext_resource type="Texture2D" uid="uid://b2kechd7qg8xq" path="res://Scenes/UI/UIAssets/BG/BGRect.png" id="1_nw1oc"]
@@ -8,12 +8,48 @@
 [ext_resource type="PackedScene" uid="uid://bunuilmma82bm" path="res://Scenes/UI/Components/Font/default_label.tscn" id="5_gbnmi"]
 [ext_resource type="Texture2D" uid="uid://is2ar38de1ds" path="res://Scenes/UI/UIAssets/PlayUI/Ready (2).png" id="5_pcq31"]
 [ext_resource type="Texture2D" uid="uid://c7hxd6wpw2fkj" path="res://Scenes/UI/UIAssets/PlayUI/Move.png" id="6_fwwyg"]
-[ext_resource type="Texture2D" uid="uid://ctyd6xk834da5" path="res://Scenes/UI/UIAssets/Power/MoveDiagonal.png" id="7_8jkkp"]
 [ext_resource type="Texture2D" uid="uid://c87t6ihqbb8ft" path="res://Scenes/UI/UIAssets/PlayUI/Time.png" id="7_gbnmi"]
 [ext_resource type="Texture2D" uid="uid://c31aek3pgqjex" path="res://Scenes/UI/UIAssets/PlayUI/PowUp.png" id="8_0wt4e"]
 [ext_resource type="PackedScene" uid="uid://cdkigd0b56gm8" path="res://Scenes/UI/UIScenes/p1tall.tscn" id="8_xtakj"]
 [ext_resource type="PackedScene" uid="uid://c1k7elicvjavn" path="res://Scenes/UI/UIScenes/p2tall.tscn" id="9_cyk1x"]
 [ext_resource type="Texture2D" uid="uid://b58m2i2ghsmgg" path="res://Scenes/UI/UIAssets/Power/PowUpDiagonalBomb.png" id="9_hdpaw"]
+[ext_resource type="Script" uid="uid://c48q4h33dm7j6" path="res://Scenes/UI/UIScripts/Components/buttontutorialpowerup.gd" id="15_hdpaw"]
+[ext_resource type="Texture2D" uid="uid://tmyb87o113jd" path="res://Scenes/UI/UIAssets/Power/PowUpNormalBomb.png" id="16_7sehx"]
+[ext_resource type="Texture2D" uid="uid://bj871x4pnf6h5" path="res://Scenes/UI/UIAssets/Power/MoveKing.png" id="16_a8gmd"]
+[ext_resource type="AudioStream" uid="uid://c1c4o61tek8kc" path="res://Scenes/UI/Components/Buttons/AudioAssets/buttonUI.mp3" id="16_tkn1i"]
+[ext_resource type="Shader" uid="uid://e3oxmp7fc20y" path="res://Scenes/UI/UIAssets/Shader/patternxy.gdshader" id="16_xoush"]
+[ext_resource type="Texture2D" uid="uid://dilt7sp7iqmco" path="res://Scenes/UI/UIAssets/BG/BGPatternBlue.png" id="17_a8gmd"]
+[ext_resource type="Texture2D" uid="uid://beiqv2lvqnt3r" path="res://Scenes/UI/UIAssets/Power/PowUpWideBomb.png" id="17_dw7xm"]
+[ext_resource type="Texture2D" uid="uid://ctnv723rm1gq7" path="res://Scenes/UI/UIAssets/Power/MoveQueen.png" id="17_qf3xp"]
+[ext_resource type="Texture2D" uid="uid://r8ek0ku46dqn" path="res://Scenes/UI/UIAssets/Power/MoveBishop.png" id="18_jn4ws"]
+[ext_resource type="Texture2D" uid="uid://xptg0fvwekib" path="res://Scenes/UI/UIAssets/Power/MoveDouble.png" id="19_pujjn"]
+[ext_resource type="Texture2D" uid="uid://bc5qda738gyv3" path="res://Scenes/UI/UIAssets/Power/MoveReversed.png" id="20_lqsjy"]
+[ext_resource type="AudioStream" uid="uid://t3wkd1y3sarh" path="res://Scenes/UI/Components/Buttons/AudioAssets/buttonStar.mp3" id="24_7sehx"]
+[ext_resource type="AudioStream" uid="uid://52a64tgjs46e" path="res://Scenes/UI/Components/Buttons/AudioAssets/buttonRect.mp3" id="25_dw7xm"]
+[ext_resource type="AudioStream" uid="uid://wkgmp3oa50e" path="res://Scenes/UI/Components/Buttons/AudioAssets/airhorn.mp3" id="25_xjtte"]
+[ext_resource type="AudioStream" uid="uid://ysgvs4qrxxdc" path="res://Scenes/UI/Components/Buttons/AudioAssets/countdowntime.mp3" id="26_hhv6v"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0wt4e"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hdpaw"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qf3xp"]
+bg_color = Color(0.972549, 0.945098, 0.866667, 1)
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jn4ws"]
+bg_color = Color(0.972549, 0.945098, 0.866667, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pujjn"]
+shader = ExtResource("16_xoush")
+shader_parameter/scroll_speed = Vector2(0.1, 0.05)
+shader_parameter/time_offset = 0.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lqsjy"]
+texture = ExtResource("17_a8gmd")
 
 [node name="play_ui" type="Control"]
 layout_mode = 3
@@ -37,15 +73,15 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 680.0
+offset_left = 820.0
 offset_top = 24.0
-offset_right = 680.0
+offset_right = 820.0
 offset_bottom = 24.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.146628, 0.146628)
 
-[node name="OutlineRect" type="TextureRect" parent="Main/Time"]
+[node name="CountdownTime" type="TextureRect" parent="Main/Time"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -56,15 +92,15 @@ texture = ExtResource("7_gbnmi")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="minute" parent="Main/Time/OutlineRect" instance=ExtResource("5_gbnmi")]
+[node name="minute" parent="Main/Time/CountdownTime" instance=ExtResource("5_gbnmi")]
 z_index = 100
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -340.999
+offset_left = -402.379
 offset_top = 68.1998
-offset_right = -340.999
+offset_right = -402.379
 offset_bottom = 68.1998
 grow_horizontal = 2
 grow_vertical = 2
@@ -73,19 +109,19 @@ theme_override_colors/default_color = Color(0.984314, 0.776471, 0.411765, 1)
 theme_override_colors/font_outline_color = Color(0.333333, 0.333333, 0.333333, 1)
 theme_override_constants/outline_size = 50
 theme_override_font_sizes/normal_font_size = 400
-text = "60"
+text = "5"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="seconds" parent="Main/Time/OutlineRect" instance=ExtResource("5_gbnmi")]
+[node name="seconds" parent="Main/Time/CountdownTime" instance=ExtResource("5_gbnmi")]
 z_index = 100
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 327.359
+offset_left = 395.559
 offset_top = 68.1998
-offset_right = 327.359
+offset_right = 395.559
 offset_bottom = 68.1998
 grow_horizontal = 2
 grow_vertical = 2
@@ -94,7 +130,7 @@ theme_override_colors/default_color = Color(0.984314, 0.776471, 0.411765, 1)
 theme_override_colors/font_outline_color = Color(0.333333, 0.333333, 0.333333, 1)
 theme_override_constants/outline_size = 50
 theme_override_font_sizes/normal_font_size = 400
-text = "60"
+text = "00"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -158,9 +194,9 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 109.0
-offset_top = 700.0
+offset_top = 844.0
 offset_right = 109.0
-offset_bottom = 700.0
+offset_bottom = 844.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.145328, 0.145328)
@@ -173,14 +209,14 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 227.073
-offset_top = 144.501
-offset_right = 227.073
-offset_bottom = 144.501
+offset_left = 309.646
+offset_top = 172.025
+offset_right = 309.646
+offset_bottom = 172.025
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.7, 0.7)
-texture = ExtResource("7_8jkkp")
+texture = ExtResource("16_a8gmd")
 expand_mode = 1
 stretch_mode = 5
 
@@ -190,9 +226,9 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 297.0
-offset_top = 700.0
+offset_top = 844.0
 offset_right = 297.0
-offset_bottom = 700.0
+offset_bottom = 844.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.145328, 0.145328)
@@ -205,14 +241,14 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 227.073
-offset_top = 144.501
-offset_right = 227.073
-offset_bottom = 144.501
+offset_left = 247.716
+offset_top = 178.906
+offset_right = 247.716
+offset_bottom = 178.906
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.7, 0.7)
-texture = ExtResource("9_hdpaw")
+texture = ExtResource("16_7sehx")
 expand_mode = 1
 stretch_mode = 5
 
@@ -225,7 +261,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="P2Tall" parent="Main/PTall/P2" instance=ExtResource("9_cyk1x")]
-position = Vector2(1700, 900)
+position = Vector2(2020, 900)
 rotation = 3.14159
 scale = Vector2(5.25928, -5.25928)
 
@@ -234,9 +270,9 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 1284.0
+offset_left = 1604.0
 offset_top = 166.0
-offset_right = 1284.0
+offset_right = 1604.0
 offset_bottom = 166.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -268,10 +304,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 1030.0
-offset_top = 700.0
-offset_right = 1030.0
-offset_bottom = 700.0
+offset_left = 1350.0
+offset_top = 844.0
+offset_right = 1350.0
+offset_bottom = 844.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.145328, 0.145328)
@@ -284,14 +320,14 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 227.073
-offset_top = 144.501
-offset_right = 227.073
-offset_bottom = 144.501
+offset_left = 309.646
+offset_top = 172.025
+offset_right = 309.646
+offset_bottom = 172.025
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.7, 0.7)
-texture = ExtResource("7_8jkkp")
+texture = ExtResource("16_a8gmd")
 expand_mode = 1
 stretch_mode = 5
 
@@ -300,10 +336,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 1218.0
-offset_top = 700.0
-offset_right = 1218.0
-offset_bottom = 700.0
+offset_left = 1538.0
+offset_top = 844.0
+offset_right = 1538.0
+offset_bottom = 844.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.145328, 0.145328)
@@ -316,14 +352,14 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 227.073
-offset_top = 144.501
-offset_right = 227.073
-offset_bottom = 144.501
+offset_left = 247.717
+offset_top = 178.906
+offset_right = 247.717
+offset_bottom = 178.906
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.7, 0.7)
-texture = ExtResource("9_hdpaw")
+texture = ExtResource("16_7sehx")
 expand_mode = 1
 stretch_mode = 5
 
@@ -336,12 +372,12 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Ready(1)" type="Sprite2D" parent="Ready"]
+[node name="Ready1" type="Sprite2D" parent="Ready"]
 position = Vector2(350, 450)
 scale = Vector2(0.648906, 0.648906)
 texture = ExtResource("4_nw1oc")
 
-[node name="default_label" parent="Ready/Ready(1)" instance=ExtResource("5_gbnmi")]
+[node name="default_label" parent="Ready/Ready1" instance=ExtResource("5_gbnmi")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -361,13 +397,13 @@ Ready"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Ready(2)" type="Sprite2D" parent="Ready"]
-position = Vector2(1250, 450)
+[node name="Ready2" type="Sprite2D" parent="Ready"]
+position = Vector2(1570, 450)
 rotation = -3.14159
 scale = Vector2(0.648906, 0.648906)
 texture = ExtResource("5_pcq31")
 
-[node name="default_label" parent="Ready/Ready(2)" instance=ExtResource("5_gbnmi")]
+[node name="default_label" parent="Ready/Ready2" instance=ExtResource("5_gbnmi")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -388,34 +424,842 @@ Ready"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="default_label" parent="Ready" instance=ExtResource("5_gbnmi")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.972549, 0.945098, 0.866667, 1)
+theme_override_colors/font_outline_color = Color(0.333333, 0.333333, 0.333333, 1)
+theme_override_constants/outline_size = 24
+theme_override_font_sizes/normal_font_size = 50
+text = "
+
+
+
+
+
+
+
+
+
+Press C and Slash(/) to Get Ready"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="countdown" parent="Ready" instance=ExtResource("5_gbnmi")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.972549, 0.945098, 0.866667, 1)
+theme_override_colors/font_outline_color = Color(0.333333, 0.333333, 0.333333, 1)
+theme_override_constants/outline_size = 24
+theme_override_font_sizes/normal_font_size = 100
+text = ""
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="Tutorial" type="Control" parent="."]
-visible = false
+z_index = 101
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 
-[node name="BgRect" type="Sprite2D" parent="Tutorial"]
-position = Vector2(794, 443)
-scale = Vector2(0.887065, 0.744049)
+[node name="BgRect" type="TextureRect" parent="Tutorial"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -47.0
+offset_top = 263.0
+offset_right = 47.0
+offset_bottom = -263.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("1_nw1oc")
+expand_mode = 1
 
 [node name="Control" type="Control" parent="Tutorial"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 1235.0
-offset_top = 111.0
-offset_right = 1235.0
-offset_bottom = 111.0
+offset_left = 1548.0
+offset_top = 159.0
+offset_right = 1548.0
+offset_bottom = 159.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.186789, 0.186789)
+mouse_filter = 1
 
 [node name="Bstar" parent="Tutorial/Control" instance=ExtResource("2_karjq")]
 layout_mode = 1
 target_node_path = NodePath("../..")
 signal_receiver_path = NodePath("../../..")
+
+[node name="default_label" parent="Tutorial" instance=ExtResource("5_gbnmi")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.972549, 0.945098, 0.866667, 1)
+theme_override_colors/font_outline_color = Color(0.333333, 0.333333, 0.333333, 1)
+theme_override_constants/outline_size = 24
+theme_override_font_sizes/normal_font_size = 50
+text = "
+
+
+
+
+
+
+
+
+
+Close or Press C/Slash(/) to Continue"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tutorial"]
+layout_mode = 0
+offset_left = 994.0
+offset_top = 301.0
+offset_right = 1731.0
+offset_bottom = 801.0
+theme_override_constants/separation = 20
+
+[node name="RTETitle" parent="Tutorial/VBoxContainer" instance=ExtResource("5_gbnmi")]
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.972549, 0.945098, 0.866667, 1)
+theme_override_colors/font_outline_color = Color(0.333333, 0.333333, 0.333333, 1)
+theme_override_constants/outline_size = 24
+theme_override_font_sizes/normal_font_size = 40
+text = "Items in This Stage"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ColorRect" type="ColorRect" parent="Tutorial/VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+color = Color(0.937255, 0.843137, 0.752941, 1)
+
+[node name="RTESelectedItem" parent="Tutorial/VBoxContainer" instance=ExtResource("5_gbnmi")]
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.972549, 0.945098, 0.866667, 1)
+theme_override_colors/font_outline_color = Color(0.333333, 0.333333, 0.333333, 1)
+theme_override_constants/outline_size = 24
+theme_override_font_sizes/normal_font_size = 35
+text = "Normal Bomb"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Tutorial/VBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tutorial/VBoxContainer/ScrollContainer"]
+custom_minimum_size = Vector2(700, 80)
+layout_mode = 2
+
+[node name="RTESelectedItemDesc" parent="Tutorial/VBoxContainer/ScrollContainer/VBoxContainer" instance=ExtResource("5_gbnmi")]
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.333333, 0.333333, 0.333333, 1)
+theme_override_colors/font_outline_color = Color(0.333333, 0.333333, 0.333333, 1)
+theme_override_font_sizes/normal_font_size = 30
+text = "Explodes in a cross shape (up/down/left/right)."
+vertical_alignment = 1
+
+[node name="ColorRect2" type="ColorRect" parent="Tutorial/VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+color = Color(0.937255, 0.843137, 0.752941, 1)
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Tutorial"]
+z_index = 101
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 998.0
+offset_top = 609.0
+offset_right = 1659.0
+offset_bottom = 197.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.285578, 0.285578)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Tutorial/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 100
+
+[node name="Button6" type="Button" parent="Tutorial/ScrollContainer/HBoxContainer" node_paths=PackedStringArray("rte_item")]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_0wt4e")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_hdpaw")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_hdpaw")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_hdpaw")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_hdpaw")
+script = ExtResource("15_hdpaw")
+rte_item = NodePath("VBoxContainer/RTEItem")
+item_description = "Explodes in a cross shape (up/down/left/right)."
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tutorial/ScrollContainer/HBoxContainer/Button6"]
+layout_mode = 2
+offset_right = 400.0
+offset_bottom = 668.0
+
+[node name="TexMove" type="TextureRect" parent="Tutorial/ScrollContainer/HBoxContainer/Button6/VBoxContainer"]
+custom_minimum_size = Vector2(400, 400)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("8_0wt4e")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TexItem" type="TextureRect" parent="Tutorial/ScrollContainer/HBoxContainer/Button6/VBoxContainer/TexMove"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -150.0
+offset_right = 150.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("16_7sehx")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="RTEItem" parent="Tutorial/ScrollContainer/HBoxContainer/Button6/VBoxContainer" instance=ExtResource("5_gbnmi")]
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.33, 0.33, 0.33, 1)
+theme_override_font_sizes/normal_font_size = 80
+text = "Normal Bomb"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AudioUI" type="AudioStreamPlayer" parent="Tutorial/ScrollContainer/HBoxContainer/Button6"]
+stream = ExtResource("16_tkn1i")
+
+[node name="Button7" type="Button" parent="Tutorial/ScrollContainer/HBoxContainer" node_paths=PackedStringArray("rte_item")]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_0wt4e")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_hdpaw")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_hdpaw")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_hdpaw")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_hdpaw")
+script = ExtResource("15_hdpaw")
+rte_item = NodePath("VBoxContainer/RTEItem")
+item_description = "Explodes in a 5x5 area."
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tutorial/ScrollContainer/HBoxContainer/Button7"]
+layout_mode = 2
+offset_right = 400.0
+offset_bottom = 668.0
+
+[node name="TexMove" type="TextureRect" parent="Tutorial/ScrollContainer/HBoxContainer/Button7/VBoxContainer"]
+custom_minimum_size = Vector2(400, 400)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("8_0wt4e")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TexItem" type="TextureRect" parent="Tutorial/ScrollContainer/HBoxContainer/Button7/VBoxContainer/TexMove"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -150.0
+offset_right = 150.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("17_dw7xm")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="RTEItem" parent="Tutorial/ScrollContainer/HBoxContainer/Button7/VBoxContainer" instance=ExtResource("5_gbnmi")]
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.33, 0.33, 0.33, 1)
+theme_override_font_sizes/normal_font_size = 80
+text = "Wide Bomb"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AudioUI" type="AudioStreamPlayer" parent="Tutorial/ScrollContainer/HBoxContainer/Button7"]
+stream = ExtResource("16_tkn1i")
+
+[node name="Button8" type="Button" parent="Tutorial/ScrollContainer/HBoxContainer" node_paths=PackedStringArray("rte_item")]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_0wt4e")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_hdpaw")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_hdpaw")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_hdpaw")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_hdpaw")
+script = ExtResource("15_hdpaw")
+rte_item = NodePath("VBoxContainer/RTEItem")
+item_description = "Explodes diagonally from the center."
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tutorial/ScrollContainer/HBoxContainer/Button8"]
+layout_mode = 2
+offset_right = 400.0
+offset_bottom = 668.0
+
+[node name="TexMove" type="TextureRect" parent="Tutorial/ScrollContainer/HBoxContainer/Button8/VBoxContainer"]
+custom_minimum_size = Vector2(400, 400)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("8_0wt4e")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TexItem" type="TextureRect" parent="Tutorial/ScrollContainer/HBoxContainer/Button8/VBoxContainer/TexMove"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -150.0
+offset_right = 150.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("9_hdpaw")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="RTEItem" parent="Tutorial/ScrollContainer/HBoxContainer/Button8/VBoxContainer" instance=ExtResource("5_gbnmi")]
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.33, 0.33, 0.33, 1)
+theme_override_font_sizes/normal_font_size = 80
+text = "Diagonal Bomb"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AudioUI" type="AudioStreamPlayer" parent="Tutorial/ScrollContainer/HBoxContainer/Button8"]
+stream = ExtResource("16_tkn1i")
+
+[node name="Button" type="Button" parent="Tutorial/ScrollContainer/HBoxContainer" node_paths=PackedStringArray("rte_item")]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_0wt4e")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_hdpaw")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_hdpaw")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_hdpaw")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_hdpaw")
+script = ExtResource("15_hdpaw")
+rte_item = NodePath("VBoxContainer/RTEItem")
+item_description = "Move 1 tile at a time with WASD."
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tutorial/ScrollContainer/HBoxContainer/Button"]
+layout_mode = 2
+offset_right = 400.0
+offset_bottom = 668.0
+
+[node name="TexMove" type="TextureRect" parent="Tutorial/ScrollContainer/HBoxContainer/Button/VBoxContainer"]
+custom_minimum_size = Vector2(400, 400)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("6_fwwyg")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TexItem" type="TextureRect" parent="Tutorial/ScrollContainer/HBoxContainer/Button/VBoxContainer/TexMove"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -150.0
+offset_right = 150.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("16_a8gmd")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="RTEItem" parent="Tutorial/ScrollContainer/HBoxContainer/Button/VBoxContainer" instance=ExtResource("5_gbnmi")]
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.33, 0.33, 0.33, 1)
+theme_override_font_sizes/normal_font_size = 80
+text = "King Move"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AudioUI" type="AudioStreamPlayer" parent="Tutorial/ScrollContainer/HBoxContainer/Button"]
+stream = ExtResource("16_tkn1i")
+
+[node name="Button2" type="Button" parent="Tutorial/ScrollContainer/HBoxContainer" node_paths=PackedStringArray("rte_item")]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_0wt4e")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_hdpaw")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_hdpaw")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_hdpaw")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_hdpaw")
+script = ExtResource("15_hdpaw")
+rte_item = NodePath("VBoxContainer/RTEItem")
+item_description = "Move like King, plus diagonals using two keys (e.g., W+A = top-left)."
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tutorial/ScrollContainer/HBoxContainer/Button2"]
+layout_mode = 2
+offset_right = 400.0
+offset_bottom = 668.0
+
+[node name="TexMove" type="TextureRect" parent="Tutorial/ScrollContainer/HBoxContainer/Button2/VBoxContainer"]
+custom_minimum_size = Vector2(400, 400)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("6_fwwyg")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TexItem" type="TextureRect" parent="Tutorial/ScrollContainer/HBoxContainer/Button2/VBoxContainer/TexMove"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -150.0
+offset_right = 150.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("17_qf3xp")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="RTEItem" parent="Tutorial/ScrollContainer/HBoxContainer/Button2/VBoxContainer" instance=ExtResource("5_gbnmi")]
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.33, 0.33, 0.33, 1)
+theme_override_font_sizes/normal_font_size = 80
+text = "Queen Move"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AudioUI" type="AudioStreamPlayer" parent="Tutorial/ScrollContainer/HBoxContainer/Button2"]
+stream = ExtResource("16_tkn1i")
+
+[node name="Button3" type="Button" parent="Tutorial/ScrollContainer/HBoxContainer" node_paths=PackedStringArray("rte_item")]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_0wt4e")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_hdpaw")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_hdpaw")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_hdpaw")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_hdpaw")
+script = ExtResource("15_hdpaw")
+rte_item = NodePath("VBoxContainer/RTEItem")
+item_description = "Can only move diagonally using two keys at once."
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tutorial/ScrollContainer/HBoxContainer/Button3"]
+layout_mode = 2
+offset_right = 400.0
+offset_bottom = 668.0
+
+[node name="TexMove" type="TextureRect" parent="Tutorial/ScrollContainer/HBoxContainer/Button3/VBoxContainer"]
+custom_minimum_size = Vector2(400, 400)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("6_fwwyg")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TexItem" type="TextureRect" parent="Tutorial/ScrollContainer/HBoxContainer/Button3/VBoxContainer/TexMove"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -150.0
+offset_right = 150.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("18_jn4ws")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="RTEItem" parent="Tutorial/ScrollContainer/HBoxContainer/Button3/VBoxContainer" instance=ExtResource("5_gbnmi")]
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.33, 0.33, 0.33, 1)
+theme_override_font_sizes/normal_font_size = 80
+text = "Queen Move"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AudioUI" type="AudioStreamPlayer" parent="Tutorial/ScrollContainer/HBoxContainer/Button3"]
+stream = ExtResource("16_tkn1i")
+
+[node name="Button4" type="Button" parent="Tutorial/ScrollContainer/HBoxContainer" node_paths=PackedStringArray("rte_item")]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_0wt4e")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_hdpaw")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_hdpaw")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_hdpaw")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_hdpaw")
+script = ExtResource("15_hdpaw")
+rte_item = NodePath("VBoxContainer/RTEItem")
+item_description = "Move 2 tiles per input."
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tutorial/ScrollContainer/HBoxContainer/Button4"]
+layout_mode = 2
+offset_right = 400.0
+offset_bottom = 668.0
+
+[node name="TexMove" type="TextureRect" parent="Tutorial/ScrollContainer/HBoxContainer/Button4/VBoxContainer"]
+custom_minimum_size = Vector2(400, 400)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("6_fwwyg")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TexItem" type="TextureRect" parent="Tutorial/ScrollContainer/HBoxContainer/Button4/VBoxContainer/TexMove"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -150.0
+offset_right = 150.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("19_pujjn")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="RTEItem" parent="Tutorial/ScrollContainer/HBoxContainer/Button4/VBoxContainer" instance=ExtResource("5_gbnmi")]
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.33, 0.33, 0.33, 1)
+theme_override_font_sizes/normal_font_size = 80
+text = "Double Step"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AudioUI" type="AudioStreamPlayer" parent="Tutorial/ScrollContainer/HBoxContainer/Button4"]
+stream = ExtResource("16_tkn1i")
+
+[node name="Button5" type="Button" parent="Tutorial/ScrollContainer/HBoxContainer" node_paths=PackedStringArray("rte_item")]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_0wt4e")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_hdpaw")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_hdpaw")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_hdpaw")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_hdpaw")
+script = ExtResource("15_hdpaw")
+rte_item = NodePath("VBoxContainer/RTEItem")
+item_description = "Movement controls are inverted."
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tutorial/ScrollContainer/HBoxContainer/Button5"]
+layout_mode = 2
+offset_right = 400.0
+offset_bottom = 668.0
+
+[node name="TexMove" type="TextureRect" parent="Tutorial/ScrollContainer/HBoxContainer/Button5/VBoxContainer"]
+custom_minimum_size = Vector2(400, 400)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("6_fwwyg")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TexItem" type="TextureRect" parent="Tutorial/ScrollContainer/HBoxContainer/Button5/VBoxContainer/TexMove"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -150.0
+offset_right = 150.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("20_lqsjy")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="RTEItem" parent="Tutorial/ScrollContainer/HBoxContainer/Button5/VBoxContainer" instance=ExtResource("5_gbnmi")]
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.33, 0.33, 0.33, 1)
+theme_override_font_sizes/normal_font_size = 80
+text = "Reversed Move"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AudioUI" type="AudioStreamPlayer" parent="Tutorial/ScrollContainer/HBoxContainer/Button5"]
+stream = ExtResource("16_tkn1i")
+
+[node name="Rect" type="Panel" parent="Tutorial"]
+clip_children = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 149.0
+offset_top = 319.0
+offset_right = -967.0
+offset_bottom = -309.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_qf3xp")
+
+[node name="RectNormal" type="Panel" parent="Tutorial/Rect"]
+clip_children = 2
+texture_repeat = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_jn4ws")
+
+[node name="RectHover" type="Panel" parent="Tutorial/Rect"]
+clip_children = 2
+texture_repeat = 2
+material = SubResource("ShaderMaterial_pujjn")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 488.0
+offset_bottom = 840.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_lqsjy")
+
+[node name="Rect2" type="Panel" parent="Tutorial"]
+clip_children = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 164.0
+offset_top = 334.0
+offset_right = -981.0
+offset_bottom = -325.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_qf3xp")
+
+[node name="default_label" parent="Tutorial/Rect2" instance=ExtResource("5_gbnmi")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 14.0
+offset_right = 0.0
+offset_bottom = -310.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.972549, 0.945098, 0.866667, 1)
+theme_override_colors/font_outline_color = Color(0.333333, 0.333333, 0.333333, 1)
+theme_override_constants/outline_size = 24
+theme_override_font_sizes/normal_font_size = 60
+text = "How to Play"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="default_label2" parent="Tutorial/Rect2" instance=ExtResource("5_gbnmi")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 25.0
+offset_top = 132.0
+offset_right = -25.0
+offset_bottom = -74.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.33, 0.33, 0.33, 1)
+theme_override_font_sizes/normal_font_size = 35
+theme_override_font_sizes/bold_font_size = 35
+text = "[b]P1[/b]: Move with WASD, place bombs with C
+[b]P2[/b]: Move with Arrow Keys, place bombs with /
+
+[b]Get to the item tiles to acquire the items that might help you![/b]"
+
+[node name="EndGame" type="Control" parent="."]
+z_index = 105
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="P1Win" parent="EndGame" instance=ExtResource("5_gbnmi")]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(1, 0.639216, 0.847059, 1)
+theme_override_colors/font_outline_color = Color(0.333333, 0.333333, 0.333333, 1)
+theme_override_constants/outline_size = 24
+theme_override_font_sizes/normal_font_size = 50
+theme_override_font_sizes/bold_font_size = 200
+text = "[b]P1
+WINS[/b]"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="P2Win" parent="EndGame" instance=ExtResource("5_gbnmi")]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.407843, 0.533333, 0.85098, 1)
+theme_override_colors/font_outline_color = Color(0.333333, 0.333333, 0.333333, 1)
+theme_override_constants/outline_size = 24
+theme_override_font_sizes/normal_font_size = 50
+theme_override_font_sizes/bold_font_size = 200
+text = "[b]P2
+WINS[/b]"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SuddenDeath" parent="EndGame" instance=ExtResource("5_gbnmi")]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.977125, 0.437811, 0.453545, 1)
+theme_override_colors/font_outline_color = Color(0.333333, 0.333333, 0.333333, 1)
+theme_override_constants/outline_size = 24
+theme_override_font_sizes/normal_font_size = 50
+theme_override_font_sizes/bold_font_size = 200
+text = "[b]SUDDEN DEATH[/b]"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Draw" parent="EndGame" instance=ExtResource("5_gbnmi")]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.817166, 0.645732, 0.925638, 1)
+theme_override_colors/font_outline_color = Color(0.333333, 0.333333, 0.333333, 1)
+theme_override_constants/outline_size = 24
+theme_override_font_sizes/normal_font_size = 50
+theme_override_font_sizes/bold_font_size = 200
+text = "[b]DRAW[/b]"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AudioClose" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("24_7sehx")
+
+[node name="AudioCount" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("26_hhv6v")
+
+[node name="AudioStart" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("25_xjtte")
+volume_db = -9.694
+
+[node name="AudioReady" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("25_dw7xm")
+
+[node name="DrawCheckTimer" type="Timer" parent="."]
+wait_time = 0.4
+one_shot = true
+
+[connection signal="pressed" from="Tutorial/ScrollContainer/HBoxContainer/Button6" to="Tutorial/ScrollContainer/HBoxContainer/Button6" method="_on_button_pressed"]
+[connection signal="pressed" from="Tutorial/ScrollContainer/HBoxContainer/Button7" to="Tutorial/ScrollContainer/HBoxContainer/Button7" method="_on_button_pressed"]
+[connection signal="pressed" from="Tutorial/ScrollContainer/HBoxContainer/Button8" to="Tutorial/ScrollContainer/HBoxContainer/Button8" method="_on_button_pressed"]
+[connection signal="pressed" from="Tutorial/ScrollContainer/HBoxContainer/Button" to="Tutorial/ScrollContainer/HBoxContainer/Button" method="_on_button_pressed"]
+[connection signal="pressed" from="Tutorial/ScrollContainer/HBoxContainer/Button2" to="Tutorial/ScrollContainer/HBoxContainer/Button2" method="_on_button_pressed"]
+[connection signal="pressed" from="Tutorial/ScrollContainer/HBoxContainer/Button3" to="Tutorial/ScrollContainer/HBoxContainer/Button3" method="_on_button_pressed"]
+[connection signal="pressed" from="Tutorial/ScrollContainer/HBoxContainer/Button4" to="Tutorial/ScrollContainer/HBoxContainer/Button4" method="_on_button_pressed"]
+[connection signal="pressed" from="Tutorial/ScrollContainer/HBoxContainer/Button5" to="Tutorial/ScrollContainer/HBoxContainer/Button5" method="_on_button_pressed"]

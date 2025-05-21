@@ -1,0 +1,75 @@
+[gd_scene load_steps=5 format=3 uid="uid://bp18hxh6qh4u"]
+
+[ext_resource type="Script" uid="uid://8xatkgoop0ja" path="res://Scenes/UI/UIScripts/playertag.gd" id="1_tmeby"]
+[ext_resource type="Texture2D" uid="uid://bu6ro5posvoou" path="res://Scenes/UI/UIAssets/PlayUI/P (1).png" id="1_viswk"]
+[ext_resource type="PackedScene" uid="uid://bunuilmma82bm" path="res://Scenes/UI/Components/Font/default_label.tscn" id="2_tmeby"]
+[ext_resource type="Texture2D" uid="uid://ewkqi5piteyb" path="res://Scenes/UI/UIAssets/PlayUI/P (2).png" id="4_eb686"]
+
+[node name="Playertag" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_tmeby")
+player = "P2"
+
+[node name="TexP1" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_viswk")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="RTLP1" parent="TexP1" instance=ExtResource("2_tmeby")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.972549, 0.945098, 0.866667, 1)
+theme_override_colors/font_outline_color = Color(0.333333, 0.333333, 0.333333, 1)
+theme_override_constants/outline_size = 50
+theme_override_font_sizes/normal_font_size = 400
+text = "P1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TexP2" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_eb686")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="RTLP2" parent="TexP2" instance=ExtResource("2_tmeby")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.972549, 0.945098, 0.866667, 1)
+theme_override_colors/font_outline_color = Color(0.333333, 0.333333, 0.333333, 1)
+theme_override_constants/outline_size = 50
+theme_override_font_sizes/normal_font_size = 400
+text = "P2
+"
+horizontal_alignment = 1
+vertical_alignment = 1

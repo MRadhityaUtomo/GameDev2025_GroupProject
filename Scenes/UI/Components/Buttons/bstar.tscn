@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dtg2wlxdjktm6"]
+[gd_scene load_steps=14 format=3 uid="uid://dtg2wlxdjktm6"]
 
 [ext_resource type="Script" uid="uid://7julxgm7er0x" path="res://Scenes/UI/UIScripts/Components/buttonstar.gd" id="1_ek28j"]
 [ext_resource type="Texture2D" uid="uid://b3fwljtqyuep4" path="res://Scenes/UI/UIAssets/Button/Mask/BStarMask.png" id="1_l4tuk"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://dl1ehwkdmi3ym" path="res://Scenes/UI/UIAssets/BG/BGPatternYellow.png" id="3_ek28j"]
 [ext_resource type="Texture2D" uid="uid://dkv3rss7ogob6" path="res://Scenes/UI/UIAssets/Button/BStarOutline.png" id="4_mjnhn"]
 [ext_resource type="PackedScene" uid="uid://bunuilmma82bm" path="res://Scenes/UI/Components/Font/default_label.tscn" id="5_36qpw"]
+[ext_resource type="AudioStream" uid="uid://t3wkd1y3sarh" path="res://Scenes/UI/Components/Buttons/AudioAssets/buttonStar.mp3" id="7_mjnhn"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ek28j"]
 
@@ -50,6 +51,7 @@ anchor_bottom = 1.00333
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.555867, 1.01152)
+mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_h17lh")
 metadata/_edit_use_anchors_ = true
 
@@ -64,6 +66,7 @@ offset_right = 1152.0
 offset_bottom = 1152.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_qe2fc")
 
 [node name="RectHover" type="Panel" parent="MaskStar"]
@@ -78,6 +81,7 @@ offset_right = 1152.0
 offset_bottom = 1152.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_f7meo")
 
 [node name="Star Outline" type="TextureRect" parent="."]
@@ -111,6 +115,9 @@ text = "X
 "
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_mjnhn")
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

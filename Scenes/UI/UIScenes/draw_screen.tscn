@@ -1,0 +1,147 @@
+[gd_scene load_steps=11 format=3 uid="uid://dby17olmrq44p"]
+
+[ext_resource type="Shader" uid="uid://e3oxmp7fc20y" path="res://Scenes/UI/UIAssets/Shader/patternxy.gdshader" id="1_bu5ti"]
+[ext_resource type="Script" uid="uid://uo6l3iqmnu2s" path="res://Scenes/UI/UIScripts/Components/StatusScreen.gd" id="1_qsm46"]
+[ext_resource type="Texture2D" uid="uid://djn5ft5uisry2" path="res://Scenes/UI/UIAssets/BG/BGPatternBlue2.png" id="2_u5wl5"]
+[ext_resource type="Texture2D" uid="uid://cq3jvr4ir8exs" path="res://Scenes/UI/UIAssets/Player/P2Win.png" id="3_6jofh"]
+[ext_resource type="PackedScene" uid="uid://bunuilmma82bm" path="res://Scenes/UI/Components/Font/default_label.tscn" id="4_qsm46"]
+[ext_resource type="Texture2D" uid="uid://d2t88semkit2p" path="res://Scenes/UI/UIAssets/Player/P1Win.png" id="4_u5wl5"]
+[ext_resource type="Texture2D" uid="uid://6peopgp1jim7" path="res://Scenes/UI/UIAssets/Button/BRectOutline.png" id="5_v0lj8"]
+[ext_resource type="PackedScene" uid="uid://d3tddc5evf43b" path="res://Scenes/UI/Components/Buttons/brectnew.tscn" id="6_e236n"]
+[ext_resource type="AudioStream" uid="uid://b4kk578oo6ah4" path="res://Scenes/UI/Components/Buttons/AudioAssets/Draw.mp3" id="9_qsm46"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ymvcf"]
+shader = ExtResource("1_bu5ti")
+shader_parameter/scroll_speed = Vector2(0.1, 0.1)
+shader_parameter/time_offset = 0.0
+
+[node name="level_select" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qsm46")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_ymvcf")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -450.0
+offset_top = -175.0
+offset_right = 450.0
+offset_bottom = 175.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+texture = ExtResource("2_u5wl5")
+
+[node name="P1Win" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 500.0
+offset_top = -57.0
+offset_right = 500.0
+offset_bottom = -57.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_6jofh")
+stretch_mode = 5
+
+[node name="P1Win3" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 157.0
+offset_top = 140.0
+offset_right = 157.0
+offset_bottom = 140.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_u5wl5")
+stretch_mode = 5
+
+[node name="P1Win2" parent="." instance=ExtResource("4_qsm46")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 298.0
+offset_top = 19.0
+offset_right = -1027.0
+offset_bottom = -341.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.777914, 0.702745, 0.905685, 1)
+theme_override_colors/font_outline_color = Color(0.333333, 0.333333, 0.333333, 1)
+theme_override_constants/outline_size = 24
+theme_override_font_sizes/normal_font_size = 50
+theme_override_font_sizes/bold_font_size = 200
+text = "[b]DRAW[/b]"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 608.0
+offset_bottom = 608.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.217675
+color = Color(0.778855, 0.743071, 0.923183, 1)
+
+[node name="OutlineRect" type="TextureRect" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -262.384
+offset_top = -102.761
+offset_right = -262.384
+offset_bottom = -102.761
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.22735, 1.12235)
+texture = ExtResource("5_v0lj8")
+expand_mode = 1
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 688.0
+offset_bottom = 688.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.315024, 0.362466)
+
+[node name="Brectlevelselect" parent="Control" instance=ExtResource("6_e236n")]
+layout_mode = 1
+offset_left = 216.99
+offset_right = 216.99
+target_scene = "C:/Users/samue/Documents/DL File/Col/UI/GameDev/Gamejam Kelompok/GameDev2025_GroupProject/Scenes/UI/UIScenes/main_menu2.tscn"
+label_text_2 = "Back to Menu"
+
+[node name="Brectlevelselect2" parent="Control" instance=ExtResource("6_e236n")]
+layout_mode = 1
+offset_left = 2256.2
+offset_right = 2256.2
+target_scene = "res://Scenes/tile_testing.tscn"
+label_text_2 = "Play Again"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_qsm46")

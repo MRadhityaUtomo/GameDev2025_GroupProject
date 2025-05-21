@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://d3fsr3dge7nqx"]
+[gd_scene load_steps=9 format=3 uid="uid://d3fsr3dge7nqx"]
 
 [ext_resource type="Texture2D" uid="uid://cgkx0w8vuy7yo" path="res://Scenes/UI/UIAssets/Button/BRect_H.png" id="1_ow5y5"]
 [ext_resource type="Script" uid="uid://c7wytq4ic1gbk" path="res://Scenes/UI/UIScripts/Components/button.gd" id="1_v7q38"]
 [ext_resource type="Texture2D" uid="uid://b2w2d8pa7i45d" path="res://Scenes/UI/UIAssets/Button/BRect.png" id="2_dx1h2"]
+[ext_resource type="AudioStream" uid="uid://cxwtwvusditq" path="res://Scenes/UI/Components/Buttons/AudioAssets/button.mp3" id="4_2evwi"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ow5y5"]
 
@@ -33,6 +34,9 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_xi6lh")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_2evwi")
 theme_override_styles/normal = SubResource("StyleBoxTexture_dx1h2")
 script = ExtResource("1_v7q38")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_2evwi")
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

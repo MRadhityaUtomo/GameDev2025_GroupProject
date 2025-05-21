@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://b3fwljtqyuep4" path="res://Scenes/UI/UIAssets/Button/Mask/BStarMask.png" id="3_ps82v"]
 [ext_resource type="Texture2D" uid="uid://dkv3rss7ogob6" path="res://Scenes/UI/UIAssets/Button/BStarOutline.png" id="4_dx8yw"]
 [ext_resource type="Texture2D" uid="uid://dl1ehwkdmi3ym" path="res://Scenes/UI/UIAssets/BG/BGPatternYellow.png" id="6_4c8mr"]
+[ext_resource type="AudioStream" uid="uid://52a64tgjs46e" path="res://Scenes/UI/Components/Buttons/AudioAssets/buttonRect.mp3" id="9_ojhm6"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6jmn0"]
 
@@ -28,9 +29,6 @@ shader_parameter/time_offset = 0.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4c8mr"]
 texture = ExtResource("2_dx8yw")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jbc24"]
-texture = ExtResource("3_ps82v")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4c8mr"]
 bg_color = Color(0.52549, 0.627451, 0.882353, 1)
@@ -63,14 +61,13 @@ script = ExtResource("1_4c8mr")
 [node name="Rect" type="Panel" parent="."]
 clip_children = 2
 layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.333
+anchors_preset = 15
 anchor_right = 1.0
-anchor_bottom = 0.69
-offset_left = 51.9999
-offset_top = 0.299988
-offset_right = -40.0001
-offset_bottom = -6.10352e-05
+anchor_bottom = 1.0
+offset_left = 46.0
+offset_top = 359.0
+offset_right = -46.0
+offset_bottom = -359.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_3ivo4")
@@ -105,30 +102,25 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 10.0
-offset_top = 250.0
-offset_right = -1124.0
-offset_bottom = -528.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(3.41349, 3.41349)
 texture = ExtResource("2_3ivo4")
 expand_mode = 1
-stretch_mode = 4
+stretch_mode = 5
 
-[node name="MaskStar" type="Panel" parent="."]
+[node name="MaskStar" type="TextureRect" parent="."]
 clip_children = 1
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 630.0
-offset_top = 25.0
-offset_right = -613.0
-offset_bottom = -518.0
+offset_top = 111.0
+offset_bottom = -597.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_jbc24")
+scale = Vector2(1, 0.946457)
+texture = ExtResource("3_ps82v")
+stretch_mode = 5
 
 [node name="RectNormal" type="Panel" parent="MaskStar"]
 clip_children = 2
@@ -137,8 +129,6 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 1152.0
-offset_bottom = 1152.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_4c8mr")
@@ -162,16 +152,15 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 600.0
-offset_top = 2.0
-offset_right = -878.0
-offset_bottom = -778.0
+offset_left = 643.0
+offset_top = 113.0
+offset_right = -648.0
+offset_bottom = -613.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(3.41349, 3.41349)
 texture = ExtResource("4_dx8yw")
 expand_mode = 1
-stretch_mode = 4
+stretch_mode = 5
 
 [node name="default_label" parent="." instance=ExtResource("3_cmw60")]
 z_index = 100
@@ -223,6 +212,9 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_4c8mr")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_4c8mr")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_4c8mr")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_4c8mr")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_ojhm6")
 
 [connection signal="pressed" from="." to="." method="_on_Button_pressed"]
 [connection signal="mouse_entered" from="Button" to="." method="_on_mouse_entered"]
