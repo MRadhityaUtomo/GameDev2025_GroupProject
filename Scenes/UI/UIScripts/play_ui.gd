@@ -25,8 +25,8 @@ class_name PlayUI
 @onready var p2tall = $Main/PTall/P2/P2Tall
 
 #keep this for now
-@export_enum("angry", "dead", "happy", "neutral", "hurt") var _expressionP1: String = "neutral"
-@export_enum("angry", "dead", "happy", "neutral", "hurt") var _expressionP2: String = "neutral"
+@export_enum("angry", "dead", "happy", "neutral", "hurt") var expressionP1: String = "neutral"
+@export_enum("angry", "dead", "happy", "neutral", "hurt") var expressionP2: String = "neutral"
 
 @onready var audio_ready = $AudioReady
 @onready var audio_close = $AudioClose
@@ -37,12 +37,12 @@ static var ui_instance: PlayUI = null
 
 
 func set_expression_p1(value: String) -> void:
-	_expressionP1 = value
+	expressionP1 = value
 	if is_instance_valid(p1tall):
 		p1tall.set_expression(value)
 
 func set_expression_p2(value: String) -> void:
-	_expressionP2 = value
+	expressionP2 = value
 	if is_instance_valid(p2tall):
 		p2tall.set_expression(value)
 
@@ -134,8 +134,8 @@ func _ready():
 
 	set_process_input(true)
 	update_player_icons()
-	set_expression_p1(_expressionP1)
-	set_expression_p2(_expressionP2)
+	set_expression_p1(expressionP1)
+	set_expression_p2(expressionP2)
 	set_heart_p1(heartP1)
 	set_heart_p2(heartP2)
 
