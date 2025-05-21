@@ -11,6 +11,11 @@ on:
         options:
         - release
         - debug
+      release_tag:
+        description: 'Release tag (only for release builds)'
+        required: false
+        type: string
+        default: 'v1.0.0'
 
 jobs:
   export-windows:
@@ -47,20 +52,26 @@ jobs:
         if: github.event.inputs.build_type == 'release'
         run: |
           mkdir -p artifacts/windows-build-release
-          godot --headless --export-release "Windows Desktop" artifacts/windows-build-release/YourGameName_release.exe .
+          godot --headless --export-release "Windows Desktop" artifacts/windows-build-release/Explosive-Outplay_${{ github.event.inputs.release_tag }}.exe .
 
       - name: Export Godot project (Debug)
         if: github.event.inputs.build_type == 'debug'
         run: |
           mkdir -p artifacts/windows-build-debug
-          godot --headless --export-debug "Windows Desktop" artifacts/windows-build-debug/YourGameName_debug.exe .
+          godot --headless --export-debug "Windows Desktop" artifacts/windows-build-debug/Explosive-Outplay_debug.exe .
 
-      - name: Upload Windows Artifact (Release)
+      - name: Create GitHub Release and Upload (Release)
         if: github.event.inputs.build_type == 'release'
-        uses: actions/upload-artifact@v4
+        uses: softprops/action-gh-release@v1
         with:
-          name: windows-build-release
-          path: artifacts/windows-build-release
+          tag_name: ${{ github.event.inputs.release_tag }}
+          name: Release ${{ github.event.inputs.release_tag }}
+          files: |
+            artifacts/windows-build-release/Explosive-Outplay_${{ github.event.inputs.release_tag }}.exe
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload Windows Artifact (Debug)
         if: github.event.inputs.build_type == 'debug'
