@@ -222,5 +222,5 @@ func reset_movement_mode():
         PlayUI.ui_instance.set_p2_move_icon(mode_name)
     PlayUI.ui_instance.stop_powerup_timer(player_body.id, "MOVEMENT")
     current_movement_mode = MovementMode.Type.KING_MOVEMENT
-    _update_active_logic_strategy()
+    change_movement_mode(current_movement_mode)
     movement_mode_changed.emit(mode_name)
