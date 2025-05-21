@@ -69,12 +69,13 @@ func takedamage():
                 PlayUI.ui_instance.set_expression_p1("dead")
                 if PlayUI.ui_instance.expressionP2 == "neutral":
                     PlayUI.ui_instance.set_expression_p2("happy")
+                PlayUI.ui_instance.set_heart_p1(0)
         else:
             if is_instance_valid(PlayUI.ui_instance):
                 PlayUI.ui_instance.set_expression_p2("dead")
                 if PlayUI.ui_instance.expressionP1 == "neutral":
                     PlayUI.ui_instance.set_expression_p1("happy")
-                
+                PlayUI.ui_instance.set_heart_p2(0)
         self.invincible()
         animations.play("hurt")
         await animations.animation_finished
