@@ -86,7 +86,7 @@ var ready_2_active := false
 var countdown = 3
 var countdown_timer := Timer.new()
 var game_timer := Timer.new()
-var total_game_seconds = 5 * 60  # 5 minutes
+var total_game_seconds = 5 * 45  # 5 minutes
 
 func _ready():
 	get_tree().paused = true
@@ -164,8 +164,8 @@ func _on_countdown_tick():
 		countdown_label.text = "1"
 
 		# Start game countdown
-		minute_label.text = "5"
-		second_label.text = "00"
+		minute_label.text = "3"
+		second_label.text = "45"
 		game_timer.start()
 
 		# Show game and hide ready

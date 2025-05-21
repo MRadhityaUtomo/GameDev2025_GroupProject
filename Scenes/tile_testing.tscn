@@ -71,6 +71,7 @@ script = ExtResource("1_wmmkt")
 
 [node name="DynamicTiles" parent="." instance=ExtResource("2_toqyy")]
 position = Vector2(-128, -128)
+shrinking_time = 45
 maximum_shrinking_stages = 5
 border_explosion_scene = ExtResource("5_8w6n6")
 

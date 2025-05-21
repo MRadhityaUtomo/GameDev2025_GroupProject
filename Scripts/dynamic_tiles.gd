@@ -10,7 +10,6 @@ enum BorderType {
 }
 
 @onready var half_cell_size := tile_set.tile_size / 2
-@onready var shrinking_time_label = $ShrinkingTimeLabel
 @export var trap_spawn_rate = 2
 @export var trap_amount_limit = 8
 @export var max_radius = 7
@@ -26,7 +25,7 @@ enum BorderType {
 @export var border_explosion_scene: PackedScene
 
 var current_radius
-var current_shrinking_time
+static var current_shrinking_time
 var tile_instances = {}
 var current_shrinking_stage=0
 
@@ -82,8 +81,6 @@ func _ready():
 		await get_tree().process_frame
 		current_radius = max_radius
 		current_shrinking_time = shrinking_time
-		if shrinking_time_label:
-			shrinking_time_label.text = "Time Until Shrinking %d" % [current_shrinking_time]
 			
 		# Clear any existing tile instances
 		for pos in tile_instances.keys():
@@ -331,10 +328,8 @@ func reset_edge_sprites():
 func _on_shrinking_timer_timeout() -> void:
 	if current_shrinking_stage < maximum_shrinking_stages:
 		current_shrinking_time -= 1
-		shrinking_time_label.text = "Time Until Shrinking %d" % [current_shrinking_time]
 		if current_shrinking_time <= 0:
 			current_shrinking_time = shrinking_time
-			shrinking_time_label.text = "Time Until Shrinking %d" % [current_shrinking_time]
 			if current_radius > 1:
 				current_radius -= 1
 				remove_border()
