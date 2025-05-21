@@ -201,10 +201,10 @@ target_scene = "res://Scenes/UI/UIScenes/level_select.tscn"
 [node name="default_label3" parent="main_menu/Control" instance=ExtResource("2_wwvqu")]
 z_index = 102
 layout_mode = 2
-offset_left = 592.0
-offset_top = 683.0
-offset_right = 992.0
-offset_bottom = 721.0
+offset_left = 752.0
+offset_top = 768.0
+offset_right = 1152.0
+offset_bottom = 806.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -213,6 +213,7 @@ theme_override_font_sizes/normal_font_size = 31
 text = "Click To Play"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_group_ = true
 
 [node name="MarginContainer" type="MarginContainer" parent="main_menu"]
 z_index = 100

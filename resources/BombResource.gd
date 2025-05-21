@@ -1,7 +1,7 @@
 class_name BombType
 extends Resource
 
-enum ExplosionPattern { CROSS, DIAG }
+enum ExplosionPattern { CROSS, DIAG, SQUARE }
 
 @export var grid_size: int = 64
 @export var name: String = "Standard Bomb"
@@ -16,26 +16,33 @@ func get_explosion_directions() -> Array:
 			return [Vector2.UP, Vector2.DOWN, Vector2.LEFT, Vector2.RIGHT]
 		ExplosionPattern.DIAG:
 			return [Vector2(1, 1), Vector2(-1, 1), Vector2(1, -1), Vector2(-1, -1)]
+		ExplosionPattern.SQUARE:
+			return [
+				Vector2.UP, Vector2.DOWN, Vector2.LEFT, Vector2.RIGHT,  # Cardinal directions
+				Vector2(1, 1), Vector2(-1, 1), Vector2(1, -1), Vector2(-1, -1)  # Diagonal directions
+			]
 	return []
+
 
 
 func spawn_explosions(origin_position: Vector2, parent_scene: Node):
 	var directions = get_explosion_directions()
+	var max_distance = 2 if pattern == ExplosionPattern.SQUARE else explosion_radius
 
 	print("Spawning explosions from origin: ", origin_position)
 
 	# spawn one at center
 	_spawn_explosion_at(origin_position, parent_scene)
 
-	# For each direction (up, down, left, right in cross pattern)
+	# For each direction
 	for dir in directions:
 		# Start from 1 (one tile away from origin)
 		var i = 1
 		var blocked = false
 		var max_safety_limit = 30  # Safety limit to prevent infinite explosions
 
-		# Continue until we hit something or reach safety limit
-		while not blocked and i <= max_safety_limit:
+		# Continue until we hit something or reach safety/distance limit
+		while not blocked and i <= max_safety_limit and i <= max_distance:
 			var pos = origin_position + dir * i * grid_size
 
 			# Check if there's a wall or border at this position

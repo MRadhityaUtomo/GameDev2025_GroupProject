@@ -5,7 +5,7 @@ extends CharacterBody2D
 @export var hp: int = 3
 @export var state: String
 @export var BombCount: int = 3
-@export var action_cooldown_duration: float = 0.4  # seconds
+@export var action_cooldown_duration: float = 0.6 # seconds
 
 @export var up_action: String
 @export var down_action: String
@@ -43,7 +43,13 @@ func invincible():
 	print("test")
 	hurtBox.disabled = true
 	isInvincible = true
-	await get_tree().create_timer(2).timeout
+	var flicker_count = 20 
+	var flicker_interval = 0.1  
+	var original_visibility = animations.modulate.a
+	for i in range(flicker_count):
+		animations.modulate.a = 0.2 if i % 2 == 0 else original_visibility
+		await get_tree().create_timer(flicker_interval).timeout
+	animations.modulate.a = original_visibility
 	hurtBox.disabled = false
 	isInvincible = false
 
@@ -58,6 +64,18 @@ func takedamage():
 	animations.play("idle")
 
 	
+# Add this function to your Player class
+func push_from_border(push_direction: Vector2, push_force: float = 500.0):
+	# Apply a strong impulse in the push direction
+	print("pushed")
+	velocity = push_direction * push_force
+	move_and_slide()
+	
+	# Play hurt animation if not already playing
+	if animations.animation != "hurt":
+		animations.play("hurt")
+		await animations.animation_finished
+		animations.play("idle")
 	
 func die():
 	queue_free()

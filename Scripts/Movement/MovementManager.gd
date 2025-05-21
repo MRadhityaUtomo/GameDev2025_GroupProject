@@ -2,7 +2,7 @@ extends Node
 
 @export var player_body : CharacterBody2D
 @export var grid_size : int = 64
-@export var travel_speed : int = 800
+@export var travel_speed : int = 1200
 
 @onready var BombMarker = $"../BombSpawnLocation"
 @onready var Raycast = $"../RayCast2D"

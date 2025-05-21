@@ -23,6 +23,7 @@ enum BorderType {
 @export var border_tile_scene: PackedScene
 @export var trap_tile_scene: PackedScene
 @export var maximum_shrinking_stages=3
+@export var border_explosion_scene: PackedScene
 
 var current_radius
 var current_shrinking_time
