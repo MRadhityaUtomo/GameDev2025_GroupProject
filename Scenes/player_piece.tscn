@@ -2,13 +2,13 @@
 
 [ext_resource type="Script" uid="uid://bvpbsltbk1ovn" path="res://Scripts/Player.gd" id="1_5heyv"]
 [ext_resource type="Texture2D" uid="uid://muxlfx7u30ye" path="res://Assets/ChessPiece.png" id="2_4eato"]
-[ext_resource type="Script" uid="uid://ds1jhdlon08rw" path="res://Scripts/MovementManager.gd" id="3_ii2tr"]
+[ext_resource type="Script" uid="uid://ds1jhdlon08rw" path="res://Scripts/Movement/MovementManager.gd" id="3_ii2tr"]
 [ext_resource type="Script" uid="uid://d2prhul35vk57" path="res://Scripts/BombManager.gd" id="4_6l0lv"]
 [ext_resource type="PackedScene" uid="uid://cowthuaj68hka" path="res://Scenes/bomb.tscn" id="5_yey61"]
 [ext_resource type="Texture2D" uid="uid://bjqvddit73fr8" path="res://Assets/Placeholder Tiles.png" id="6_a2i5t"]
 [ext_resource type="Texture2D" uid="uid://cspwvsu3dxtxh" path="res://Assets/crosshair.png" id="7_2ahor"]
-[ext_resource type="SpriteFrames" uid="uid://dneu7xno7w1ek" path="res://Scenes/player1anims.tres" id="8_dvguk"]
-[ext_resource type="SpriteFrames" uid="uid://xeim4427l12d" path="res://Scenes/player2anims.tres" id="9_2ahor"]
+[ext_resource type="SpriteFrames" uid="uid://cwgr2uq3oppun" path="res://Scenes/player1anims.tres" id="8_dvguk"]
+[ext_resource type="SpriteFrames" uid="uid://2xyna35jkfvm" path="res://Scenes/player2anims.tres" id="9_2ahor"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uruiu"]
 
@@ -46,6 +46,10 @@ z_index = 4
 scale = Vector2(2, 2)
 collision_mask = 4
 script = ExtResource("1_5heyv")
+up_action = "W"
+down_action = "S"
+left_action = "A"
+right_action = "D"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 visible = false

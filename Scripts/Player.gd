@@ -1,16 +1,17 @@
+class_name Player
 extends CharacterBody2D
 
-@export var id : int
-@export var hp : int = 3
-@export var state : String
-@export var BombCount : int = 3
-@export var action_cooldown_duration : float = 0.4  # seconds
+@export var id: int
+@export var hp: int = 3
+@export var state: String
+@export var BombCount: int = 3
+@export var action_cooldown_duration: float = 0.4  # seconds
 
-@export var up_action : String
-@export var down_action : String
-@export var left_action : String
-@export var right_action : String
-@export var bomb_action : String
+@export var up_action: String
+@export var down_action: String
+@export var left_action: String
+@export var right_action: String
+@export var bomb_action: String
 
 @onready var hurtBox = $CollisionShape2D
 @onready var sprite = $Sprite2D
@@ -19,20 +20,25 @@ extends CharacterBody2D
 
 var isInvincible = false
 var CanPlace = true
-var original_modulate := Color(1, 1, 1)  
-@export var current_bomb_type : BombType
+var original_modulate := Color(1, 1, 1)
+@export var current_bomb_type: BombType
 
 @export var GlobalBombs: Node2D
 
-var action_cooldown_timer : float = 0.0
-var last_move_direction : Vector2 = Vector2.ZERO
+var action_cooldown_timer: float = 0.0
+var last_move_direction: Vector2 = Vector2.ZERO
+var has_diagonal_movement: bool = false  # Added for diagonal movement powerup
+var diagonal_mode_active: bool = false  # New variable for diagonal-only mode
+
 
 func _ready():
 	animations.sprite_frames = animationSet
 	animations.play("idle")
 	add_to_group("player")
+	print("player ready at", global_position)
 	pass
-	
+
+
 func invincible():
 	print("test")
 	hurtBox.disabled = true
@@ -41,7 +47,8 @@ func invincible():
 	hurtBox.disabled = false
 	isInvincible = false
 
-func takedamage():	
+
+func takedamage():
 	hp -= 1
 	if hp <= 0:
 		die()
@@ -54,4 +61,7 @@ func takedamage():
 	
 func die():
 	queue_free()
-	
+
+
+func get_movement_manager():
+	return $MovementManager

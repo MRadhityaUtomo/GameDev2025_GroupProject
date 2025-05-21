@@ -337,3 +337,24 @@ func _on_shrinking_timer_timeout() -> void:
 					draw_rectange_border(center.x, center.y, current_radius)
 				update_edge_sprites()
 			current_shrinking_stage+=1
+
+func get_random_walkable_tile_position() -> Vector2:
+	# Get all walkable tile positions
+	var walkable_tiles = get_used_cells_by_id(0, Vector2i(0, 0), 1)
+	
+	# If no walkable tiles found, return Vector2.ZERO
+	if walkable_tiles.size() == 0:
+		print("No walkable tiles found")
+		return Vector2.ZERO
+	
+	# Select random walkable tile
+	var random_index = randi() % walkable_tiles.size()
+	var random_tile_pos = walkable_tiles[random_index]
+	
+	print("Selected walkable tile pos:", random_tile_pos)
+	
+	# Convert tile position to world position
+	var local_pos = map_to_local(random_tile_pos)
+	
+	# Convert to global position to account for tilemap's own position
+	return to_global(local_pos)
