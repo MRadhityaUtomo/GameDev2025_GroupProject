@@ -71,7 +71,7 @@ script = ExtResource("1_wmmkt")
 
 [node name="DynamicTiles" parent="." instance=ExtResource("2_toqyy")]
 position = Vector2(-128, -128)
-shrinking_time = 999
+shrinking_time = 300
 maximum_shrinking_stages = 5
 border_explosion_scene = ExtResource("5_8w6n6")
 
@@ -94,7 +94,7 @@ up_action = "ui_up"
 down_action = "ui_down"
 left_action = "ui_left"
 right_action = "ui_right"
-bomb_action = "ui_accept"
+bomb_action = "slash"
 animationSet = ExtResource("7_nughl")
 current_bomb_type = ExtResource("4_toqyy")
 GlobalBombs = NodePath("../GlobalBombManager")
@@ -124,7 +124,6 @@ offset_right = 1920.0
 offset_bottom = 1080.0
 
 [node name="play_ui" parent="CanvasLayer" instance=ExtResource("20_ooln7")]
-visible = false
 
 [node name="CanvasLayer2" type="CanvasLayer" parent="."]
 

@@ -9,6 +9,8 @@ enum ExplosionPattern { CROSS, DIAG, SQUARE }
 @export var explosion_scene: PackedScene
 @export var pattern: ExplosionPattern = ExplosionPattern.CROSS
 @export var texture: Texture2D
+@export var duration: float = 7
+@export var id_name: String
 
 func get_explosion_directions() -> Array:
 	match pattern:

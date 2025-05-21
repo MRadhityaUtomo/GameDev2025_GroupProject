@@ -12,3 +12,5 @@ explosion_radius = 100
 explosion_scene = ExtResource("1_pssym")
 pattern = 0
 texture = ExtResource("3_g4uq6")
+duration = 7.0
+id_name = ""
