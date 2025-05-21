@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="BombType" load_steps=4 format=3 uid="uid://bv1qxktdrtsr5"]
+
+[ext_resource type="PackedScene" uid="uid://bvle03hudcfyf" path="res://Scenes/explosion.tscn" id="1_yphsl"]
+[ext_resource type="Script" uid="uid://onm7yujaucp1" path="res://resources/BombResource.gd" id="2_0n2vy"]
+[ext_resource type="Texture2D" uid="uid://beiqv2lvqnt3r" path="res://Scenes/UI/UIAssets/Power/PowUpWideBomb.png" id="3_0n2vy"]
+
+[resource]
+script = ExtResource("2_0n2vy")
+grid_size = 64
+name = "Standard Bomb"
+explosion_radius = 2
+explosion_scene = ExtResource("1_yphsl")
+pattern = 2
+texture = ExtResource("3_0n2vy")

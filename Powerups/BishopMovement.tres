@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="PowerupResource" load_steps=3 format=3 uid="uid://ciluy0fqsgjjf"]
+
+[ext_resource type="Script" uid="uid://bh488m13x02a6" path="res://resources/PowerupResource.gd" id="1_f7gl4"]
+[ext_resource type="Texture2D" uid="uid://ctyd6xk834da5" path="res://Scenes/UI/UIAssets/Power/MoveDiagonal.png" id="2_rxrql"]
+
+[resource]
+script = ExtResource("1_f7gl4")
+movement_type = 1
+texture = ExtResource("2_rxrql")
+display_name = "Bishop Movement"
+color_tint = Color(1, 1, 1, 1)

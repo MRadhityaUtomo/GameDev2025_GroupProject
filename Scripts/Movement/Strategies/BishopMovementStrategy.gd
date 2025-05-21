@@ -18,25 +18,26 @@ func handle_input() -> bool:
 	if manager.player_body.action_cooldown_timer > 0 or _is_moving_to_target:
 		return false
 
-	var input_x_axis = 0
-	var input_y_axis = 0
-	if Input.is_action_pressed(str(manager.player_body.left_action)):
-		input_x_axis -= 1
-	if Input.is_action_pressed(str(manager.player_body.right_action)):
-		input_x_axis += 1
-	if Input.is_action_pressed(str(manager.player_body.up_action)):
-		input_y_axis -= 1
-	if Input.is_action_pressed(str(manager.player_body.down_action)):
-		input_y_axis += 1
-
-	input_x_axis = sign(input_x_axis)
-	input_y_axis = sign(input_y_axis)
-
-	if input_x_axis != 0 and input_y_axis != 0:
-		_current_input_vector = Vector2(input_x_axis, input_y_axis)
-		return true
-
 	_current_input_vector = Vector2.ZERO
+	
+	# Direct mapping of cardinal inputs to diagonal movements
+	if Input.is_action_pressed(str(manager.player_body.up_action)):
+		# Up → Top-right
+		_current_input_vector = Vector2(1, -1)
+		return true
+	elif Input.is_action_pressed(str(manager.player_body.right_action)):
+		# Right → Bottom-right
+		_current_input_vector = Vector2(1, 1)
+		return true
+	elif Input.is_action_pressed(str(manager.player_body.down_action)):
+		# Down → Bottom-left
+		_current_input_vector = Vector2(-1, 1)
+		return true
+	elif Input.is_action_pressed(str(manager.player_body.left_action)):
+		# Left → Top-left
+		_current_input_vector = Vector2(-1, -1)
+		return true
+	
 	return false
 
 

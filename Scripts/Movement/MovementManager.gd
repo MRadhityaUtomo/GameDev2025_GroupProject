@@ -2,11 +2,11 @@ extends Node
 
 @export var player_body : CharacterBody2D
 @export var grid_size : int = 64
-@export var travel_speed : int = 800
+@export var travel_speed : int = 1200
 
 @onready var BombMarker = $"../BombSpawnLocation"
 @onready var Raycast = $"../RayCast2D"
-
+@onready var powerup_duration: Timer = $"../PowerupDuration"
 
 var current_movement_mode: MovementMode.Type = MovementMode.Type.KING_MOVEMENT
 
@@ -176,7 +176,11 @@ func update_bomb_marker():
 		BombMarker.global_position = player_body.global_position
 
 
-func change_movement_mode(new_mode: MovementMode.Type):
+func change_movement_mode(new_mode: MovementMode.Type, duration: float = 10.0):
+	# First, disconnect any existing timeout connections to avoid multiple callbacks
+	if powerup_duration.timeout.is_connected(reset_movement_mode):
+		powerup_duration.timeout.disconnect(reset_movement_mode)
+	
 	# Don't change immediately if currently moving
 	if current_movement_strategy and current_movement_strategy.is_moving():
 		# Schedule the change after movement completes
@@ -195,8 +199,15 @@ func change_movement_mode(new_mode: MovementMode.Type):
 				# Now it's safe to change
 				current_movement_mode = new_mode
 				_update_active_logic_strategy()
-				movement_mode_changed.emit(mode_name)
-				print("MovementManager: Mode changed to -> ", mode_name)
+				var new_mode_name = MovementMode.Type.keys()[current_movement_mode]
+				movement_mode_changed.emit(new_mode_name)
+				print("MovementManager: Mode changed to -> ", new_mode_name)
+				
+				# Start the powerup duration timer
+				powerup_duration.wait_time = duration
+				powerup_duration.start()
+				powerup_duration.timeout.connect(reset_movement_mode)
+				
 				# Clean up timer
 				timer.stop()
 				timer.queue_free()
@@ -210,3 +221,16 @@ func change_movement_mode(new_mode: MovementMode.Type):
 		var mode_name = MovementMode.Type.keys()[current_movement_mode]
 		movement_mode_changed.emit(mode_name)
 		print("MovementManager: Mode changed to -> ", mode_name)
+		
+		# Start the powerup duration timer
+		powerup_duration.wait_time = duration
+		powerup_duration.start()
+		powerup_duration.timeout.connect(reset_movement_mode)
+
+
+func reset_movement_mode():
+	print("Powerup duration ended, reverting to KING_MOVEMENT")
+	current_movement_mode = MovementMode.Type.KING_MOVEMENT
+	_update_active_logic_strategy()
+	var mode_name = MovementMode.Type.keys()[current_movement_mode]
+	movement_mode_changed.emit(mode_name)

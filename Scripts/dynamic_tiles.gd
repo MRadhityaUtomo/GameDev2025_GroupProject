@@ -2,6 +2,8 @@
 extends TileMapLayer
 class_name DynamicTiles
 
+signal border_shrunk(new_radius)
+
 enum BorderType {
 	circle,
 	rectangle
@@ -21,6 +23,7 @@ enum BorderType {
 @export var border_tile_scene: PackedScene
 @export var trap_tile_scene: PackedScene
 @export var maximum_shrinking_stages=3
+@export var border_explosion_scene: PackedScene
 
 var current_radius
 var current_shrinking_time
@@ -116,6 +119,8 @@ func _on_trap_timer_timeout() -> void:
 	elif get_trap_amount() < trap_amount_limit:
 		for i in range(trap_amount_limit - get_trap_amount()):
 			spawn_trap()
+
+#comment
 
 func draw_circle_border(center_x, center_y, radius):
 	var center = Vector2(center_x, center_y)
@@ -333,7 +338,11 @@ func _on_shrinking_timer_timeout() -> void:
 				elif border_type == BorderType.rectangle:
 					draw_rectange_border(center.x, center.y, current_radius)
 				update_edge_sprites()
-			current_shrinking_stage+=1
+				
+				# Signal that the border has shrunk
+				border_shrunk.emit(current_radius)
+				
+			current_shrinking_stage += 1
 
 func get_random_walkable_tile_position() -> Vector2:
 	# Get all walkable tile positions
@@ -355,3 +364,20 @@ func get_random_walkable_tile_position() -> Vector2:
 	
 	# Convert to global position to account for tilemap's own position
 	return to_global(local_pos)
+
+func is_position_inside_border(pos: Vector2) -> bool:
+	var tile_pos = local_to_map(to_local(pos))
+	
+	if border_type == BorderType.circle:
+		var dx = tile_pos.x - center.x
+		var dy = tile_pos.y - center.y
+		var dist_sq = dx * dx + dy * dy
+		
+		# Subtract 1 to exclude border tiles
+		return dist_sq < (current_radius - 1) * (current_radius - 1)
+	elif border_type == BorderType.rectangle:
+		# Subtract 1 to exclude border tiles
+		return (abs(tile_pos.x - center.x) < current_radius - 1 and 
+				abs(tile_pos.y - center.y) < current_radius - 1)
+	
+	return false

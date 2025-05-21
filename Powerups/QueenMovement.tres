@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="PowerupResource" load_steps=3 format=3 uid="uid://cndd4rk0bs1rs"]
+
+[ext_resource type="Script" uid="uid://bh488m13x02a6" path="res://resources/PowerupResource.gd" id="1_sx8pn"]
+[ext_resource type="Texture2D" uid="uid://ctyd6xk834da5" path="res://Scenes/UI/UIAssets/Power/MoveDiagonal.png" id="2_qk21e"]
+
+[resource]
+script = ExtResource("1_sx8pn")
+movement_type = 2
+texture = ExtResource("2_qk21e")
+display_name = "Queen Movement"
+color_tint = Color(1, 1, 1, 1)
