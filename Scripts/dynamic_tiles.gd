@@ -117,6 +117,8 @@ func _on_trap_timer_timeout() -> void:
 		for i in range(trap_amount_limit - get_trap_amount()):
 			spawn_trap()
 
+#comment
+
 func draw_circle_border(center_x, center_y, radius):
 	var center = Vector2(center_x, center_y)
 	# Adjust these radius values to be more inclusive at corners
