@@ -91,6 +91,7 @@ position = Vector2(288, 285)
 zoom = Vector2(1.1, 1.1)
 
 [node name="ColorRect" type="ColorRect" parent="."]
+visible = false
 z_index = 11
 material = SubResource("ShaderMaterial_m8f3l")
 offset_left = -588.0
