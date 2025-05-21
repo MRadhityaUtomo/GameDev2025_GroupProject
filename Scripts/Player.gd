@@ -17,6 +17,7 @@ extends CharacterBody2D
 @onready var sprite = $Sprite2D
 @onready var animations = $AnimatedSprite2D
 @onready var crosshair = $BombSpawnLocation/Crosshair
+@onready var movementManager = $MovementManager
 
 @export var animationSet:SpriteFrames
 
@@ -88,18 +89,68 @@ func invincible():
 
 func takedamage():
 	hp -= 1
+	
+	if hp <= 0:
+		if id == 1:
+			if is_instance_valid(PlayUI.ui_instance):
+				PlayUI.ui_instance.set_expression_p1("dead")
+				if PlayUI.ui_instance.expressionP2 == "neutral":
+					PlayUI.ui_instance.set_expression_p2("happy")
+				PlayUI.ui_instance.set_heart_p1(0)
+		else:
+			if is_instance_valid(PlayUI.ui_instance):
+				PlayUI.ui_instance.set_expression_p2("dead")
+				if PlayUI.ui_instance.expressionP1 == "neutral":
+					PlayUI.ui_instance.set_expression_p1("happy")
+				PlayUI.ui_instance.set_heart_p2(0)
+		self.invincible()
+		animations.play("hurt")
+		await animations.animation_finished
+		
+		await get_tree().create_timer(1.0).timeout
+		die()
+		return
+	
 	if id == 1:
+		PlayUI.ui_instance.set_expression_p1("hurt")
+		if PlayUI.ui_instance.expressionP2 == "neutral":
+
+			PlayUI.ui_instance.set_expression_p2("happy")
 		PlayUI.ui_instance.set_heart_p1(hp)
 	else:
+		if PlayUI.ui_instance.expressionP1 == "neutral":
+			PlayUI.ui_instance.set_expression_p1("happy")
+		PlayUI.ui_instance.set_expression_p2("hurt")
 		PlayUI.ui_instance.set_heart_p2(hp)
-	if hp <= 0:
-		die()
+	
 	self.invincible()
 	animations.play("hurt")
 	await animations.animation_finished
 	animations.play("idle")
-
 	
+	await get_tree().create_timer(0.5).timeout
+	
+	if id == 1:
+		if is_instance_valid(PlayUI.ui_instance):
+			PlayUI.ui_instance.set_expression_p1("angry")
+			PlayUI.ui_instance.set_expression_p2("neutral")
+	else:
+		if is_instance_valid(PlayUI.ui_instance):
+			PlayUI.ui_instance.set_expression_p1("neutral")
+			PlayUI.ui_instance.set_expression_p2("angry")
+			
+	
+	await get_tree().create_timer(0.5).timeout
+	
+	if id == 1:
+		if is_instance_valid(PlayUI.ui_instance):
+			PlayUI.ui_instance.set_expression_p1("neutral")
+			PlayUI.ui_instance.set_expression_p2("neutral")
+	else:
+		if is_instance_valid(PlayUI.ui_instance):
+			PlayUI.ui_instance.set_expression_p1("neutral")
+			PlayUI.ui_instance.set_expression_p2("neutral")
+			
 # Add this new function for grid-aligned push
 func push_from_border_grid_aligned(push_direction: Vector2, dynamic_tiles: DynamicTiles):
 	# Calculate the target position
@@ -168,24 +219,30 @@ func change_bomb_type_to(new_type: BombType):
 
 # Add this new function for handling any powerup
 func powerup_activated(id_name: String, duration: float = 10.0):
-	powerup_pickup.play()
+	if id_name == "KING_MOVEMENT":
+		movementManager.reset_movement_mode()
+		return
+	elif id_name == "PowUpNormalBomb":
+		_reset_bomb_type()
+		return
 	
 	# Update UI icons
-	if id_name.begins_with("Move"):
+	if id_name.ends_with("MOVEMENT"):
 		if id == 1:
-			$"../CanvasLayer/play_ui".set_p1_move_icon(id_name)
+			PlayUI.ui_instance.set_p1_move_icon(id_name)
 		else:
-			$"../CanvasLayer/play_ui".set_p2_move_icon(id_name)
+			PlayUI.ui_instance.set_p2_move_icon(id_name)
 	else:
 		if id == 1:
-			$"../CanvasLayer/play_ui".set_p1_powup_icon(id_name)
+			PlayUI.ui_instance.set_p1_powup_icon(id_name)
 		else:
-			$"../CanvasLayer/play_ui".set_p2_powup_icon(id_name)
+			PlayUI.ui_instance.set_p2_powup_icon(id_name)
 			
 	# Start the timer visual
-	$"../CanvasLayer/play_ui".start_powerup_timer(id, id_name, duration)
+	PlayUI.ui_instance.start_powerup_timer(id, id_name, duration)
 	
-	$"../CanvasLayer/play_ui".update_player_icons()
+	PlayUI.ui_instance.update_player_icons()
+	
 
 # Add this function to cancel any active powerup
 func cancel_active_powerup():
@@ -234,6 +291,14 @@ func change_bomb_type(new_bomb_type: BombType, duration: float = 10.0):
 	bomb_powerup_timer.start()
 
 func _reset_bomb_type():
+	PlayUI.ui_instance.stop_powerup_timer(id, "HANAU")
+	if id == 1:
+		print("should behere")
+		PlayUI.ui_instance.set_p1_powup_icon("PowUpNormalBomb")
+	else:
+		PlayUI.ui_instance.set_p2_powup_icon("PowUpNormalBomb")
+	PlayUI.ui_instance.update_player_icons()
+		
 	print("Bomb powerup expired, reverting to default")
 	current_bomb_type = default_bomb_type
 	if bomb_powerup_timer.timeout.is_connected(_reset_bomb_type):

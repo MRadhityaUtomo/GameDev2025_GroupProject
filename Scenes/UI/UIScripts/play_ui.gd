@@ -30,8 +30,8 @@ class_name PlayUI
 @onready var p2_bomb_timer = $Main/PTall/P2/TexPowUp/TimerProgress
 
 #keep this for now
-@export_enum("angry", "dead", "happy", "neutral", "hurt") var _expressionP1: String = "neutral"
-@export_enum("angry", "dead", "happy", "neutral", "hurt") var _expressionP2: String = "neutral"
+@export_enum("angry", "dead", "happy", "neutral", "hurt") var expressionP1: String = "neutral"
+@export_enum("angry", "dead", "happy", "neutral", "hurt") var expressionP2: String = "neutral"
 
 @onready var audio_ready = $AudioReady
 @onready var audio_close = $AudioClose
@@ -51,12 +51,12 @@ var p2_move_timer_current: float = 0.0
 var p2_bomb_timer_current: float = 0.0
 
 func set_expression_p1(value: String) -> void:
-	_expressionP1 = value
+	expressionP1 = value
 	if is_instance_valid(p1tall):
 		p1tall.set_expression(value)
 
 func set_expression_p2(value: String) -> void:
-	_expressionP2 = value
+	expressionP2 = value
 	if is_instance_valid(p2tall):
 		p2tall.set_expression(value)
 
@@ -67,13 +67,13 @@ func set_expression_p2(value: String) -> void:
 @onready var heartP1RichTextLabel =  $Main/PTall/P1/TexHeart/RTLCount
 @onready var heartP2RichTextLabel = $Main/PTall/P2/Heart/Count
 
-@export_enum("MoveBishop", "MoveDiagonal", "MoveDouble", "MoveKing", "MoveQueen", "MoveReversed")
-var move_icon_p1: String = "MoveKing"
+@export_enum("BISHOP_MOVEMENT", "MoveDiagonal", "DOUBLE_STEP_MOVEMENT", "KING_MOVEMENT", "QUEEN_MOVEMENT", "REVERSED_MOVEMENT")
+var move_icon_p1: String = "KING_MOVEMENT"
 @export_enum("PowUpDiagonalBomb", "PowUpNormalBomb", "PowUpWideBomb")
 var powup_icon_p1: String = "PowUpNormalBomb"
 
-@export_enum("MoveBishop", "MoveDiagonal", "MoveDouble", "MoveKing", "MoveQueen", "MoveReversed")
-var move_icon_p2: String = "MoveKing"
+@export_enum("BISHOP_MOVEMENT", "MoveDiagonal", "DOUBLE_STEP_MOVEMENT", "KING_MOVEMENT", "QUEEN_MOVEMENT", "REVERSED_MOVEMENT")
+var move_icon_p2: String = "KING_MOVEMENT"
 @export_enum("PowUpDiagonalBomb", "PowUpNormalBomb", "PowUpWideBomb")
 var powup_icon_p2: String = "PowUpNormalBomb"
 
@@ -82,12 +82,12 @@ var dead_player: int = 0 # 0 = none, 1 = P1 died, 2 = P2 died
 
 
 const MOVE_TEXTURES := {
-	"MoveBishop": preload("res://Scenes/UI/UIAssets/Power/MoveBishop.png"),
+	"BISHOP_MOVEMENT": preload("res://Scenes/UI/UIAssets/Power/MoveBishop.png"),
 	"MoveDiagonal": preload("res://Scenes/UI/UIAssets/Power/MoveDiagonal.png"),
-	"MoveDouble": preload("res://Scenes/UI/UIAssets/Power/MoveDouble.png"),
-	"MoveKing": preload("res://Scenes/UI/UIAssets/Power/MoveKing.png"),
-	"MoveQueen": preload("res://Scenes/UI/UIAssets/Power/MoveQueen.png"),
-	"MoveReversed": preload("res://Scenes/UI/UIAssets/Power/MoveReversed.png"),
+	"DOUBLE_STEP_MOVEMENT": preload("res://Scenes/UI/UIAssets/Power/MoveDouble.png"),
+	"KING_MOVEMENT": preload("res://Scenes/UI/UIAssets/Power/MoveKing.png"),
+	"QUEEN_MOVEMENT": preload("res://Scenes/UI/UIAssets/Power/MoveQueen.png"),
+	"REVERSED_MOVEMENT": preload("res://Scenes/UI/UIAssets/Power/MoveReversed.png"),
 }
 
 const POWUP_TEXTURES := {
@@ -148,8 +148,8 @@ func _ready():
 
 	set_process_input(true)
 	update_player_icons()
-	set_expression_p1(_expressionP1)
-	set_expression_p2(_expressionP2)
+	set_expression_p1(expressionP1)
+	set_expression_p2(expressionP2)
 	set_heart_p1(heartP1)
 	set_heart_p2(heartP2)
 
@@ -327,19 +327,33 @@ func set_player_icon(player: int, move: String, powup: String):
 	update_player_icons()
 
 func set_p1_move_icon(move: String) -> void:
-	#audio_ready.play()
+	if move == "KING_MOVEMENT":
+		audio_close.play()
+	else:
+		audio_ready.play()
 	move_icon_p1 = move
+	tex_move_p1.texture = MOVE_TEXTURES.get(move_icon_p1, null)
 
 func set_p1_powup_icon(powup: String) -> void:
-	#audio_ready.play()
+	if powup == "PowUpNormalBomb":
+		audio_close.play()
+	else:
+		audio_ready.play()
 	powup_icon_p1 = powup
 
 func set_p2_move_icon(move: String) -> void:
-	#audio_ready.play()
+	if move == "KING_MOVEMENT":
+		audio_close.play()
+	else:
+		audio_ready.play()
 	move_icon_p2 = move
+	tex_move_p2.texture = MOVE_TEXTURES.get(move_icon_p2, null)
 
 func set_p2_powup_icon(powup: String) -> void:
-	#audio_ready.play()
+	if powup == "PowUpNormalBomb":
+		audio_close.play()
+	else:
+		audio_ready.play()
 	powup_icon_p2 = powup
 
 
@@ -384,7 +398,7 @@ func set_heart_p2(value: int):
 
 func start_powerup_timer(player_id: int, powerup_type: String, duration: float):
 	if player_id == 1:
-		if powerup_type.begins_with("Move"):
+		if powerup_type.ends_with("MOVEMENT"):
 			p1_move_timer_duration = duration
 			p1_move_timer_current = duration
 			p1_move_timer.visible = true
@@ -395,7 +409,7 @@ func start_powerup_timer(player_id: int, powerup_type: String, duration: float):
 			p1_bomb_timer.visible = true
 			p1_bomb_timer.value = 100
 	elif player_id == 2:
-		if powerup_type.begins_with("Move"):
+		if powerup_type.ends_with("MOVEMENT"):
 			p2_move_timer_duration = duration
 			p2_move_timer_current = duration
 			p2_move_timer.visible = true
@@ -405,3 +419,15 @@ func start_powerup_timer(player_id: int, powerup_type: String, duration: float):
 			p2_bomb_timer_current = duration
 			p2_bomb_timer.visible = true
 			p2_bomb_timer.value = 100
+
+func stop_powerup_timer(player_id: int, powerup_type: String):
+	if player_id == 1:
+		if powerup_type.ends_with("MOVEMENT"):
+			p1_move_timer.visible = false
+		else:
+			p1_bomb_timer.visible = false
+	elif player_id == 2:
+		if powerup_type.ends_with("MOVEMENT"):
+			p2_move_timer.visible = false
+		else:
+			p2_bomb_timer.visible = false

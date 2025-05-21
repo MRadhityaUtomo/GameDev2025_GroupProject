@@ -153,10 +153,21 @@ func update_bomb_marker():
 
 
 func change_movement_mode(new_mode: MovementMode.Type, duration: float = 10.0):
+	# First, disconnect any existing timeout connections to avoid multiple callbacks
+	if powerup_duration.timeout.is_connected(reset_movement_mode):
+		powerup_duration.timeout.disconnect(reset_movement_mode)
+	
 	# Don't change immediately if currently moving
 	if current_movement_strategy and current_movement_strategy.is_moving():
 		# Schedule the change after movement completes
 		var mode_name = MovementMode.Type.keys()[new_mode]
+		print("MovementManager: Queuing movement change to -> ", mode_name)
+		if player_body.id == 1:
+			print("Player 1 is changing movement mode to -> ", mode_name)
+			PlayUI.ui_instance.set_p1_move_icon(mode_name)
+		else:
+			print("Player 2 is changing movement mode to -> ", mode_name)
+			PlayUI.ui_instance.set_p2_move_icon(mode_name)
 		print("Movement change queued: Will change to " + mode_name + " after current movement completes")
 		
 		# Use a one-shot timer to change the mode after movement completes
@@ -173,15 +184,12 @@ func change_movement_mode(new_mode: MovementMode.Type, duration: float = 10.0):
 				_update_active_logic_strategy()
 				var new_mode_name = MovementMode.Type.keys()[current_movement_mode]
 				movement_mode_changed.emit(new_mode_name)
-				print("MovementManager: Mode changed to -> ", new_mode_name, " for ", duration, " seconds")
+				print("MovementManager: Mode changed to -> ", new_mode_name)
 				
-				# Start timer to revert movement
-				if powerup_duration.timeout.is_connected(reset_movement_mode):
-					powerup_duration.timeout.disconnect(reset_movement_mode)
-				
+				# Start the powerup duration timer
 				powerup_duration.wait_time = duration
-				powerup_duration.timeout.connect(reset_movement_mode)
 				powerup_duration.start()
+				powerup_duration.timeout.connect(reset_movement_mode)
 				
 				# Clean up timer
 				timer.stop()
@@ -195,20 +203,24 @@ func change_movement_mode(new_mode: MovementMode.Type, duration: float = 10.0):
 		_update_active_logic_strategy()
 		var mode_name = MovementMode.Type.keys()[current_movement_mode]
 		movement_mode_changed.emit(mode_name)
-		print("MovementManager: Mode changed to -> ", mode_name, " for ", duration, " seconds")
+		print("MovementManager: Mode changed to -> ", mode_name)
 		
-		# Start timer to revert movement
-		if powerup_duration.timeout.is_connected(reset_movement_mode):
-			powerup_duration.timeout.disconnect(reset_movement_mode)
-			
+		# Start the powerup duration timer
 		powerup_duration.wait_time = duration
-		powerup_duration.timeout.connect(reset_movement_mode)
 		powerup_duration.start()
+		powerup_duration.timeout.connect(reset_movement_mode)
 
 
 func reset_movement_mode():
 	print("Powerup duration ended, reverting to KING_MOVEMENT")
+	var mode_name = "KING_MOVEMENT"
+	if player_body.id == 1:
+		print("Player 1 is changing movement mode to -> ", mode_name)
+		PlayUI.ui_instance.set_p1_move_icon(mode_name)
+	else:
+		print("Player 2 is changing movement mode to -> ", mode_name)
+		PlayUI.ui_instance.set_p2_move_icon(mode_name)
+	PlayUI.ui_instance.stop_powerup_timer(player_body.id, "MOVEMENT")
 	current_movement_mode = MovementMode.Type.KING_MOVEMENT
 	_update_active_logic_strategy()
-	var mode_name = MovementMode.Type.keys()[current_movement_mode]
 	movement_mode_changed.emit(mode_name)

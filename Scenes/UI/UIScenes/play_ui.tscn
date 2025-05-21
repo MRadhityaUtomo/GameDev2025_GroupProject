@@ -26,9 +26,9 @@
 [ext_resource type="Texture2D" uid="uid://xptg0fvwekib" path="res://Scenes/UI/UIAssets/Power/MoveDouble.png" id="19_pujjn"]
 [ext_resource type="Texture2D" uid="uid://bc5qda738gyv3" path="res://Scenes/UI/UIAssets/Power/MoveReversed.png" id="20_lqsjy"]
 [ext_resource type="AudioStream" uid="uid://t3wkd1y3sarh" path="res://Scenes/UI/Components/Buttons/AudioAssets/buttonStar.mp3" id="24_7sehx"]
-[ext_resource type="AudioStream" uid="uid://52a64tgjs46e" path="res://Scenes/UI/Components/Buttons/AudioAssets/buttonRect.mp3" id="25_dw7xm"]
 [ext_resource type="AudioStream" uid="uid://wkgmp3oa50e" path="res://Scenes/UI/Components/Buttons/AudioAssets/airhorn.mp3" id="25_xjtte"]
 [ext_resource type="AudioStream" uid="uid://ysgvs4qrxxdc" path="res://Scenes/UI/Components/Buttons/AudioAssets/countdowntime.mp3" id="26_hhv6v"]
+[ext_resource type="AudioStream" uid="uid://dc04svl8sfelc" path="res://Assets/Audio/Sfx/powerup_pickup.ogg" id="29_tua0u"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0wt4e"]
 
@@ -1330,7 +1330,7 @@ stream = ExtResource("25_xjtte")
 volume_db = -9.694
 
 [node name="AudioReady" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("25_dw7xm")
+stream = ExtResource("29_tua0u")
 
 [node name="DrawCheckTimer" type="Timer" parent="."]
 wait_time = 0.4

@@ -10,4 +10,4 @@ texture = ExtResource("2_rtr2o")
 display_name = "Doble Step Movement"
 color_tint = Color(1, 1, 1, 1)
 duration = 5.0
-id_name = "MoveDouble"
+id_name = "DOUBLE_STEP_MOVEMENT"
