@@ -9,4 +9,4 @@ movement_type = 1
 texture = ExtResource("2_rxrql")
 display_name = "Bishop Movement"
 color_tint = Color(1, 1, 1, 1)
-duration = 5.0
+duration = 999.0

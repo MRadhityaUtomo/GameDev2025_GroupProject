@@ -5,6 +5,8 @@ extends Area2D
 @export var explosion_radius: int = 2
 @export var owner_player_id: int
 @export var bomb_type: BombType
+@onready var anims: AnimatedSprite2D = $AnimatedSprite2D
+
 
 signal bomb_exploded(position, bomb_ref)
 
@@ -16,7 +18,12 @@ func _ready():
 
 func trigger_countdown():
 	countdown -= 1
-
+	
+	if countdown == 2:
+		anims.play("stage2")
+	elif countdown == 1:
+		anims.play("stage3")
+		
 	if countdown <= 0:
 		call_deferred("explode")
 
