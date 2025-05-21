@@ -1,8 +1,8 @@
-[gd_scene load_steps=35 format=3 uid="uid://djnjtf7d6stl1"]
+[gd_scene load_steps=36 format=3 uid="uid://djnjtf7d6stl1"]
 
 [ext_resource type="Script" uid="uid://clx1ipbukk4ei" path="res://Scenes/UI/UIScripts/play_ui.gd" id="1_12tgd"]
 [ext_resource type="Texture2D" uid="uid://b2kechd7qg8xq" path="res://Scenes/UI/UIAssets/BG/BGRect.png" id="1_nw1oc"]
-[ext_resource type="PackedScene" path="res://Scenes/UI/Components/Buttons/bstar.tscn" id="2_karjq"]
+[ext_resource type="PackedScene" uid="uid://dtg2wlxdjktm6" path="res://Scenes/UI/Components/Buttons/bstar.tscn" id="2_karjq"]
 [ext_resource type="Texture2D" uid="uid://dwuu6ujsorn0w" path="res://Scenes/UI/UIAssets/PlayUI/Ready (1).png" id="4_nw1oc"]
 [ext_resource type="Texture2D" uid="uid://dmqhhpxd37r3j" path="res://Scenes/UI/UIAssets/PlayUI/Heart.png" id="5_cyk1x"]
 [ext_resource type="PackedScene" uid="uid://bunuilmma82bm" path="res://Scenes/UI/Components/Font/default_label.tscn" id="5_gbnmi"]
@@ -10,14 +10,15 @@
 [ext_resource type="Texture2D" uid="uid://c7hxd6wpw2fkj" path="res://Scenes/UI/UIAssets/PlayUI/Move.png" id="6_fwwyg"]
 [ext_resource type="Texture2D" uid="uid://c87t6ihqbb8ft" path="res://Scenes/UI/UIAssets/PlayUI/Time.png" id="7_gbnmi"]
 [ext_resource type="Texture2D" uid="uid://c31aek3pgqjex" path="res://Scenes/UI/UIAssets/PlayUI/PowUp.png" id="8_0wt4e"]
-[ext_resource type="PackedScene" path="res://Scenes/UI/UIScenes/p1tall.tscn" id="8_xtakj"]
-[ext_resource type="PackedScene" path="res://Scenes/UI/UIScenes/p2tall.tscn" id="9_cyk1x"]
+[ext_resource type="Texture2D" uid="uid://ckol47c50ug3r" path="res://Scenes/UI/UIAssets/PlayUI/Ellipse_54.png" id="8_tua0u"]
+[ext_resource type="PackedScene" uid="uid://cdkigd0b56gm8" path="res://Scenes/UI/UIScenes/p1tall.tscn" id="8_xtakj"]
+[ext_resource type="PackedScene" uid="uid://c1k7elicvjavn" path="res://Scenes/UI/UIScenes/p2tall.tscn" id="9_cyk1x"]
 [ext_resource type="Texture2D" uid="uid://b58m2i2ghsmgg" path="res://Scenes/UI/UIAssets/Power/PowUpDiagonalBomb.png" id="9_hdpaw"]
 [ext_resource type="Script" path="res://Scenes/UI/UIScripts/Components/buttontutorialpowerup.gd" id="15_hdpaw"]
 [ext_resource type="Texture2D" uid="uid://tmyb87o113jd" path="res://Scenes/UI/UIAssets/Power/PowUpNormalBomb.png" id="16_7sehx"]
 [ext_resource type="Texture2D" uid="uid://bj871x4pnf6h5" path="res://Scenes/UI/UIAssets/Power/MoveKing.png" id="16_a8gmd"]
 [ext_resource type="AudioStream" uid="uid://c1c4o61tek8kc" path="res://Scenes/UI/Components/Buttons/AudioAssets/buttonUI.mp3" id="16_tkn1i"]
-[ext_resource type="Shader" path="res://Scenes/UI/UIAssets/Shader/patternxy.gdshader" id="16_xoush"]
+[ext_resource type="Shader" uid="uid://e3oxmp7fc20y" path="res://Scenes/UI/UIAssets/Shader/patternxy.gdshader" id="16_xoush"]
 [ext_resource type="Texture2D" uid="uid://dilt7sp7iqmco" path="res://Scenes/UI/UIAssets/BG/BGPatternBlue.png" id="17_a8gmd"]
 [ext_resource type="Texture2D" uid="uid://beiqv2lvqnt3r" path="res://Scenes/UI/UIAssets/Power/PowUpWideBomb.png" id="17_dw7xm"]
 [ext_resource type="Texture2D" uid="uid://ctnv723rm1gq7" path="res://Scenes/UI/UIAssets/Power/MoveQueen.png" id="17_qf3xp"]
@@ -221,6 +222,25 @@ texture = ExtResource("16_a8gmd")
 expand_mode = 1
 stretch_mode = 5
 
+[node name="TimerProgress" type="TextureProgressBar" parent="Main/PTall/P1/TexMove"]
+z_index = -1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -581.546
+offset_top = -601.929
+offset_right = 618.454
+offset_bottom = 598.071
+grow_horizontal = 2
+grow_vertical = 2
+value = 100.0
+fill_mode = 4
+nine_patch_stretch = true
+texture_progress = ExtResource("8_tua0u")
+
 [node name="TexPowUp" type="TextureRect" parent="Main/PTall/P1"]
 layout_mode = 1
 anchors_preset = 15
@@ -236,6 +256,25 @@ scale = Vector2(0.145328, 0.145328)
 texture = ExtResource("8_0wt4e")
 expand_mode = 1
 stretch_mode = 5
+
+[node name="TimerProgress" type="TextureProgressBar" parent="Main/PTall/P1/TexPowUp"]
+z_index = -1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -581.546
+offset_top = -601.929
+offset_right = 618.454
+offset_bottom = 598.071
+grow_horizontal = 2
+grow_vertical = 2
+value = 100.0
+fill_mode = 4
+nine_patch_stretch = true
+texture_progress = ExtResource("8_tua0u")
 
 [node name="TexItem" type="TextureRect" parent="Main/PTall/P1/TexPowUp"]
 layout_mode = 1
@@ -317,6 +356,25 @@ texture = ExtResource("6_fwwyg")
 expand_mode = 1
 stretch_mode = 5
 
+[node name="TimerProgress" type="TextureProgressBar" parent="Main/PTall/P2/TexMove"]
+z_index = -1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -581.546
+offset_top = -601.929
+offset_right = 618.454
+offset_bottom = 598.071
+grow_horizontal = 2
+grow_vertical = 2
+value = 100.0
+fill_mode = 4
+nine_patch_stretch = true
+texture_progress = ExtResource("8_tua0u")
+
 [node name="TexItem" type="TextureRect" parent="Main/PTall/P2/TexMove"]
 layout_mode = 1
 anchors_preset = 15
@@ -348,6 +406,25 @@ scale = Vector2(0.145328, 0.145328)
 texture = ExtResource("8_0wt4e")
 expand_mode = 1
 stretch_mode = 5
+
+[node name="TimerProgress" type="TextureProgressBar" parent="Main/PTall/P2/TexPowUp"]
+z_index = -1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -581.546
+offset_top = -601.929
+offset_right = 618.454
+offset_bottom = 598.071
+grow_horizontal = 2
+grow_vertical = 2
+value = 100.0
+fill_mode = 4
+nine_patch_stretch = true
+texture_progress = ExtResource("8_tua0u")
 
 [node name="TexItem" type="TextureRect" parent="Main/PTall/P2/TexPowUp"]
 layout_mode = 1
@@ -1154,6 +1231,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = -3.0
+offset_bottom = -3.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2

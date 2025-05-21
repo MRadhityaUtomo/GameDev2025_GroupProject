@@ -24,6 +24,11 @@ class_name PlayUI
 @onready var p1tall = $Main/PTall/P1/P1Tall
 @onready var p2tall = $Main/PTall/P2/P2Tall
 
+@onready var p1_move_timer = $Main/PTall/P1/TexMove/TimerProgress
+@onready var p1_bomb_timer = $Main/PTall/P1/TexPowUp/TimerProgress
+@onready var p2_move_timer = $Main/PTall/P2/TexMove/TimerProgress
+@onready var p2_bomb_timer = $Main/PTall/P2/TexPowUp/TimerProgress
+
 #keep this for now
 @export_enum("angry", "dead", "happy", "neutral", "hurt") var _expressionP1: String = "neutral"
 @export_enum("angry", "dead", "happy", "neutral", "hurt") var _expressionP2: String = "neutral"
@@ -35,6 +40,15 @@ class_name PlayUI
 
 static var ui_instance: PlayUI = null
 
+var p1_move_timer_duration: float = 0.0
+var p1_bomb_timer_duration: float = 0.0
+var p2_move_timer_duration: float = 0.0
+var p2_bomb_timer_duration: float = 0.0
+
+var p1_move_timer_current: float = 0.0
+var p1_bomb_timer_current: float = 0.0
+var p2_move_timer_current: float = 0.0
+var p2_bomb_timer_current: float = 0.0
 
 func set_expression_p1(value: String) -> void:
 	_expressionP1 = value
@@ -139,6 +153,12 @@ func _ready():
 	set_heart_p1(heartP1)
 	set_heart_p2(heartP2)
 
+	# Initially hide all timers
+	p1_move_timer.visible = false
+	p1_bomb_timer.visible = false
+	p2_move_timer.visible = false
+	p2_bomb_timer.visible = false
+
 func _input(event):
 	if event is InputEvent and event.is_pressed():
 		if tutorial.visible:
@@ -156,6 +176,33 @@ func _input(event):
 				ready_2_active = true
 				_set_darken(ready_2, false)
 				_check_start_countdown()
+
+func _process(delta):
+	# Update movement powerup timers
+	if p1_move_timer_current > 0:
+		p1_move_timer_current -= delta
+		p1_move_timer.value = (p1_move_timer_current / p1_move_timer_duration) * 100
+		if p1_move_timer_current <= 0:
+			p1_move_timer.visible = false
+	
+	if p2_move_timer_current > 0:
+		p2_move_timer_current -= delta
+		p2_move_timer.value = (p2_move_timer_current / p2_move_timer_duration) * 100
+		if p2_move_timer_current <= 0:
+			p2_move_timer.visible = false
+	
+	# Update bomb powerup timers
+	if p1_bomb_timer_current > 0:
+		p1_bomb_timer_current -= delta
+		p1_bomb_timer.value = (p1_bomb_timer_current / p1_bomb_timer_duration) * 100
+		if p1_bomb_timer_current <= 0:
+			p1_bomb_timer.visible = false
+	
+	if p2_bomb_timer_current > 0:
+		p2_bomb_timer_current -= delta
+		p2_bomb_timer.value = (p2_bomb_timer_current / p2_bomb_timer_duration) * 100
+		if p2_bomb_timer_current <= 0:
+			p2_bomb_timer.visible = false
 
 func _check_start_countdown():
 	if ready_1_active and ready_2_active:
@@ -334,3 +381,27 @@ func set_heart_p2(value: int):
 	heartP2 = max(0, value)
 	heartP2RichTextLabel.text = str(heartP2)
 	#_check_endgame_status()
+
+func start_powerup_timer(player_id: int, powerup_type: String, duration: float):
+	if player_id == 1:
+		if powerup_type.begins_with("Move"):
+			p1_move_timer_duration = duration
+			p1_move_timer_current = duration
+			p1_move_timer.visible = true
+			p1_move_timer.value = 100
+		else:
+			p1_bomb_timer_duration = duration
+			p1_bomb_timer_current = duration
+			p1_bomb_timer.visible = true
+			p1_bomb_timer.value = 100
+	elif player_id == 2:
+		if powerup_type.begins_with("Move"):
+			p2_move_timer_duration = duration
+			p2_move_timer_current = duration
+			p2_move_timer.visible = true
+			p2_move_timer.value = 100
+		else:
+			p2_bomb_timer_duration = duration
+			p2_bomb_timer_current = duration
+			p2_bomb_timer.visible = true
+			p2_bomb_timer.value = 100
