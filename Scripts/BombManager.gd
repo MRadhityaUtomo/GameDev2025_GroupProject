@@ -24,7 +24,9 @@ func place_bomb(spawn_position : Vector2):
 	# Signal hookup
 	bomb.bomb_exploded.connect(func(pos, bomb_ref): on_bomb_exploded(pos, bomb_ref))
 	
-	print("Player ", player_body.id, " placed a bomb at ", spawn_position)
+	player_body.animations.play("place_bomb")
+	await player_body.animations.animation_finished
+	player_body.animations.play("idle")
 
 
 func _physics_process(delta):
@@ -42,6 +44,7 @@ func handle_input():
 		
 		if player_body.CanPlace:
 			place_bomb(BombMarker.global_position)
+
 
 func update_can_place_status():
 	# Use the same raycast from MovementManager
