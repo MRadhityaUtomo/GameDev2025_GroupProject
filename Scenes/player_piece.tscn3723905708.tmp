@@ -108,5 +108,3 @@ position = Vector2(0, -16)
 scale = Vector2(0.988281, 0.988281)
 sprite_frames = ExtResource("9_2ahor")
 animation = &"hurt"
-
-[node name="PowerupDuration" type="Timer" parent="."]

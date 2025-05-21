@@ -137,7 +137,7 @@ texture = ExtResource("1_07dip")
 [node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="."]
 visible = false
 z_index = 12
-position = Vector2(0, -32)
+position = Vector2(0, -12)
 sprite_frames = SubResource("SpriteFrames_fy3ml")
 autoplay = "default"
 frame = 6
