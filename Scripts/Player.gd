@@ -16,7 +16,11 @@ extends CharacterBody2D
 @onready var hurtBox = $CollisionShape2D
 @onready var sprite = $Sprite2D
 @onready var animations = $AnimatedSprite2D
+@onready var crosshair = $BombSpawnLocation/Crosshair
+
 @export var animationSet:SpriteFrames
+
+
 
 var isInvincible = false
 var CanPlace = true
@@ -34,6 +38,7 @@ var diagonal_mode_active: bool = false  # New variable for diagonal-only mode
 func _ready():
     animations.sprite_frames = animationSet
     animations.play("idle")
+    crosshair.process_mode = Node.PROCESS_MODE_ALWAYS
     animations.process_mode = Node.PROCESS_MODE_ALWAYS
     add_to_group("player")
     print("player ready at", global_position)
