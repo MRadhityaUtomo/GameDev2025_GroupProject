@@ -1,0 +1,117 @@
+[gd_scene load_steps=13 format=3 uid="uid://dtg2wlxdjktm6"]
+
+[ext_resource type="Script" uid="uid://7julxgm7er0x" path="res://Scenes/UI/UIScripts/Components/buttonstar.gd" id="1_ek28j"]
+[ext_resource type="Texture2D" uid="uid://b3fwljtqyuep4" path="res://Scenes/UI/UIAssets/Button/Mask/BStarMask.png" id="1_l4tuk"]
+[ext_resource type="Shader" uid="uid://e3oxmp7fc20y" path="res://Scenes/UI/UIAssets/Shader/patternxy.gdshader" id="2_36qpw"]
+[ext_resource type="Texture2D" uid="uid://dl1ehwkdmi3ym" path="res://Scenes/UI/UIAssets/BG/BGPatternYellow.png" id="3_ek28j"]
+[ext_resource type="Texture2D" uid="uid://dkv3rss7ogob6" path="res://Scenes/UI/UIAssets/Button/BStarOutline.png" id="4_mjnhn"]
+[ext_resource type="PackedScene" uid="uid://bunuilmma82bm" path="res://Scenes/UI/Components/Font/default_label.tscn" id="5_36qpw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ek28j"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mjnhn"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_h17lh"]
+texture = ExtResource("1_l4tuk")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qe2fc"]
+bg_color = Color(0.52549, 0.627451, 0.882353, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wimvc"]
+shader = ExtResource("2_36qpw")
+shader_parameter/scroll_speed = Vector2(0.1, 0.05)
+shader_parameter/time_offset = 0.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f7meo"]
+texture = ExtResource("3_ek28j")
+
+[node name="Bstar" type="Button"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ek28j")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_mjnhn")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ek28j")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_ek28j")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_ek28j")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ek28j")
+script = ExtResource("1_ek28j")
+
+[node name="MaskStar" type="Panel" parent="."]
+clip_children = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.228125
+anchor_top = 0.00333333
+anchor_right = 1.22812
+anchor_bottom = 1.00333
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.555867, 1.01152)
+theme_override_styles/panel = SubResource("StyleBoxTexture_h17lh")
+metadata/_edit_use_anchors_ = true
+
+[node name="RectNormal" type="Panel" parent="MaskStar"]
+clip_children = 2
+texture_repeat = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1152.0
+offset_bottom = 1152.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_qe2fc")
+
+[node name="RectHover" type="Panel" parent="MaskStar"]
+clip_children = 2
+texture_repeat = 2
+material = SubResource("ShaderMaterial_wimvc")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1152.0
+offset_bottom = 1152.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_f7meo")
+
+[node name="Star Outline" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.228125
+anchor_top = 0.00333333
+anchor_right = 1.22812
+anchor_bottom = 1.00333
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_mjnhn")
+expand_mode = 1
+stretch_mode = 4
+metadata/_edit_use_anchors_ = true
+
+[node name="default_label" parent="." instance=ExtResource("5_36qpw")]
+z_index = 100
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.333333, 0.333333, 0.333333, 1)
+theme_override_font_sizes/normal_font_size = 300
+text = "X
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[connection signal="pressed" from="." to="." method="_on_Button_pressed"]

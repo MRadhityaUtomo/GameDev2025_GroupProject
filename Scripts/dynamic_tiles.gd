@@ -102,11 +102,12 @@ func get_trap_amount():
 	return len(get_used_cells_by_id(0, Vector2i(0, 0), 3))
 	
 func spawn_trap():
-	var walkable_tiles = get_used_cells_by_id(0, Vector2i(0, 0), 1)
-	var random_num = randi_range(0, len(walkable_tiles) - 1)
-	var target_tiles = walkable_tiles[random_num]
-	set_cell(target_tiles, 0, Vector2i(0, 0), 3)
-	create_tile_instance(target_tiles, 3)
+	#var walkable_tiles = get_used_cells_by_id(0, Vector2i(0, 0), 1)
+	#var random_num = randi_range(0, len(walkable_tiles) - 1)
+	#var target_tiles = walkable_tiles[random_num]
+	#set_cell(target_tiles, 0, Vector2i(0, 0), 3)
+	#create_tile_instance(target_tiles, 3)
+	pass
 
 func _on_trap_timer_timeout() -> void:
 	if get_trap_amount() + trap_spawn_rate <= trap_amount_limit:
@@ -117,27 +118,23 @@ func _on_trap_timer_timeout() -> void:
 			spawn_trap()
 
 func draw_circle_border(center_x, center_y, radius):
-	var points := {}
-	var r_min = pow(radius - 0.5, 2)
-	var r_max = pow(radius + 0.5, 2)
-
-	var min_x = int(floor(center_x - radius - 1))
-	var max_x = int(ceil(center_x + radius + 1))
-	var min_y = int(floor(center_y - radius - 1))
-	var max_y = int(ceil(center_y + radius + 1))
-
-	for y in range(min_y, max_y + 1):
-		for x in range(min_x, max_x + 1):
-			var dx = x - center_x
-			var dy = y - center_y
-			var dist_sq = float(dx * dx + dy * dy)
-
-			if dist_sq >= r_min and dist_sq < r_max:
+	var center = Vector2(center_x, center_y)
+	# Adjust these radius values to be more inclusive at corners
+	var r_max = (radius + 0.7) * (radius + 0.7)  # Slightly larger outer boundary
+	var r_min = (radius - 0.7) * (radius - 0.7)  # Slightly smaller inner boundary
+	var points = {}
+	
+	# Scan a slightly larger area to catch all relevant corner tiles
+	for x in range(center_x - radius - 1, center_x + radius + 2):
+		for y in range(center_y - radius - 1, center_y + radius + 2):
+			var dist_sq = (x - center.x) * (x - center.x) + (y - center.y) * (y - center.y)
+			
+			# More inclusive radius check to catch corner tiles
+			if dist_sq >= r_min and dist_sq <= r_max:
 				points[Vector2(x, y)] = true
-
+	
 	for point in points.keys():
-		set_cell(point, 0, Vector2i(0, 0), 2)
-		create_tile_instance(point, 2)
+		set_border_tile(point)
 
 func draw_rectange_border(center_x, center_y, radius):
 	var center = Vector2i(center_x, center_y)

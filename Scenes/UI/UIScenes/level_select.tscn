@@ -1,0 +1,68 @@
+[gd_scene load_steps=2 format=3 uid="uid://dw2tsbdfbscxf"]
+
+[ext_resource type="PackedScene" uid="uid://bdrxgm7bhh624" path="res://Scenes/UI/Components/Buttons/brectlevelselect.tscn" id="1_td2q0"]
+
+[node name="level_select" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+clip_contents = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 56.0
+offset_top = 600.0
+offset_right = 56.0
+offset_bottom = 600.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.337391, 0.337391)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_constants/separation = 100
+
+[node name="Brectlevelselect" parent="ScrollContainer/HBoxContainer" instance=ExtResource("1_td2q0")]
+custom_minimum_size = Vector2(1600, 900)
+layout_mode = 2
+size_flags_horizontal = 3
+target_scene = "res://Scenes/tile_testing.tscn"
+metadata/_edit_use_anchors_ = true
+
+[node name="Brectlevelselect4" parent="ScrollContainer/HBoxContainer" instance=ExtResource("1_td2q0")]
+custom_minimum_size = Vector2(1600, 900)
+layout_mode = 2
+size_flags_horizontal = 3
+target_scene = "res://Scenes/tile_testing.tscn"
+metadata/_edit_use_anchors_ = true
+
+[node name="Brectlevelselect2" parent="ScrollContainer/HBoxContainer" instance=ExtResource("1_td2q0")]
+custom_minimum_size = Vector2(1600, 900)
+layout_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Brectlevelselect3" parent="ScrollContainer/HBoxContainer" instance=ExtResource("1_td2q0")]
+custom_minimum_size = Vector2(1600, 900)
+layout_mode = 2
+metadata/_edit_use_anchors_ = true
