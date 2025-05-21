@@ -16,6 +16,10 @@ var next_spawn_time: float = 0.0
 
 func _ready():
 	spawn_timer.start(5)
+	
+	# Connect to the border_shrunk signal
+	if tile_map_layer and tile_map_layer.has_signal("border_shrunk"):
+		tile_map_layer.border_shrunk.connect(check_powerups_outside_border)
 
 
 func spawn_powerup():
@@ -72,3 +76,19 @@ func _on_spawn_timer_timeout() -> void:
 	var random_interval = randf_range(spawn_interval_min, spawn_interval_max)
 	print("Next powerup in ", random_interval, " seconds")
 	spawn_timer.start(random_interval)
+
+
+func check_powerups_outside_border(new_radius):
+	print("Border shrunk to radius: ", new_radius, ", checking powerups...")
+	var powerups_to_remove = []
+	
+	for powerup in powerups:
+		if is_instance_valid(powerup):
+			if not tile_map_layer.is_position_inside_border(powerup.global_position):
+				print("Powerup outside border, removing: ", powerup.global_position)
+				powerups_to_remove.append(powerup)
+	
+	# Remove the powerups outside the border
+	for powerup in powerups_to_remove:
+		powerups.erase(powerup)
+		powerup.queue_free()
