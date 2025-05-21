@@ -62,6 +62,10 @@ func invincible():
 
 func takedamage():
     hp -= 1
+    if id == 1:
+        PlayUI.ui_instance.set_heart_p1(hp)
+    else:
+        PlayUI.ui_instance.set_heart_p2(hp)
     if hp <= 0:
         die()
     self.invincible()

@@ -1,4 +1,5 @@
 extends Control
+class_name PlayUI
 
 @onready var tutorial = $Tutorial
 @onready var cready = $Ready
@@ -31,6 +32,8 @@ extends Control
 @onready var audio_close = $AudioClose
 @onready var audio_start = $AudioStart
 @onready var audio_count = $AudioCount
+
+static var ui_instance: PlayUI = null
 
 
 func set_expression_p1(value: String) -> void:
@@ -89,6 +92,11 @@ var game_timer := Timer.new()
 var total_game_seconds = 5 * 45  # 5 minutes
 
 func _ready():
+	if ui_instance == null:
+		ui_instance = self
+		set_process_mode(Node.PROCESS_MODE_ALWAYS)
+	else:
+		queue_free()
 	get_tree().paused = true
 	
 	process_mode = Node.PROCESS_MODE_ALWAYS
