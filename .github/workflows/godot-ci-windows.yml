@@ -40,39 +40,43 @@ jobs:
           GODOT_VERSION="4.4.1"
           TEMPLATE_DIR="/home/runner/.local/share/godot/export_templates/${GODOT_VERSION}.stable.mono"
           mkdir -p "${TEMPLATE_DIR}"
-          echo "Copying templates from ExportTemplates/ directory..."
           cp ExportTemplates/windows_debug_x86_64.exe "${TEMPLATE_DIR}/"
           cp ExportTemplates/windows_release_x86_64.exe "${TEMPLATE_DIR}/"
 
       - name: Check for Export Templates
         run: |
-          echo "Checking for templates in /home/runner/.local/share/godot/export_templates/4.4.1.stable.mono/"
-          ls -la /home/runner/.local/share/godot/export_templates/4.4.1.stable.mono/ || echo "Directory not found or empty."
+          echo "Checking for templates..."
+          ls -la /home/runner/.local/share/godot/export_templates/4.4.1.stable.mono/
 
       - name: Export Godot project (Release)
         if: github.event.inputs.build_type == 'release'
         run: |
           mkdir -p artifacts/windows-build-release
-          godot --headless --export-release "Windows Desktop" artifacts/windows-build-release/Explosive-Outplay-${{ github.event.inputs.version }}.exe .
+          godot --headless --export-release "Windows Desktop" artifacts/windows-build-release/Explosive-Outplay.exe .
+
+          echo "Creating ZIP..."
+          cd artifacts/windows-build-release
+          zip Explosive-Outplay-Windows-${{ github.event.inputs.version }}.zip Explosive-Outplay.exe *.pck
+          cd -
 
       - name: Export Godot project (Debug)
         if: github.event.inputs.build_type == 'debug'
         run: |
           mkdir -p artifacts/windows-build-debug
-          godot --headless --export-debug "Windows Desktop" artifacts/windows-build-debug/Explosive-Outplay-debug.exe .
+          godot --headless --export-debug "Windows Desktop" artifacts/windows-build-debug/Explosive-Outplay-Debug.exe .
 
-      - name: Upload Windows Artifact (Release)
+      - name: Upload Artifact (Release ZIP)
         if: github.event.inputs.build_type == 'release'
         uses: actions/upload-artifact@v4
         with:
-          name: windows-build-release
-          path: artifacts/windows-build-release
+          name: Explosive-Outplay-Windows-${{ github.event.inputs.version }}
+          path: artifacts/windows-build-release/Explosive-Outplay-Windows-${{ github.event.inputs.version }}.zip
 
-      - name: Upload Windows Artifact (Debug)
+      - name: Upload Artifact (Debug EXE)
         if: github.event.inputs.build_type == 'debug'
         uses: actions/upload-artifact@v4
         with:
-          name: windows-build-debug
+          name: Explosive-Outplay-Debug
           path: artifacts/windows-build-debug
 
       - name: Create GitHub Release
@@ -81,20 +85,20 @@ jobs:
         uses: actions/create-release@v1
         with:
           tag_name: ${{ github.event.inputs.version }}
-          release_name: Explosive-Outplay ${{ github.event.inputs.version }}
+          release_name: Explosive Outplay ${{ github.event.inputs.version }}
           body: ${{ github.event.inputs.description }}
           draft: false
           prerelease: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Upload Release Asset
+      - name: Upload ZIP to GitHub Release
         if: github.event.inputs.build_type == 'release'
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: artifacts/windows-build-release/Explosive-Outplay-${{ github.event.inputs.version }}.exe
-          asset_name: Explosive-Outplay-${{ github.event.inputs.version }}.exe
-          asset_content_type: application/octet-stream
+          asset_path: artifacts/windows-build-release/Explosive-Outplay-Windows-${{ github.event.inputs.version }}.zip
+          asset_name: Explosive-Outplay-Windows-${{ github.event.inputs.version }}.zip
+          asset_content_type: application/zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
