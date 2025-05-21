@@ -9,13 +9,14 @@ on:
         default: 'release'
         type: choice
         options:
-        - release
-        - debug
-      release_tag:
-        description: 'Release tag (only for release builds)'
+          - release
+          - debug
+      version:
+        description: 'Release version (e.g. v1.0.0)'
         required: false
-        type: string
-        default: 'v1.0.0'
+      description:
+        description: 'Release description'
+        required: false
 
 jobs:
   export-windows:
@@ -52,26 +53,20 @@ jobs:
         if: github.event.inputs.build_type == 'release'
         run: |
           mkdir -p artifacts/windows-build-release
-          godot --headless --export-release "Windows Desktop" artifacts/windows-build-release/Explosive-Outplay_${{ github.event.inputs.release_tag }}.exe .
+          godot --headless --export-release "Windows Desktop" artifacts/windows-build-release/Explosive-Outplay-${{ github.event.inputs.version }}.exe .
 
       - name: Export Godot project (Debug)
         if: github.event.inputs.build_type == 'debug'
         run: |
           mkdir -p artifacts/windows-build-debug
-          godot --headless --export-debug "Windows Desktop" artifacts/windows-build-debug/Explosive-Outplay_debug.exe .
+          godot --headless --export-debug "Windows Desktop" artifacts/windows-build-debug/Explosive-Outplay-debug.exe .
 
-      - name: Create GitHub Release and Upload (Release)
+      - name: Upload Windows Artifact (Release)
         if: github.event.inputs.build_type == 'release'
-        uses: softprops/action-gh-release@v1
+        uses: actions/upload-artifact@v4
         with:
-          tag_name: ${{ github.event.inputs.release_tag }}
-          name: Release ${{ github.event.inputs.release_tag }}
-          files: |
-            artifacts/windows-build-release/Explosive-Outplay_${{ github.event.inputs.release_tag }}.exe
-          draft: false
-          prerelease: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          name: windows-build-release
+          path: artifacts/windows-build-release
 
       - name: Upload Windows Artifact (Debug)
         if: github.event.inputs.build_type == 'debug'
@@ -79,3 +74,27 @@ jobs:
         with:
           name: windows-build-debug
           path: artifacts/windows-build-debug
+
+      - name: Create GitHub Release
+        if: github.event.inputs.build_type == 'release'
+        id: create_release
+        uses: actions/create-release@v1
+        with:
+          tag_name: ${{ github.event.inputs.version }}
+          release_name: Explosive-Outplay ${{ github.event.inputs.version }}
+          body: ${{ github.event.inputs.description }}
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Release Asset
+        if: github.event.inputs.build_type == 'release'
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: artifacts/windows-build-release/Explosive-Outplay-${{ github.event.inputs.version }}.exe
+          asset_name: Explosive-Outplay-${{ github.event.inputs.version }}.exe
+          asset_content_type: application/octet-stream
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
