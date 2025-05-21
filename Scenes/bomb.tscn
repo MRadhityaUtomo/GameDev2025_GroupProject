@@ -56,29 +56,29 @@ region = Rect2(256, 0, 64, 128)
 atlas = ExtResource("3_l8kb1")
 region = Rect2(320, 0, 64, 128)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_60xmw"]
+atlas = ExtResource("4_mkuqu")
+region = Rect2(0, 0, 104, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l8kb1"]
+atlas = ExtResource("4_mkuqu")
+region = Rect2(104, 0, 104, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mkuqu"]
+atlas = ExtResource("4_mkuqu")
+region = Rect2(208, 0, 104, 128)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_5hwo8"]
 atlas = ExtResource("4_mkuqu")
-region = Rect2(0, 0, 64, 128)
+region = Rect2(312, 0, 104, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_av66p"]
 atlas = ExtResource("4_mkuqu")
-region = Rect2(64, 0, 64, 128)
+region = Rect2(416, 0, 104, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_82kys"]
 atlas = ExtResource("4_mkuqu")
-region = Rect2(128, 0, 64, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_f6e1b"]
-atlas = ExtResource("4_mkuqu")
-region = Rect2(192, 0, 64, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_b7n2s"]
-atlas = ExtResource("4_mkuqu")
-region = Rect2(256, 0, 64, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4b8bt"]
-atlas = ExtResource("4_mkuqu")
-region = Rect2(320, 0, 64, 128)
+region = Rect2(520, 0, 104, 128)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_qa8sr"]
 animations = [{
@@ -130,6 +130,15 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_60xmw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l8kb1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mkuqu")
+}, {
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_5hwo8")
 }, {
 "duration": 1.0,
@@ -137,19 +146,10 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_82kys")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_f6e1b")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_b7n2s")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_4b8bt")
 }],
 "loop": true,
 "name": &"stage3",
-"speed": 25.0
+"speed": 20.0
 }]
 
 [node name="Bomb" type="Area2D"]
@@ -169,4 +169,4 @@ position = Vector2(0, -32)
 sprite_frames = SubResource("SpriteFrames_qa8sr")
 animation = &"stage3"
 autoplay = "stage1"
-frame_progress = 0.0659023
+frame_progress = 0.962765

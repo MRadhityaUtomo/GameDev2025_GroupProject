@@ -1,8 +1,8 @@
 [gd_scene load_steps=23 format=3 uid="uid://bvle03hudcfyf"]
 
 [ext_resource type="Script" uid="uid://cnhrma4fy61gx" path="res://Scenes/explosion.gd" id="1_a801j"]
-[ext_resource type="Texture2D" uid="uid://fosfe3852apw" path="res://Assets/Explosion Tile.png" id="1_aayv4"]
 [ext_resource type="Texture2D" uid="uid://5ginq0jac4n6" path="res://Assets/explosion.png" id="3_4okmj"]
+[ext_resource type="AudioStream" uid="uid://dh3toadhajgu8" path="res://Assets/Audio/explosion.wav" id="4_k2xjm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_a801j"]
 size = Vector2(48, 48)
@@ -138,11 +138,6 @@ animations = [{
 collision_mask = 3
 script = ExtResource("1_a801j")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-visible = false
-scale = Vector2(0.75, 0.75)
-texture = ExtResource("1_aayv4")
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_a801j")
 debug_color = Color(0.985947, 0, 0.328636, 0.42)
@@ -155,6 +150,9 @@ sprite_frames = SubResource("SpriteFrames_tfhyv")
 autoplay = "default"
 frame = 16
 frame_progress = 1.0
+
+[node name="sfx" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_k2xjm")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

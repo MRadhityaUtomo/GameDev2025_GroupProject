@@ -68,6 +68,7 @@ func update_can_place_status():
 
 
 func on_bomb_exploded(position: Vector2, bomb_ref):
+	$"../sfx".play()
 	print("BombManager: Bomb exploded at ", position)
 	player_body.BombCount += 1
 	# call the explosion

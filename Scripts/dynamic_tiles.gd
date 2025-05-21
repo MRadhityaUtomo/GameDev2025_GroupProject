@@ -135,14 +135,41 @@ func draw_circle_border(center_x, center_y, radius, spawn_explosions=false):
 			if dist_sq >= r_min and dist_sq <= r_max:
 				points[Vector2(x, y)] = true
 	
-	for point in points.keys():
-		# Spawn border explosion if requested (during shrinking)
-		if spawn_explosions and border_explosion_scene and not Engine.is_editor_hint():
-			var explosion = border_explosion_scene.instantiate()
-			explosion.position = map_to_local(point)
-			add_child(explosion)
+	# If we're spawning explosions, show warnings first
+	if spawn_explosions and border_explosion_scene and not Engine.is_editor_hint():
+		# Create warning animations at all points
+		var warning_animations = []
+		for point in points.keys():
+			var warning = $warning.duplicate()
+			warning.visible = true
+			warning.position = map_to_local(point)
+			add_child(warning)
+			warning.play("default")
+			warning_animations.append(warning)
 		
-		set_border_tile(point)
+		# Wait a short time for warning effect
+		get_tree().create_timer(1.5).timeout.connect(func():
+			# Spawn explosions after warning
+			$sfx.play()
+			for i in range(warning_animations.size()):
+				var point = points.keys()[i]
+				var warning = warning_animations[i]
+				
+				# Create explosion
+				var explosion = border_explosion_scene.instantiate()
+				explosion.position = map_to_local(point)
+				add_child(explosion)
+				
+				# Remove warning animation
+				warning.queue_free()
+				
+				# Set the border tile
+				set_border_tile(point)
+		)
+	else:
+		# If no explosions, just set border tiles immediately
+		for point in points.keys():
+			set_border_tile(point)
 		
 func draw_rectange_border(center_x, center_y, radius):
 	var center = Vector2i(center_x, center_y)

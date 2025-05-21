@@ -99,18 +99,67 @@ func invincible():
 
 func takedamage():
 	hp -= 1
+	
+	if hp <= 0:
+		if id == 1:
+			if is_instance_valid(PlayUI.ui_instance):
+				PlayUI.ui_instance.set_expression_p1("dead")
+				if PlayUI.ui_instance.expressionP2 == "neutral":
+					PlayUI.ui_instance.set_expression_p2("happy")
+		else:
+			if is_instance_valid(PlayUI.ui_instance):
+				PlayUI.ui_instance.set_expression_p2("dead")
+				if PlayUI.ui_instance.expressionP1 == "neutral":
+					PlayUI.ui_instance.set_expression_p1("happy")
+				
+		self.invincible()
+		animations.play("hurt")
+		await animations.animation_finished
+		
+		await get_tree().create_timer(1.0).timeout
+		die()
+		return
+	
 	if id == 1:
+		PlayUI.ui_instance.set_expression_p1("hurt")
+		if PlayUI.ui_instance.expressionP2 == "neutral":
+
+			PlayUI.ui_instance.set_expression_p2("happy")
 		PlayUI.ui_instance.set_heart_p1(hp)
 	else:
+		if PlayUI.ui_instance.expressionP1 == "neutral":
+			PlayUI.ui_instance.set_expression_p1("happy")
+		PlayUI.ui_instance.set_expression_p2("hurt")
 		PlayUI.ui_instance.set_heart_p2(hp)
-	if hp <= 0:
-		die()
+	
 	self.invincible()
 	animations.play("hurt")
 	await animations.animation_finished
 	animations.play("idle")
-
 	
+	await get_tree().create_timer(0.5).timeout
+	
+	if id == 1:
+		if is_instance_valid(PlayUI.ui_instance):
+			PlayUI.ui_instance.set_expression_p1("angry")
+			PlayUI.ui_instance.set_expression_p2("neutral")
+	else:
+		if is_instance_valid(PlayUI.ui_instance):
+			PlayUI.ui_instance.set_expression_p1("neutral")
+			PlayUI.ui_instance.set_expression_p2("angry")
+			
+	
+	await get_tree().create_timer(0.5).timeout
+	
+	if id == 1:
+		if is_instance_valid(PlayUI.ui_instance):
+			PlayUI.ui_instance.set_expression_p1("neutral")
+			PlayUI.ui_instance.set_expression_p2("neutral")
+	else:
+		if is_instance_valid(PlayUI.ui_instance):
+			PlayUI.ui_instance.set_expression_p1("neutral")
+			PlayUI.ui_instance.set_expression_p2("neutral")
+			
 # Add this new function for grid-aligned push
 func push_from_border_grid_aligned(push_direction: Vector2, dynamic_tiles: DynamicTiles):
 	# Calculate the target position

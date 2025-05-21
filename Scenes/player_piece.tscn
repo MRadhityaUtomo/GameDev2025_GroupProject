@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://3vppwekhnxr7"]
+[gd_scene load_steps=17 format=3 uid="uid://3vppwekhnxr7"]
 
 [ext_resource type="Script" uid="uid://bvpbsltbk1ovn" path="res://Scripts/Player.gd" id="1_5heyv"]
 [ext_resource type="Texture2D" uid="uid://muxlfx7u30ye" path="res://Assets/ChessPiece.png" id="2_4eato"]
@@ -10,6 +10,7 @@
 [ext_resource type="SpriteFrames" uid="uid://cwgr2uq3oppun" path="res://Scenes/player1anims.tres" id="8_dvguk"]
 [ext_resource type="SpriteFrames" uid="uid://2xyna35jkfvm" path="res://Scenes/player2anims.tres" id="9_2ahor"]
 [ext_resource type="AudioStream" uid="uid://dc04svl8sfelc" path="res://Assets/Audio/Sfx/powerup_pickup.ogg" id="10_es1bt"]
+[ext_resource type="AudioStream" uid="uid://dh3toadhajgu8" path="res://Assets/Audio/explosion.wav" id="11_4qpob"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uruiu"]
 size = Vector2(16.6667, 16.6667)
@@ -116,3 +117,6 @@ animation = &"hurt"
 
 [node name="PowerupPickup" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("10_es1bt")
+
+[node name="sfx" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("11_4qpob")
