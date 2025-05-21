@@ -102,11 +102,12 @@ func get_trap_amount():
 	return len(get_used_cells_by_id(0, Vector2i(0, 0), 3))
 	
 func spawn_trap():
-	var walkable_tiles = get_used_cells_by_id(0, Vector2i(0, 0), 1)
-	var random_num = randi_range(0, len(walkable_tiles) - 1)
-	var target_tiles = walkable_tiles[random_num]
-	set_cell(target_tiles, 0, Vector2i(0, 0), 3)
-	create_tile_instance(target_tiles, 3)
+	#var walkable_tiles = get_used_cells_by_id(0, Vector2i(0, 0), 1)
+	#var random_num = randi_range(0, len(walkable_tiles) - 1)
+	#var target_tiles = walkable_tiles[random_num]
+	#set_cell(target_tiles, 0, Vector2i(0, 0), 3)
+	#create_tile_instance(target_tiles, 3)
+	pass
 
 func _on_trap_timer_timeout() -> void:
 	if get_trap_amount() + trap_spawn_rate <= trap_amount_limit:

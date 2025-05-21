@@ -54,7 +54,6 @@ tile_map_data = PackedByteArray("AAAEAAAAAAAAAAAAAQAFAAAAAAAAAAAAAQAGAAAAAAAAAAA
 shrinking_time = 5
 
 [node name="PlayerPiece" parent="." node_paths=PackedStringArray("GlobalBombs") instance=ExtResource("3_lquhd")]
-z_index = 1
 position = Vector2(-32, 288)
 id = 1
 up_action = "w"
@@ -67,7 +66,6 @@ current_bomb_type = ExtResource("4_toqyy")
 GlobalBombs = NodePath("../GlobalBombManager")
 
 [node name="PlayerPiece2" parent="." node_paths=PackedStringArray("GlobalBombs") instance=ExtResource("3_lquhd")]
-z_index = 1
 position = Vector2(608, 288)
 id = 2
 up_action = "ui_up"

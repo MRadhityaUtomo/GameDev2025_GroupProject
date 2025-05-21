@@ -8,6 +8,7 @@ extends Node2D
 @export var tile_map_layer: TileMapLayer
 
 @onready var spawn_timer: Timer = $SpawnTimer
+@onready var global_bomb_manager: Node2D = $"../GlobalBombManager"
 
 var powerups = []
 var next_spawn_time: float = 0.0
@@ -18,16 +19,41 @@ func _ready():
 
 
 func spawn_powerup():
-	var powerup = powerup_scene.instantiate()
+	# Check if we already have max powerups
+	clean_powerups()
+	if powerups.size() >= max_powerups:
+		print("Maximum powerups reached, not spawning more")
+		return
+	
+	# Get random position
 	var pos = tile_map_layer.get_random_walkable_tile_position()
-	print(pos)
-
+	print("Potential powerup position:", pos)
+	
 	if pos != Vector2.ZERO:
+		# Check for existing powerups at this position
+		for existing_powerup in powerups:
+			if is_instance_valid(existing_powerup):
+				# Use distance check with small threshold to account for floating point imprecision
+				if existing_powerup.global_position.distance_to(pos) < 20:
+					print("Position already has a powerup, trying again")
+					# Try another position
+					spawn_powerup()
+					return
+		
+		if global_bomb_manager and global_bomb_manager.has_method("is_bomb_at_position"):
+			if global_bomb_manager.is_bomb_at_position(pos):
+				print("Position already has a bomb, trying again")
+				# Try another position
+				spawn_powerup()
+				return
+		
+		# Position is clear, spawn the powerup
+		var powerup = powerup_scene.instantiate()
 		powerup.global_position = pos - get_parent().position
 		add_child(powerup)
-		powerup.z_index = 10
+		powerup.z_index = 5  # Below player but above tiles
 		powerups.append(powerup)
-		print("Spawned powerup at position: ", pos)
+		print("Spawned powerup at position:", pos)
 
 
 func clean_powerups():

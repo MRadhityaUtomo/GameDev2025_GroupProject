@@ -85,3 +85,14 @@ func on_bomb_exploded(position: Vector2, bomb_ref):
 			print(
 				"Removed bomb from global array, remaining: ", player_body.GlobalBombs.Bombs.size()
 			)
+
+
+func is_bomb_at_position(pos: Vector2, threshold: float = 20.0) -> bool:
+	# Check all bombs managed by this BombManager
+	for bomb in bombs:
+		if is_instance_valid(bomb):
+			var distance = bomb.global_position.distance_to(pos)
+			if distance < threshold:
+				return true
+	
+	return false
