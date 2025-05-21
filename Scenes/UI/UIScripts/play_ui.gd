@@ -241,6 +241,8 @@ func _on_game_timer_tick():
         game_timer.stop()
         show_endgame_status("SuddenDeath")
 
+
+
 # SHOW WHOS WIN, SUDDENT DEATH, AND DRAW
 func show_endgame_status(status: String) -> void:
     var status_node: Node = null
