@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="PowerupResource" load_steps=3 format=3 uid="uid://cipiiurkbi2dx"]
 
-[ext_resource type="Script" uid="uid://bh488m13x02a6" path="res://Scripts/PowerupResource.gd" id="1_nee26"]
+[ext_resource type="Script" uid="uid://bh488m13x02a6" path="res://resources/PowerupResource.gd" id="1_nee26"]
 [ext_resource type="Texture2D" uid="uid://xptg0fvwekib" path="res://Scenes/UI/UIAssets/Power/MoveDouble.png" id="2_rtr2o"]
 
 [resource]

@@ -23,6 +23,7 @@ enum BorderType {
 @export var border_tile_scene: PackedScene
 @export var trap_tile_scene: PackedScene
 @export var maximum_shrinking_stages=3
+@export var border_explosion_scene: PackedScene
 
 var current_radius
 var current_shrinking_time
@@ -118,6 +119,8 @@ func _on_trap_timer_timeout() -> void:
 	elif get_trap_amount() < trap_amount_limit:
 		for i in range(trap_amount_limit - get_trap_amount()):
 			spawn_trap()
+
+#comment
 
 func draw_circle_border(center_x, center_y, radius):
 	var center = Vector2(center_x, center_y)

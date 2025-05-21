@@ -7,16 +7,18 @@ extends Node2D
 @export var max_powerups: int = 3
 @export var tile_map_layer: TileMapLayer
 @export var available_powerups: Array[PowerupResource]
+@export var available_bomb_powerups: Array[BombType]
 
 @onready var spawn_timer: Timer = $SpawnTimer
 @onready var global_bomb_manager: Node2D = $"../GlobalBombManager"
 
 var powerups = []
 var next_spawn_time: float = 0.0
-
+var combined_powerups = []
 
 func _ready():
 	spawn_timer.start(5)
+	combined_powerups = available_bomb_powerups + available_powerups
 	
 	# Connect to the border_shrunk signal
 	if tile_map_layer and tile_map_layer.has_signal("border_shrunk"):
@@ -56,9 +58,18 @@ func spawn_powerup():
 		var powerup = powerup_scene.instantiate()
 		
 		# Select a random powerup type from available resources
-		var random_powerup = available_powerups[randi() % available_powerups.size()]
-		powerup.powerup_resource = random_powerup
-		
+		var random_powerup = combined_powerups[randi() % combined_powerups.size()]
+		print("WHAT THE FUCK IS GOING ON")
+		# Check the type of resource and assign to appropriate property
+		if random_powerup is PowerupResource:
+			powerup.powerup_resource = random_powerup
+			print("Spawned movement powerup: ", random_powerup.display_name)
+		elif random_powerup is BombType:
+			powerup.bomb_resource = random_powerup
+			print("Spawned bomb powerup: ", random_powerup.name)
+		else:
+			print("Unknown powerup resource type")
+
 		powerup.global_position = pos - get_parent().position
 		add_child(powerup)
 		powerup.z_index = 5  # Below player but above tiles
