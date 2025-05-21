@@ -164,25 +164,44 @@ func _check_start_countdown():
 		countdown_timer.start()
 
 func _on_countdown_tick():
-	countdown -= 1
-	audio_count.play()
-	if countdown < 1:
-	
-		$BGM.play()
+	if countdown == 3:
+		# Play first announcement
+		$announce1.play()
+		
+		# Wait for announce1 to finish
+		await $announce1.finished
+		
+		# Play duel announcement
+		$duel.play()
+		
+		# Wait for duel to finish
+		await $duel.finished
+		
+		# Small delay after announcements
+		await get_tree().create_timer(0.5).timeout
+		
+		# Stop the countdown timer and set game ready
 		countdown_timer.stop()
-		countdown_label.text = "1"
-
-		# Start game countdown
+		countdown_label.text = "GO!"
+		
+		# Start game timing and play BGM
 		minute_label.text = "3"
 		second_label.text = "45"
 		game_timer.start()
-
+		$BGM.play()
+		
 		# Show game and hide ready
 		_set_darken(main, false)
 		cready.visible = false
 		get_tree().paused = false
-	else:
-		countdown_label.text = str(countdown)
+		
+		# Don't continue with the countdown
+		return
+	
+	# For countdown 2 and 1
+	countdown -= 1
+	audio_count.play()
+	countdown_label.text = str(countdown)
 
 func _on_game_timer_tick():
 	total_game_seconds -= 1
