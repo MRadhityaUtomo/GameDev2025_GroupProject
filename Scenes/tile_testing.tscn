@@ -12,7 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://dxwg4b4pdjf04" path="res://Scenes/power_up_tile.tscn" id="6_m8f3l"]
 [ext_resource type="SpriteFrames" uid="uid://2xyna35jkfvm" path="res://Scenes/player2anims.tres" id="7_nughl"]
 [ext_resource type="Resource" uid="uid://cf8yovq80cwhr" path="res://BombTypes/DiagBomb.tres" id="7_t1n04"]
-[ext_resource type="Script" uid="uid://bh488m13x02a6" path="res://resources/PowerupResource.gd" id="12_8w6n6"]
+[ext_resource type="Script" path="res://resources/PowerupResource.gd" id="12_8w6n6"]
 [ext_resource type="Resource" uid="uid://s05eroefw7pf" path="res://Powerups/ReversedMovement.tres" id="13_ipx71"]
 [ext_resource type="Resource" uid="uid://ciluy0fqsgjjf" path="res://Powerups/BishopMovement.tres" id="14_sngn8"]
 [ext_resource type="Resource" uid="uid://cipiiurkbi2dx" path="res://Powerups/DoubleMovement.tres" id="15_dky8c"]
@@ -80,7 +80,7 @@ left_action = "a"
 right_action = "d"
 bomb_action = "p1Interact"
 animationSet = ExtResource("5_gkl82")
-current_bomb_type = ExtResource("7_t1n04")
+current_bomb_type = ExtResource("4_toqyy")
 GlobalBombs = NodePath("../GlobalBombManager")
 
 [node name="PlayerPiece2" parent="." node_paths=PackedStringArray("GlobalBombs") instance=ExtResource("3_lquhd")]
