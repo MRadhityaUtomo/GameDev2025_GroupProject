@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://djnjtf7d6stl1"]
+[gd_scene load_steps=39 format=3 uid="uid://djnjtf7d6stl1"]
 
 [ext_resource type="Script" uid="uid://clx1ipbukk4ei" path="res://Scenes/UI/UIScripts/play_ui.gd" id="1_12tgd"]
 [ext_resource type="Texture2D" uid="uid://b2kechd7qg8xq" path="res://Scenes/UI/UIAssets/BG/BGRect.png" id="1_nw1oc"]
@@ -30,6 +30,7 @@
 [ext_resource type="AudioStream" uid="uid://ysgvs4qrxxdc" path="res://Scenes/UI/Components/Buttons/AudioAssets/countdowntime.mp3" id="26_hhv6v"]
 [ext_resource type="AudioStream" uid="uid://dc04svl8sfelc" path="res://Assets/Audio/Sfx/powerup_pickup.ogg" id="29_tua0u"]
 [ext_resource type="AudioStream" uid="uid://pq40hpky1llh" path="res://Assets/Audio/live-studio-audience-84726.mp3" id="30_gs6e4"]
+[ext_resource type="AudioStream" uid="uid://c4nac0cbjridv" path="res://Assets/Audio/2608-chiptune音楽素材musmus.mp3" id="30_ncxgt"]
 [ext_resource type="AudioStream" uid="uid://coo7o38frjfy6" path="res://Assets/Audio/duel.wav" id="31_c2cxb"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0wt4e"]
@@ -76,19 +77,21 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 820.0
-offset_top = 24.0
-offset_right = 820.0
-offset_bottom = 24.0
+offset_left = 1304.0
+offset_top = 40.0
+offset_right = 1304.0
+offset_bottom = 40.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(0.146628, 0.146628)
+scale = Vector2(0.1, 0.1)
 
 [node name="CountdownTime" type="TextureRect" parent="Main/Time"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -0.0001297
+offset_right = -0.00012207
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("7_gbnmi")
@@ -1340,7 +1343,7 @@ wait_time = 0.4
 one_shot = true
 
 [node name="BGM" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("29_tua0u")
+stream = ExtResource("30_ncxgt")
 volume_db = 10.0
 
 [node name="announce1" type="AudioStreamPlayer2D" parent="."]
