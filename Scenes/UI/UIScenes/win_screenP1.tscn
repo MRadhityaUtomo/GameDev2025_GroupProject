@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://c0itpi0ot54pl"]
+[gd_scene load_steps=10 format=3 uid="uid://m32meqkg4x8n"]
 
 [ext_resource type="Script" uid="uid://uo6l3iqmnu2s" path="res://Scenes/UI/UIScripts/Components/StatusScreen.gd" id="1_c3bqw"]
 [ext_resource type="Shader" uid="uid://e3oxmp7fc20y" path="res://Scenes/UI/UIAssets/Shader/patternxy.gdshader" id="1_wpll6"]

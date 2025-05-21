@@ -89,6 +89,10 @@ var game_timer := Timer.new()
 var total_game_seconds = 5 * 60  # 5 minutes
 
 func _ready():
+	get_tree().paused = true
+	
+	process_mode = Node.PROCESS_MODE_ALWAYS
+	
 	tutorial.visible = true
 	cready.visible = false
 	main.visible = false
@@ -167,6 +171,7 @@ func _on_countdown_tick():
 		# Show game and hide ready
 		_set_darken(main, false)
 		cready.visible = false
+		get_tree().paused = false
 	else:
 		countdown_label.text = str(countdown)
 
