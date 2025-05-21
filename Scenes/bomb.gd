@@ -19,7 +19,7 @@ func trigger_countdown():
 
 	if countdown <= 0:
 		call_deferred("explode")
-
+	
 
 func explode():
 	bomb_exploded.emit(global_position, self)

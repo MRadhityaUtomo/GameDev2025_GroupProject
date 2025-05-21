@@ -63,15 +63,30 @@ func invincible():
 func takedamage():
     hp -= 1
     if id == 1:
+        PlayUI.ui_instance.set_expression_p1("hurt")
         PlayUI.ui_instance.set_heart_p1(hp)
     else:
+        PlayUI.ui_instance.set_expression_p2("hurt")
         PlayUI.ui_instance.set_heart_p2(hp)
+    
     if hp <= 0:
         die()
+    
+    # Start invincibility and play hurt animation
     self.invincible()
     animations.play("hurt")
     await animations.animation_finished
     animations.play("idle")
+    
+    # Wait 2 seconds and then reset expression to neutral
+    await get_tree().create_timer(1.0).timeout
+    
+    if id == 1:
+        if is_instance_valid(PlayUI.ui_instance):
+            PlayUI.ui_instance.set_expression_p1("neutral")
+    else:
+        if is_instance_valid(PlayUI.ui_instance):
+            PlayUI.ui_instance.set_expression_p2("neutral")
 
     
 # Add this new function for grid-aligned push
