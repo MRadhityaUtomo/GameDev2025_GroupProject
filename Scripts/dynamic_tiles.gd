@@ -372,6 +372,8 @@ func show_circle_border_warnings(center_x, center_y, radius):
 	# After warning finishes, remove old border and create new one
 	get_tree().create_timer(1.5).timeout.connect(func():
 		$sfx.play()
+		# Apply camera shake here
+		apply_camera_shake(8.0, 0.5)
 		# NOW remove the old border
 		remove_border()
 		
@@ -394,6 +396,36 @@ func show_circle_border_warnings(center_x, center_y, radius):
 		update_edge_sprites()
 		current_radius = radius  # Update the radius AFTER creating new border
 	)
+	
+# Simple camera shake function
+func apply_camera_shake(intensity: float = 8.0, duration: float = 0.5):
+	# Find the camera in the scene
+	var camera = get_viewport().get_camera_2d()
+	if not camera:
+		print("No Camera2D found in the viewport")
+		return
+	
+	# Create a tween for the shake effect
+	var shake_tween = create_tween()
+	
+	# Apply several random shakes with decreasing intensity
+	var rand = RandomNumberGenerator.new()
+	rand.randomize()
+	
+	# Initial shake
+	var original_position = camera.position
+	
+	# Add 5 random position changes with decreasing intensity
+	for i in range(5):
+		var step_intensity = intensity * (1.0 - (float(i) / 5))
+		var next_offset = Vector2(
+			rand.randf_range(-step_intensity, step_intensity),
+			rand.randf_range(-step_intensity, step_intensity)
+		)
+		shake_tween.tween_property(camera, "offset", next_offset, duration / 5)
+	
+	# Final step - return to center
+	shake_tween.tween_property(camera, "offset", Vector2.ZERO, duration / 5)
 func get_random_walkable_tile_position() -> Vector2:
 	# Get all walkable tile positions
 	var walkable_tiles = get_used_cells_by_id(0, Vector2i(0, 0), 1)

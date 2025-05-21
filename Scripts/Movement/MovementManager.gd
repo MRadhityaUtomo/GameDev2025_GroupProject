@@ -212,15 +212,50 @@ func change_movement_mode(new_mode: MovementMode.Type, duration: float = 10.0):
 
 
 func reset_movement_mode():
-	print("Powerup duration ended, reverting to KING_MOVEMENT")
-	var mode_name = "KING_MOVEMENT"
-	if player_body.id == 1:
-		print("Player 1 is changing movement mode to -> ", mode_name)
-		PlayUI.ui_instance.set_p1_move_icon(mode_name)
+	print("Powerup duration ended, checking if safe to revert to KING_MOVEMENT")
+	
+	# Don't change immediately if currently moving
+	if current_movement_strategy and current_movement_strategy.is_moving():
+		# Schedule the change after movement completes
+		var timer = Timer.new()
+		timer.wait_time = 0.1  # Check frequently
+		timer.one_shot = false
+		add_child(timer)
+		
+		# Connect timer to a function that checks if movement has completed
+		timer.timeout.connect(func():
+			if not current_movement_strategy or not current_movement_strategy.is_moving():
+				# Now it's safe to change
+				var mode_name = "KING_MOVEMENT"
+				if player_body.id == 1:
+					print("Player 1 is changing movement mode to -> ", mode_name)
+					PlayUI.ui_instance.set_p1_move_icon(mode_name)
+				else:
+					print("Player 2 is changing movement mode to -> ", mode_name)
+					PlayUI.ui_instance.set_p2_move_icon(mode_name)
+				
+				PlayUI.ui_instance.stop_powerup_timer(player_body.id, "MOVEMENT")
+				current_movement_mode = MovementMode.Type.KING_MOVEMENT
+				_update_active_logic_strategy()
+				movement_mode_changed.emit(mode_name)
+				
+				# Clean up timer
+				timer.stop()
+				timer.queue_free()
+		)
+		
+		timer.start()
 	else:
-		print("Player 2 is changing movement mode to -> ", mode_name)
-		PlayUI.ui_instance.set_p2_move_icon(mode_name)
-	PlayUI.ui_instance.stop_powerup_timer(player_body.id, "MOVEMENT")
-	current_movement_mode = MovementMode.Type.KING_MOVEMENT
-	_update_active_logic_strategy()
-	movement_mode_changed.emit(mode_name)
+		# Safe to change immediately if not moving
+		var mode_name = "KING_MOVEMENT"
+		if player_body.id == 1:
+			print("Player 1 is changing movement mode to -> ", mode_name)
+			PlayUI.ui_instance.set_p1_move_icon(mode_name)
+		else:
+			print("Player 2 is changing movement mode to -> ", mode_name)
+			PlayUI.ui_instance.set_p2_move_icon(mode_name)
+		
+		PlayUI.ui_instance.stop_powerup_timer(player_body.id, "MOVEMENT")
+		current_movement_mode = MovementMode.Type.KING_MOVEMENT
+		_update_active_logic_strategy()
+		movement_mode_changed.emit(mode_name)

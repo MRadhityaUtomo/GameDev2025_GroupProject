@@ -13,4 +13,4 @@ explosion_scene = ExtResource("1_hy2ox")
 pattern = 1
 texture = ExtResource("3_kv4ki")
 duration = 7.0
-id_name = ""
+id_name = "PowUpDiagonalBomb"
