@@ -69,30 +69,6 @@ func _unhandled_input(event: InputEvent):
 		return
 
 	var mode_changed = false
-	if event.is_action_pressed("switch_to_king"): 
-		if current_movement_mode != MovementMode.Type.KING_MOVEMENT:
-			current_movement_mode = MovementMode.Type.KING_MOVEMENT
-			mode_changed = true
-			
-	elif event.is_action_pressed("switch_to_bishop"): 
-		if current_movement_mode != MovementMode.Type.BISHOP_MOVEMENT:
-			current_movement_mode = MovementMode.Type.BISHOP_MOVEMENT
-			mode_changed = true
-			
-	elif event.is_action_pressed("switch_to_queen"): 
-		if current_movement_mode != MovementMode.Type.QUEEN_MOVEMENT:
-			current_movement_mode = MovementMode.Type.QUEEN_MOVEMENT
-			mode_changed = true
-			
-	elif event.is_action_pressed("switch_to_double_step"):
-		if current_movement_mode != MovementMode.Type.DOUBLE_STEP_MOVEMENT:
-			current_movement_mode = MovementMode.Type.DOUBLE_STEP_MOVEMENT
-			mode_changed = true
-			
-	elif event.is_action_pressed("switch_to_reversed"):
-		if current_movement_mode != MovementMode.Type.REVERSED_MOVEMENT:
-			current_movement_mode = MovementMode.Type.REVERSED_MOVEMENT
-			mode_changed = true
 	
 	if mode_changed:
 		_update_active_logic_strategy() 

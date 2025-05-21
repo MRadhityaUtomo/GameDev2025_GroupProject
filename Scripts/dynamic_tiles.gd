@@ -122,7 +122,7 @@ func _on_trap_timer_timeout() -> void:
 
 #comment
 
-func draw_circle_border(center_x, center_y, radius):
+func draw_circle_border(center_x, center_y, radius, spawn_explosions=false):
 	var center = Vector2(center_x, center_y)
 	# Adjust these radius values to be more inclusive at corners
 	var r_max = (radius + 0.7) * (radius + 0.7)  # Slightly larger outer boundary
@@ -139,8 +139,14 @@ func draw_circle_border(center_x, center_y, radius):
 				points[Vector2(x, y)] = true
 	
 	for point in points.keys():
+		# Spawn border explosion if requested (during shrinking)
+		if spawn_explosions and border_explosion_scene and not Engine.is_editor_hint():
+			var explosion = border_explosion_scene.instantiate()
+			explosion.position = map_to_local(point)
+			add_child(explosion)
+		
 		set_border_tile(point)
-
+		
 func draw_rectange_border(center_x, center_y, radius):
 	var center = Vector2i(center_x, center_y)
 	var left = center + Vector2i(-radius, 0)
@@ -333,7 +339,7 @@ func _on_shrinking_timer_timeout() -> void:
 				current_radius -= 1
 				remove_border()
 				if border_type == BorderType.circle:
-					draw_circle_border(center.x, center.y, current_radius)
+					draw_circle_border(center.x, center.y, current_radius, true) # Added 'true' to spawn explosions
 				elif border_type == BorderType.rectangle:
 					draw_rectange_border(center.x, center.y, current_radius)
 				update_edge_sprites()

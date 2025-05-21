@@ -52,12 +52,12 @@ func update_can_place_status():
 	var raycast = $"../RayCast2D"
 
 	# Set raycast direction to check where we want to place the bomb
-	raycast.target_position = player_body.last_move_direction * (grid_size * 2 / 3)
+	if player_body.last_move_direction:
+		raycast.target_position = player_body.last_move_direction * (grid_size * 2.0 / 3.0)
 
-	# Force the raycast to update
-	raycast.force_raycast_update()
+		# Force the raycast to update
+		raycast.force_raycast_update()
 
-	# Update the CanPlace flag - can't place if hitting a wall/border
 	player_body.CanPlace = !raycast.is_colliding()
 
 	# Debug output

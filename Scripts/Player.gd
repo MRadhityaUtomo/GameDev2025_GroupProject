@@ -64,12 +64,56 @@ func takedamage():
 	animations.play("idle")
 
 	
-# Add this function to your Player class
-func push_from_border(push_direction: Vector2, push_force: float = 500.0):
-	# Apply a strong impulse in the push direction
-	print("pushed")
-	velocity = push_direction * push_force
-	move_and_slide()
+# Add this new function for grid-aligned push
+func push_from_border_grid_aligned(push_direction: Vector2, dynamic_tiles: DynamicTiles):
+	# Calculate the target position
+	var current_tile_pos = dynamic_tiles.local_to_map(dynamic_tiles.to_local(global_position))
+	
+	# Try to find next valid cell in direction of center
+	var grid_aligned_direction = Vector2i(
+		round(push_direction.x),  # Round to -1, 0, or 1
+		round(push_direction.y)   # Round to -1, 0, or 1
+	)
+	
+	# If both components are non-zero (diagonal), choose the stronger one
+	if grid_aligned_direction.x != 0 and grid_aligned_direction.y != 0:
+		if abs(push_direction.x) > abs(push_direction.y):
+			grid_aligned_direction.y = 0
+		else:
+			grid_aligned_direction.x = 0
+	
+	# If somehow both components became zero, default to a direction toward center
+	if grid_aligned_direction == Vector2i.ZERO:
+		var to_center = dynamic_tiles.center - current_tile_pos
+		grid_aligned_direction = Vector2i(sign(to_center.x), sign(to_center.y))
+		
+		# Still need to choose one direction
+		if grid_aligned_direction.x != 0 and grid_aligned_direction.y != 0:
+			if abs(to_center.x) > abs(to_center.y):
+				grid_aligned_direction.y = 0
+			else:
+				grid_aligned_direction.x = 0
+	
+	# Calculate target tile position (one tile in the grid direction)
+	var target_tile_pos = current_tile_pos + grid_aligned_direction
+	
+	# Convert back to world position
+	var target_world_pos = dynamic_tiles.to_global(dynamic_tiles.map_to_local(target_tile_pos))
+	
+	# Move directly to the grid-aligned position
+	global_position = target_world_pos
+	
+	# Play hurt animation if not already playing
+	if animations.animation != "hurt":
+		animations.play("hurt")
+		await animations.animation_finished
+		animations.play("idle")
+
+# Keep the old function for compatibility
+func push_from_border(push_direction: Vector2, push_distance: float = 64.0):
+	# Apply a fixed distance movement in the push direction
+	print("pushed (deprecated function)")
+	position += push_direction * push_distance
 	
 	# Play hurt animation if not already playing
 	if animations.animation != "hurt":
