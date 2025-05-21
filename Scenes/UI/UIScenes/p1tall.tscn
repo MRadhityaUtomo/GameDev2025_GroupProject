@@ -242,7 +242,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"angry",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -277,7 +277,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"dead",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -312,7 +312,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"happy",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -347,7 +347,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"hurt",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -382,7 +382,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"neutral",
-"speed": 5.0
+"speed": 10.0
 }]
 
 [node name="P1Tall" type="Node2D"]
@@ -390,5 +390,4 @@ script = ExtResource("1_5jmuj")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_j0nes")
-animation = &"happy"
-frame_progress = 0.066759
+animation = &"neutral"

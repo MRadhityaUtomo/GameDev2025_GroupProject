@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://cdpkljgvn0mmj"]
+[gd_scene load_steps=24 format=3 uid="uid://cdpkljgvn0mmj"]
 
 [ext_resource type="Script" uid="uid://c1fc1ea1ndvpt" path="res://Scripts/PowerupManager.gd" id="1_lquhd"]
 [ext_resource type="Shader" uid="uid://e3oxmp7fc20y" path="res://Scenes/UI/UIAssets/Shader/patternxy.gdshader" id="1_t1n04"]
@@ -20,6 +20,7 @@
 [ext_resource type="Resource" uid="uid://cndd4rk0bs1rs" path="res://Powerups/QueenMovement.tres" id="17_hskjl"]
 [ext_resource type="Script" uid="uid://onm7yujaucp1" path="res://resources/BombResource.gd" id="18_hskjl"]
 [ext_resource type="Resource" uid="uid://bv1qxktdrtsr5" path="res://BombTypes/SquareBomb.tres" id="19_ooln7"]
+[ext_resource type="PackedScene" uid="uid://djnjtf7d6stl1" path="res://Scenes/UI/UIScenes/play_ui.tscn" id="20_ooln7"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_276g3"]
 shader = ExtResource("1_t1n04")
@@ -118,5 +119,9 @@ z_index = 11
 material = SubResource("ShaderMaterial_m8f3l")
 offset_right = 1920.0
 offset_bottom = 1080.0
+
+[node name="play_ui" parent="CanvasLayer" instance=ExtResource("20_ooln7")]
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
 
 [connection signal="timeout" from="PowerupManager/SpawnTimer" to="PowerupManager" method="_on_spawn_timer_timeout"]

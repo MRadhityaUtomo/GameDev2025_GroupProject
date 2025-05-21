@@ -260,13 +260,12 @@ func update_edge_sprites():
 				if is_alt:
 					if walkable_obj.has_node("Sprite2D3"):
 						print("Setting Sprite2D3 visible")
-						walkable_obj.get_node("Sprite2D3").visible = true
+						walkable_obj.get_node("Sprite2D3").visible	 = true
 				else:
 					if walkable_obj.has_node("Sprite2D2"):
 						print("Setting Sprite2D2 visible")
 						walkable_obj.get_node("Sprite2D2").visible = true
-			else:
-				print("No walkable object found at position: ", above_pos)
+
 
 # Function to get a scene instance at a specific position
 func get_scene_at_position(pos):
