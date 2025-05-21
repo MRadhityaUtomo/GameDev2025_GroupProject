@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="PowerupResource" load_steps=3 format=3 uid="uid://s05eroefw7pf"]
+
+[ext_resource type="Script" uid="uid://bh488m13x02a6" path="res://Scripts/PowerupResource.gd" id="1_mham2"]
+[ext_resource type="Texture2D" uid="uid://xptg0fvwekib" path="res://Scenes/UI/UIAssets/Power/MoveDouble.png" id="2_w8kna"]
+
+[resource]
+script = ExtResource("1_mham2")
+movement_type = 4
+texture = ExtResource("2_w8kna")
+display_name = "Reversed Movement"
+color_tint = Color(1, 1, 1, 1)

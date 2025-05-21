@@ -6,6 +6,7 @@ extends Node2D
 @export var spawn_interval_max: float = 30.0
 @export var max_powerups: int = 3
 @export var tile_map_layer: TileMapLayer
+@export var available_powerups: Array[PowerupResource]
 
 @onready var spawn_timer: Timer = $SpawnTimer
 @onready var global_bomb_manager: Node2D = $"../GlobalBombManager"
@@ -53,6 +54,11 @@ func spawn_powerup():
 		
 		# Position is clear, spawn the powerup
 		var powerup = powerup_scene.instantiate()
+		
+		# Select a random powerup type from available resources
+		var random_powerup = available_powerups[randi() % available_powerups.size()]
+		powerup.powerup_resource = random_powerup
+		
 		powerup.global_position = pos - get_parent().position
 		add_child(powerup)
 		powerup.z_index = 5  # Below player but above tiles

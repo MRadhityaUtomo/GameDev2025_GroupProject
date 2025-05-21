@@ -1,16 +1,8 @@
 extends Node2D
 
-@export var movement_type: MovementMode.Type = MovementMode.Type.REVERSED_MOVEMENT
+@export var powerup_resource: PowerupResource
 @export var float_amplitude: float = 5.0  # How high it floats
 @export var float_speed: float = 2.0  # Speed of floating animation
-
-var type_colors = {
-	MovementMode.Type.KING_MOVEMENT: Color.YELLOW,
-	MovementMode.Type.BISHOP_MOVEMENT: Color.PURPLE,
-	MovementMode.Type.QUEEN_MOVEMENT: Color.RED,
-	MovementMode.Type.DOUBLE_STEP_MOVEMENT: Color.GREEN,
-	MovementMode.Type.REVERSED_MOVEMENT: Color.BLUE
-}
 
 var initial_position: Vector2
 var time_passed: float = 0.0
@@ -23,13 +15,22 @@ func _ready() -> void:
 	# Randomize starting point in animation cycle
 	time_passed = randf() * TAU  # Random phase offset
 	
-	# Randomize the movement type
-	var types = MovementMode.Type.values()
-	movement_type = types[randi() % types.size()]
-
-	# Set visual appearance based on randomly selected movement type
-	if movement_type in type_colors:
-		$Sprite2D.modulate = type_colors[movement_type]
+	# If no resource is assigned, generate random movement
+	if not powerup_resource:
+		var types = MovementMode.Type.values()
+		var random_type = types[randi() % types.size()]
+		var type_colors = {
+			MovementMode.Type.KING_MOVEMENT: Color.YELLOW,
+			MovementMode.Type.BISHOP_MOVEMENT: Color.PURPLE,
+			MovementMode.Type.QUEEN_MOVEMENT: Color.RED,
+			MovementMode.Type.DOUBLE_STEP_MOVEMENT: Color.GREEN,
+			MovementMode.Type.REVERSED_MOVEMENT: Color.BLUE
+		}
+		$Sprite2D.modulate = type_colors[random_type]
+	else:
+		# Use the resource properties
+		$Sprite2D.texture = powerup_resource.texture
+		$Sprite2D.modulate = powerup_resource.color_tint
 
 	print("Powerup SPAWNED at:", global_position)
 
@@ -49,7 +50,12 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.has_method("get_movement_manager"):
 		var movement_manager = body.get_movement_manager()
 		if movement_manager:
-			movement_manager.change_movement_mode(movement_type)
+			var movement_type = MovementMode.Type.KING_MOVEMENT
+			var duration = 5.0
+			if powerup_resource:
+				movement_type = powerup_resource.movement_type
+				duration = powerup_resource.duration
+			movement_manager.change_movement_mode(movement_type, duration)
 			
 		# Add collection effect
 		create_collection_effect()
