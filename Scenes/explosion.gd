@@ -8,7 +8,6 @@ func _ready():
 
 
 func _on_body_entered(body: Node):
-	print(1)
 	if body.is_in_group("player"):
 		if !body.isInvincible:
 			body.takedamage()

@@ -10,3 +10,4 @@ texture = ExtResource("2_rxrql")
 display_name = "Bishop Movement"
 color_tint = Color(1, 1, 1, 1)
 duration = 5.0
+id_name = "BISHOP_MOVEMENT"

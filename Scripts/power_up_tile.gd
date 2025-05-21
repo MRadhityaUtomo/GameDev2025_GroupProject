@@ -8,6 +8,8 @@ extends Node2D
 var initial_position: Vector2
 var time_passed: float = 0.0
 
+#Sounds
+@onready var powerup_pickup: AudioStreamPlayer2D = $PowerupPickup
 
 func _ready() -> void:
 	# Store initial position for floating animation
@@ -39,23 +41,26 @@ func _process(delta: float) -> void:
 
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
-	if body.has_method("get_movement_manager"):
-		var movement_manager = body.get_movement_manager()
-		if movement_manager:
-			if powerup_resource:
-				var movement_type = powerup_resource.movement_type
+	
+	if body is Player:
+		# Handle movement powerups
+		if powerup_resource:
+			var movement_manager = body.get_node_or_null("MovementManager")
+			if movement_manager:
+				# Pass the powerup's custom duration
 				var duration = powerup_resource.duration
-				movement_manager.change_movement_mode(movement_type, duration)
-			if bomb_resource:
-				body.change_bomb_type_to(bomb_resource)
+				movement_manager.change_movement_mode(powerup_resource.movement_type, duration)
+				body.powerup_activated(powerup_resource.id_name, duration)
+				print("Player collected movement powerup: " + powerup_resource.display_name + 
+					  " (Duration: " + str(duration) + "s)")
+		
+		# Handle bomb powerups
+		elif bomb_resource:
+			print("DA BOMB IS " + bomb_resource.id_name)
+			var duration = bomb_resource.duration
+			body.change_bomb_type(bomb_resource, duration)
+			body.powerup_activated(bomb_resource.id_name, duration)
 			
-		# Add collection effect
-		create_collection_effect()
 		
 		# Remove after collection
 		queue_free()
-
-
-func create_collection_effect() -> void:
-	# Optional: You could add particles or sound effects here
-	pass

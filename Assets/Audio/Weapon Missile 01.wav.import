@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bw745fq2glvyj"
+path="res://.godot/imported/Weapon Missile 01.wav-bbe2b5a4fd6a0ea468fb2dbc7842c04a.sample"
+
+[deps]
+
+source_file="res://Assets/Audio/Weapon Missile 01.wav"
+dest_files=["res://.godot/imported/Weapon Missile 01.wav-bbe2b5a4fd6a0ea468fb2dbc7842c04a.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

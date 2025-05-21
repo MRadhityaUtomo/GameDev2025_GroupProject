@@ -17,6 +17,7 @@ extends CharacterBody2D
 @onready var sprite = $Sprite2D
 @onready var animations = $AnimatedSprite2D
 @onready var crosshair = $BombSpawnLocation/Crosshair
+@onready var movementManager = $MovementManager
 
 @export var animationSet:SpriteFrames
 
@@ -34,6 +35,15 @@ var last_move_direction: Vector2 = Vector2.ZERO
 var has_diagonal_movement: bool = false  # Added for diagonal movement powerup
 var diagonal_mode_active: bool = false  # New variable for diagonal-only mode
 
+# Add these variables for powerup management
+@onready var powerup_timer: Timer = $PowerupTimer
+@onready var bomb_powerup_timer: Timer = $BombPowerupTimer
+var default_bomb_type: BombType
+var default_movement_mode: MovementMode.Type = MovementMode.Type.KING_MOVEMENT
+var has_active_powerup: bool = false
+
+#Sounds
+@onready var powerup_pickup: AudioStreamPlayer2D = $"PowerupPickup"
 
 func _ready():
     animations.sprite_frames = animationSet
@@ -41,9 +51,37 @@ func _ready():
     crosshair.process_mode = Node.PROCESS_MODE_ALWAYS
     animations.process_mode = Node.PROCESS_MODE_ALWAYS
     add_to_group("player")
+    default_bomb_type = current_bomb_type
     print("player ready at", global_position)
+    
+    # Setup powerup timer if it doesn't exist
+    if not has_node("PowerupTimer"):
+        var timer = Timer.new()
+        timer.name = "PowerupTimer"
+        timer.one_shot = true
+        add_child(timer)
+        powerup_timer = timer
+    
+    # Set up bomb powerup timer if it doesn't exist
+    if not has_node("BombPowerupTimer"):
+        var timer = Timer.new()
+        timer.name = "BombPowerupTimer"
+        timer.one_shot = true
+        add_child(timer)
+        bomb_powerup_timer = timer
     pass
 
+func _physics_process(delta):
+    # Get current movement direction
+    if velocity != Vector2.ZERO:
+        last_move_direction = velocity.normalized()
+        update_sprite_direction(last_move_direction)
+
+# Add this function to your Player.gd script to update sprite direction
+func update_sprite_direction(direction: Vector2):
+    if direction.x != 0:  # Only update when there's horizontal movement
+        # Flip when moving left, don't flip when moving right
+        animations.flip_h = (direction.x < 0)
 
 func invincible():
     print("test")
@@ -64,6 +102,7 @@ func takedamage():
     hp -= 1
     
     if hp <= 0:
+        Engine.time_scale = 0.3
         if id == 1:
             if is_instance_valid(PlayUI.ui_instance):
                 PlayUI.ui_instance.set_expression_p1("dead")
@@ -80,7 +119,7 @@ func takedamage():
         animations.play("hurt")
         await animations.animation_finished
         
-        await get_tree().create_timer(1.0).timeout
+        await get_tree().create_timer(0.5, false).timeout
         die()
         return
     
@@ -189,3 +228,91 @@ func get_movement_manager():
 
 func change_bomb_type_to(new_type: BombType):
     current_bomb_type = new_type
+
+# Add this new function for handling any powerup
+func powerup_activated(id_name: String, duration: float = 10.0):
+    print("NAMA ID" + id_name)
+    if id_name == "KING_MOVEMENT":
+        movementManager.reset_movement_mode()
+        return
+    elif id_name == "PowUpNormalBomb":
+        _reset_bomb_type()
+        return
+    
+    # Update UI icons
+    if id_name.ends_with("MOVEMENT"):
+        if id == 1:
+            PlayUI.ui_instance.set_p1_move_icon(id_name)
+        else:
+            PlayUI.ui_instance.set_p2_move_icon(id_name)
+    else:
+        if id == 1:
+            PlayUI.ui_instance.set_p1_powup_icon(id_name)
+        else:
+            PlayUI.ui_instance.set_p2_powup_icon(id_name)
+            
+    # Start the timer visual
+    PlayUI.ui_instance.start_powerup_timer(id, id_name, duration)
+    
+    PlayUI.ui_instance.update_player_icons()
+    
+
+# Add this function to cancel any active powerup
+func cancel_active_powerup():
+    if has_active_powerup:
+        # Stop the timer
+        if powerup_timer.timeout.is_connected(_on_powerup_expired):
+            powerup_timer.timeout.disconnect(_on_powerup_expired)
+        powerup_timer.stop()
+        
+        # Reset to defaults
+        current_bomb_type = default_bomb_type
+        var movement_manager = get_movement_manager()
+        if movement_manager:
+            movement_manager.change_movement_mode(default_movement_mode)
+        
+        has_active_powerup = false
+        print("Previous powerup canceled")
+
+# Add this function for when the powerup expires
+func _on_powerup_expired():
+    print("Powerup expired, reverting to defaults")
+    current_bomb_type = default_bomb_type
+    var movement_manager = get_movement_manager()
+    if movement_manager:
+        movement_manager.change_movement_mode(default_movement_mode)
+    
+    has_active_powerup = false
+    if powerup_timer.timeout.is_connected(_on_powerup_expired):
+        powerup_timer.timeout.disconnect(_on_powerup_expired)
+
+# Add this new function for bomb powerup management
+func change_bomb_type(new_bomb_type: BombType, duration: float = 10.0):
+    # Cancel any active bomb powerup timer
+    if bomb_powerup_timer.time_left > 0:
+        if bomb_powerup_timer.timeout.is_connected(_reset_bomb_type):
+            bomb_powerup_timer.timeout.disconnect(_reset_bomb_type)
+        bomb_powerup_timer.stop()
+    
+    # Change to new bomb type
+    current_bomb_type = new_bomb_type
+    print("Changed bomb type to: " + new_bomb_type.name + " (Duration: " + str(duration) + "s)")
+    
+    # Set up timer to revert
+    bomb_powerup_timer.wait_time = duration
+    bomb_powerup_timer.timeout.connect(_reset_bomb_type)
+    bomb_powerup_timer.start()
+
+func _reset_bomb_type():
+    PlayUI.ui_instance.stop_powerup_timer(id, "HANAU")
+    if id == 1:
+        print("should behere")
+        PlayUI.ui_instance.set_p1_powup_icon("PowUpNormalBomb")
+    else:
+        PlayUI.ui_instance.set_p2_powup_icon("PowUpNormalBomb")
+    PlayUI.ui_instance.update_player_icons()
+        
+    print("Bomb powerup expired, reverting to default")
+    current_bomb_type = default_bomb_type
+    if bomb_powerup_timer.timeout.is_connected(_reset_bomb_type):
+        bomb_powerup_timer.timeout.disconnect(_reset_bomb_type)
