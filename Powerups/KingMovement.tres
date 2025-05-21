@@ -10,3 +10,4 @@ texture = ExtResource("2_b1wp4")
 display_name = "King Movement"
 color_tint = Color(1, 1, 1, 1)
 duration = 5.0
+id_name = "MoveKing"

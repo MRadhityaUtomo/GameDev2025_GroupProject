@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bj4e03gbjjotf" path="res://Scenes/dynamic_tiles.tscn" id="2_toqyy"]
 [ext_resource type="PackedScene" uid="uid://3vppwekhnxr7" path="res://Scenes/player_piece.tscn" id="3_lquhd"]
 [ext_resource type="Resource" uid="uid://dd4dspq0f8xc7" path="res://BombTypes/RegularBomb.tres" id="4_toqyy"]
-[ext_resource type="PackedScene" uid="uid://dp76h6yrd1brg" path="res://Scenes/border_explosion.tscn" id="5_8w6n6"]
+[ext_resource type="PackedScene" path="res://Scenes/border_explosion.tscn" id="5_8w6n6"]
 [ext_resource type="SpriteFrames" uid="uid://cwgr2uq3oppun" path="res://Scenes/player1anims.tres" id="5_gkl82"]
 [ext_resource type="Shader" uid="uid://b03r8gwgpxqyk" path="res://Scenes/crt.gdshader" id="5_lquhd"]
 [ext_resource type="PackedScene" uid="uid://dxwg4b4pdjf04" path="res://Scenes/power_up_tile.tscn" id="6_m8f3l"]
@@ -71,7 +71,7 @@ script = ExtResource("1_wmmkt")
 
 [node name="DynamicTiles" parent="." instance=ExtResource("2_toqyy")]
 position = Vector2(-128, -128)
-shrinking_time = 3
+shrinking_time = 300
 maximum_shrinking_stages = 5
 border_explosion_scene = ExtResource("5_8w6n6")
 

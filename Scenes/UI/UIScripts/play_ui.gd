@@ -267,19 +267,19 @@ func set_player_icon(player: int, move: String, powup: String):
 	update_player_icons()
 
 func set_p1_move_icon(move: String) -> void:
-	audio_ready.play()
+	#audio_ready.play()
 	move_icon_p1 = move
 
 func set_p1_powup_icon(powup: String) -> void:
-	audio_ready.play()
+	#audio_ready.play()
 	powup_icon_p1 = powup
 
 func set_p2_move_icon(move: String) -> void:
-	audio_ready.play()
+	#audio_ready.play()
 	move_icon_p2 = move
 
 func set_p2_powup_icon(powup: String) -> void:
-	audio_ready.play()
+	#audio_ready.play()
 	powup_icon_p2 = powup
 
 
