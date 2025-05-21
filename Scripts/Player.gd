@@ -15,6 +15,8 @@ extends CharacterBody2D
 
 @onready var hurtBox = $CollisionShape2D
 @onready var sprite = $Sprite2D
+@onready var animations = $AnimatedSprite2D
+@export var animationSet:SpriteFrames
 
 var isInvincible = false
 var CanPlace = true
@@ -30,6 +32,8 @@ var diagonal_mode_active: bool = false  # New variable for diagonal-only mode
 
 
 func _ready():
+	animations.sprite_frames = animationSet
+	animations.play("idle")
 	add_to_group("player")
 	print("player ready at", global_position)
 	pass
@@ -49,8 +53,12 @@ func takedamage():
 	if hp <= 0:
 		die()
 	self.invincible()
+	animations.play("hurt")
+	await animations.animation_finished
+	animations.play("idle")
 
-
+	
+	
 func die():
 	queue_free()
 

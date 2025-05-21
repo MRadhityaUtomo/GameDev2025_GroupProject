@@ -24,8 +24,10 @@ func place_bomb(spawn_position: Vector2):
 	player_body.BombCount -= 1
 	# Signal hookup
 	bomb.bomb_exploded.connect(func(pos, bomb_ref): on_bomb_exploded(pos, bomb_ref))
-
-	print("Player ", player_body.id, " placed a bomb at ", spawn_position)
+	
+	player_body.animations.play("place_bomb")
+	await player_body.animations.animation_finished
+	player_body.animations.play("idle")
 
 
 func _physics_process(delta):
