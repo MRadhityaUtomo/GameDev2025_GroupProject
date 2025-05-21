@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bx8dggg5njpeg"
+path="res://.godot/imported/MAUDIO-Aftertune - Travel The World (Original Mix).wav-900cb289442ad7291f193c2c6b3af66f.sample"
+
+[deps]
+
+source_file="res://Assets/Audio/MAUDIO-Aftertune - Travel The World (Original Mix).wav"
+dest_files=["res://.godot/imported/MAUDIO-Aftertune - Travel The World (Original Mix).wav-900cb289442ad7291f193c2c6b3af66f.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

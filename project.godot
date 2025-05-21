@@ -10,18 +10,31 @@ config_version=5
 
 [application]
 
-config/name="chess_movement_prototype"
+config/name="Explosive Playout"
 run/main_scene="uid://cdpkljgvn0mmj"
 config/features=PackedStringArray("4.4", "Forward Plus")
-config/icon="res://icon.svg"
+boot_splash/show_image=false
+boot_splash/fullsize=false
+boot_splash/use_filter=false
+config/icon="uid://bgglbyv24lh2q"
+
+[autoload]
+
+get_tree_transition="*res://Scenes/UI/UIScenes/transition.tscn"
 
 [display]
 
-window/size/viewport_width=1920
-window/size/viewport_height=1080
-window/size/window_width_override=1920
-window/size/window_height_override=1080
-window/stretch/mode="canvas_items"
+window/size/viewport_width=1600
+window/size/viewport_height=900
+window/size/initial_position=Vector2i(200, 500)
+window/stretch/mode="viewport"
+
+[file_customization]
+
+folder_colors={
+"res://Assets/": "pink",
+"res://Scenes/UI/": "teal"
+}
 
 [input]
 
