@@ -14,7 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://caq7ntbf8r3" path="res://Scenes/UI/UIScenes/p1tall.tscn" id="8_xtakj"]
 [ext_resource type="PackedScene" uid="uid://bcxqdl8uh6x0d" path="res://Scenes/UI/UIScenes/p2tall.tscn" id="9_cyk1x"]
 [ext_resource type="Texture2D" uid="uid://b58m2i2ghsmgg" path="res://Scenes/UI/UIAssets/Power/PowUpDiagonalBomb.png" id="9_hdpaw"]
-[ext_resource type="Script" uid="uid://c48q4h33dm7j6" path="res://Scenes/UI/UIScripts/Components/buttontutorialpowerup.gd" id="15_hdpaw"]
+[ext_resource type="Script" path="res://Scenes/UI/UIScripts/Components/buttontutorialpowerup.gd" id="15_hdpaw"]
 [ext_resource type="Texture2D" uid="uid://tmyb87o113jd" path="res://Scenes/UI/UIAssets/Power/PowUpNormalBomb.png" id="16_7sehx"]
 [ext_resource type="Texture2D" uid="uid://bj871x4pnf6h5" path="res://Scenes/UI/UIAssets/Power/MoveKing.png" id="16_a8gmd"]
 [ext_resource type="AudioStream" uid="uid://c1c4o61tek8kc" path="res://Scenes/UI/Components/Buttons/AudioAssets/buttonUI.mp3" id="16_tkn1i"]
