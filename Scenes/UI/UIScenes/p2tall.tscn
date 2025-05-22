@@ -1,6 +1,6 @@
 [gd_scene load_steps=58 format=3 uid="uid://bcxqdl8uh6x0d"]
 
-[ext_resource type="Script" path="res://Scenes/UI/UIScripts/playertall.gd" id="1_isti3"]
+[ext_resource type="Script" uid="uid://bvt5j0a5yokpb" path="res://Scenes/UI/UIScripts/playertall.gd" id="1_isti3"]
 [ext_resource type="Texture2D" uid="uid://guchrl2xoe4k" path="res://Scenes/UI/UIAssets/Player/P2/P2_Tall_Angry.png" id="2_cje0s"]
 [ext_resource type="Texture2D" uid="uid://bkrrgla6irwgi" path="res://Scenes/UI/UIAssets/Player/P2/P2_Tall_Dead.png" id="3_fyd8u"]
 [ext_resource type="Texture2D" uid="uid://desa4iqrgh4tl" path="res://Scenes/UI/UIAssets/Player/P2/P2_Tall_Happy.png" id="4_8n5qm"]

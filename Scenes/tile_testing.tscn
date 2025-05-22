@@ -1,8 +1,8 @@
-[gd_scene load_steps=26 format=3 uid="uid://cqy8mr1kene0b"]
+[gd_scene load_steps=26 format=3 uid="uid://cdpkljgvn0mmj"]
 
 [ext_resource type="Script" uid="uid://luaxcwg5qbeo" path="res://Scripts/tile_testing.gd" id="1_kath6"]
 [ext_resource type="Script" uid="uid://c1fc1ea1ndvpt" path="res://Scripts/PowerupManager.gd" id="1_lquhd"]
-[ext_resource type="Shader" path="res://Scenes/UI/UIAssets/Shader/patternxy.gdshader" id="1_t1n04"]
+[ext_resource type="Shader" uid="uid://e3oxmp7fc20y" path="res://Scenes/UI/UIAssets/Shader/patternxy.gdshader" id="1_t1n04"]
 [ext_resource type="Script" uid="uid://hg7p2skfya2w" path="res://Scenes/GlobalBombManager.gd" id="1_wmmkt"]
 [ext_resource type="Texture2D" uid="uid://djn5ft5uisry2" path="res://Scenes/UI/UIAssets/BG/BGPatternBlue2.png" id="2_8w6n6"]
 [ext_resource type="PackedScene" uid="uid://bj4e03gbjjotf" path="res://Scenes/dynamic_tiles.tscn" id="2_toqyy"]
@@ -10,7 +10,7 @@
 [ext_resource type="Resource" uid="uid://dd4dspq0f8xc7" path="res://BombTypes/RegularBomb.tres" id="4_toqyy"]
 [ext_resource type="PackedScene" uid="uid://dp76h6yrd1brg" path="res://Scenes/border_explosion.tscn" id="5_8w6n6"]
 [ext_resource type="SpriteFrames" uid="uid://cwgr2uq3oppun" path="res://Scenes/player1anims.tres" id="5_gkl82"]
-[ext_resource type="Shader" path="res://Scenes/crt.gdshader" id="5_lquhd"]
+[ext_resource type="Shader" uid="uid://b03r8gwgpxqyk" path="res://Scenes/crt.gdshader" id="5_lquhd"]
 [ext_resource type="PackedScene" uid="uid://dxwg4b4pdjf04" path="res://Scenes/power_up_tile.tscn" id="6_m8f3l"]
 [ext_resource type="SpriteFrames" uid="uid://2xyna35jkfvm" path="res://Scenes/player2anims.tres" id="7_nughl"]
 [ext_resource type="Resource" uid="uid://cf8yovq80cwhr" path="res://BombTypes/DiagBomb.tres" id="7_t1n04"]
@@ -80,10 +80,11 @@ border_explosion_scene = ExtResource("5_8w6n6")
 [node name="PlayerPiece" parent="." node_paths=PackedStringArray("GlobalBombs") instance=ExtResource("3_lquhd")]
 position = Vector2(-32, 288)
 id = 1
-up_action = "w"
-down_action = "s"
-left_action = "a"
-right_action = "d"
+hp = 4
+up_action = "w1"
+down_action = "s1"
+left_action = "a1"
+right_action = "d1"
 bomb_action = "p1Interact"
 animationSet = ExtResource("5_gkl82")
 current_bomb_type = ExtResource("4_toqyy")
@@ -92,11 +93,12 @@ GlobalBombs = NodePath("../GlobalBombManager")
 [node name="PlayerPiece2" parent="." node_paths=PackedStringArray("GlobalBombs") instance=ExtResource("3_lquhd")]
 position = Vector2(608, 288)
 id = 2
-up_action = "ui_up"
-down_action = "ui_down"
-left_action = "ui_left"
-right_action = "ui_right"
-bomb_action = "slash"
+hp = 4
+up_action = "w2"
+down_action = "s2"
+left_action = "a2"
+right_action = "d2"
+bomb_action = "p2Interact"
 animationSet = ExtResource("7_nughl")
 current_bomb_type = ExtResource("4_toqyy")
 GlobalBombs = NodePath("../GlobalBombManager")

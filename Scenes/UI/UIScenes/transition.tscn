@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://dec8wbj4j2x1t"]
 
 [ext_resource type="Script" uid="uid://dfucyjx5c2sms" path="res://Scenes/UI/UIScripts/transition.gd" id="1_0wdjm"]
-[ext_resource type="Shader" path="res://Scenes/UI/UIAssets/Shader/patternxy.gdshader" id="1_fn58x"]
+[ext_resource type="Shader" uid="uid://e3oxmp7fc20y" path="res://Scenes/UI/UIAssets/Shader/patternxy.gdshader" id="1_fn58x"]
 [ext_resource type="Texture2D" uid="uid://djn5ft5uisry2" path="res://Scenes/UI/UIAssets/BG/BGPatternBlue2.png" id="1_g334g"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_khphl"]

@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://c1rae5g8uefoi" path="res://Scenes/UI/Components/Buttons/bcircle.tscn" id="8_p7lwl"]
 [ext_resource type="Texture2D" uid="uid://y61r1syhadsx" path="res://Scenes/UI/UIAssets/Card/VersionNoticeCard.png" id="9_jskml"]
 [ext_resource type="Texture2D" uid="uid://bjkrljx6nwxut" path="res://Scenes/UI/UIAssets/Card/CreditsCard.png" id="10_5x7d4"]
-[ext_resource type="PackedScene" path="res://Scenes/UI/Components/Buttons/bstar.tscn" id="11_l688a"]
+[ext_resource type="PackedScene" uid="uid://dtg2wlxdjktm6" path="res://Scenes/UI/Components/Buttons/bstar.tscn" id="11_l688a"]
 
 [node name="main_menu" type="Control"]
 layout_mode = 3

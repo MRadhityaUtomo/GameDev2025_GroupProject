@@ -1,7 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://dtv74130x24bo"]
+[gd_scene load_steps=10 format=3 uid="uid://chfd2ngyvu1t2"]
 
 [ext_resource type="Script" path="res://Scenes/UI/UIScripts/Components/StatusScreen.gd" id="1_cxodp"]
-[ext_resource type="Shader" path="res://Scenes/UI/UIAssets/Shader/patternxy.gdshader" id="1_u5u3m"]
+[ext_resource type="Shader" uid="uid://e3oxmp7fc20y" path="res://Scenes/UI/UIAssets/Shader/patternxy.gdshader" id="1_u5u3m"]
 [ext_resource type="Texture2D" uid="uid://djn5ft5uisry2" path="res://Scenes/UI/UIAssets/BG/BGPatternBlue2.png" id="2_cxodp"]
 [ext_resource type="Texture2D" uid="uid://cq3jvr4ir8exs" path="res://Scenes/UI/UIAssets/Player/P2Win.png" id="3_u5u3m"]
 [ext_resource type="PackedScene" uid="uid://bunuilmma82bm" path="res://Scenes/UI/Components/Font/default_label.tscn" id="4_q6ibb"]
@@ -14,7 +14,7 @@ shader = ExtResource("1_u5u3m")
 shader_parameter/scroll_speed = Vector2(0.1, 0.1)
 shader_parameter/time_offset = 0.0
 
-[node name="level_select" type="Control"]
+[node name="level_select2" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
