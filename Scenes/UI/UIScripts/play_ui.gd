@@ -61,8 +61,8 @@ func set_expression_p2(value: String) -> void:
 		p2tall.set_expression(value)
 
 
-@export var heartP1: int = 3
-@export var heartP2: int = 3
+@export var heartP1: int = 5
+@export var heartP2: int = 5
 
 @onready var heartP1RichTextLabel =  $Main/PTall/P1/TexHeart/RTLCount
 @onready var heartP2RichTextLabel = $Main/PTall/P2/Heart/Count
@@ -103,7 +103,7 @@ var ready_2_active := false
 var countdown = 3
 var countdown_timer := Timer.new()
 var game_timer := Timer.new()
-var total_game_seconds = 5 * 45  # 5 minutes
+var total_game_seconds = 6 * 20  # 5 minutes
 
 func _ready():
 	if ui_instance == null:
@@ -219,8 +219,8 @@ func _on_countdown_tick():
 		countdown_label.text = "1"
 
 		# Start game countdown
-		minute_label.text = "3"
-		second_label.text = "45"
+		minute_label.text = "2"
+		second_label.text = "00"
 		game_timer.start()
 
 		# Show game and hide ready

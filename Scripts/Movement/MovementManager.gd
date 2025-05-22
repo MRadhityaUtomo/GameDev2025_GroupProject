@@ -104,7 +104,7 @@ func _physics_process(delta: float):
 		player_body.action_cooldown_timer = max(0, player_body.action_cooldown_timer) 
 		action_cooldown_updated.emit(player_body.action_cooldown_timer)
 
-	if current_movement_strategy and current_movement_strategy.is_moving():
+	if current_movement_strategy and current_movement_strategy.is_moving() and player_body.hp > 0:
 		current_movement_strategy.process_movement(delta)
 	else:
 		if current_movement_strategy: 

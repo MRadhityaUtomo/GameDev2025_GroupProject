@@ -73,14 +73,14 @@ script = ExtResource("1_wmmkt")
 
 [node name="DynamicTiles" parent="." instance=ExtResource("2_toqyy")]
 position = Vector2(-128, -128)
-shrinking_time = 45
+shrinking_time = 20
 maximum_shrinking_stages = 4
 border_explosion_scene = ExtResource("5_8w6n6")
 
 [node name="PlayerPiece" parent="." node_paths=PackedStringArray("GlobalBombs") instance=ExtResource("3_lquhd")]
 position = Vector2(-32, 288)
 id = 1
-hp = 4
+hp = 5
 up_action = "w1"
 down_action = "s1"
 left_action = "a1"
@@ -93,7 +93,7 @@ GlobalBombs = NodePath("../GlobalBombManager")
 [node name="PlayerPiece2" parent="." node_paths=PackedStringArray("GlobalBombs") instance=ExtResource("3_lquhd")]
 position = Vector2(608, 288)
 id = 2
-hp = 4
+hp = 5
 up_action = "w2"
 down_action = "s2"
 left_action = "a2"
