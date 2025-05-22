@@ -1,0 +1,125 @@
+[gd_scene load_steps=24 format=3 uid="uid://cdpkljgvn0mmj"]
+
+[ext_resource type="Script" uid="uid://c1fc1ea1ndvpt" path="res://Scripts/PowerupManager.gd" id="1_lquhd"]
+[ext_resource type="Shader" uid="uid://e3oxmp7fc20y" path="res://Scenes/UI/UIAssets/Shader/patternxy.gdshader" id="1_t1n04"]
+[ext_resource type="Script" uid="uid://hg7p2skfya2w" path="res://Scenes/GlobalBombManager.gd" id="1_wmmkt"]
+[ext_resource type="Texture2D" uid="uid://djn5ft5uisry2" path="res://Scenes/UI/UIAssets/BG/BGPatternBlue2.png" id="2_8w6n6"]
+[ext_resource type="PackedScene" uid="uid://bj4e03gbjjotf" path="res://Scenes/dynamic_tiles.tscn" id="2_toqyy"]
+[ext_resource type="PackedScene" uid="uid://3vppwekhnxr7" path="res://Scenes/player_piece.tscn" id="3_lquhd"]
+[ext_resource type="Resource" uid="uid://dd4dspq0f8xc7" path="res://BombTypes/RegularBomb.tres" id="4_toqyy"]
+[ext_resource type="SpriteFrames" uid="uid://cwgr2uq3oppun" path="res://Scenes/player1anims.tres" id="5_gkl82"]
+[ext_resource type="Shader" uid="uid://b03r8gwgpxqyk" path="res://Scenes/crt.gdshader" id="5_lquhd"]
+[ext_resource type="PackedScene" uid="uid://dxwg4b4pdjf04" path="res://Scenes/power_up_tile.tscn" id="6_m8f3l"]
+[ext_resource type="SpriteFrames" uid="uid://2xyna35jkfvm" path="res://Scenes/player2anims.tres" id="7_nughl"]
+[ext_resource type="Resource" uid="uid://cf8yovq80cwhr" path="res://BombTypes/DiagBomb.tres" id="7_t1n04"]
+[ext_resource type="Script" uid="uid://bh488m13x02a6" path="res://resources/PowerupResource.gd" id="12_8w6n6"]
+[ext_resource type="Resource" uid="uid://s05eroefw7pf" path="res://Powerups/ReversedMovement.tres" id="13_ipx71"]
+[ext_resource type="Resource" uid="uid://ciluy0fqsgjjf" path="res://Powerups/BishopMovement.tres" id="14_sngn8"]
+[ext_resource type="Resource" uid="uid://cipiiurkbi2dx" path="res://Powerups/DoubleMovement.tres" id="15_dky8c"]
+[ext_resource type="Resource" uid="uid://k0a2uh1e685k" path="res://Powerups/KingMovement.tres" id="16_e57m7"]
+[ext_resource type="Resource" uid="uid://cndd4rk0bs1rs" path="res://Powerups/QueenMovement.tres" id="17_hskjl"]
+[ext_resource type="Script" uid="uid://onm7yujaucp1" path="res://resources/BombResource.gd" id="18_hskjl"]
+[ext_resource type="Resource" uid="uid://bv1qxktdrtsr5" path="res://BombTypes/SquareBomb.tres" id="19_ooln7"]
+[ext_resource type="PackedScene" uid="uid://djnjtf7d6stl1" path="res://Scenes/UI/UIScenes/play_ui.tscn" id="21_ooln7"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_276g3"]
+shader = ExtResource("1_t1n04")
+shader_parameter/scroll_speed = Vector2(0.05, 0.02)
+shader_parameter/time_offset = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m8f3l"]
+shader = ExtResource("5_lquhd")
+shader_parameter/overlay = true
+shader_parameter/scanlines_opacity = 0.1
+shader_parameter/scanlines_width = 0.5
+shader_parameter/grille_opacity = 0.0
+shader_parameter/resolution = Vector2(960, 540)
+shader_parameter/pixelate = true
+shader_parameter/roll = true
+shader_parameter/roll_speed = 1.0
+shader_parameter/roll_size = 10.0
+shader_parameter/roll_variation = 5.0
+shader_parameter/distort_intensity = 0.002
+shader_parameter/noise_opacity = 0.0
+shader_parameter/noise_speed = 0.0
+shader_parameter/static_noise_intensity = 0.05
+shader_parameter/aberration = 0.00500005
+shader_parameter/brightness = 1.0
+shader_parameter/discolor = false
+shader_parameter/warp_amount = 1.0
+shader_parameter/clip_warp = true
+shader_parameter/vignette_intensity = 0.0
+shader_parameter/vignette_opacity = 0.5
+
+[node name="TileTesting" type="Node2D"]
+position = Vector2(672, 256)
+
+[node name="TextureRect" type="TextureRect" parent="."]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_276g3")
+offset_left = -672.0
+offset_top = -248.0
+offset_right = 1160.0
+offset_bottom = 776.0
+texture = ExtResource("2_8w6n6")
+expand_mode = 1
+metadata/_edit_group_ = true
+
+[node name="GlobalBombManager" type="Node2D" parent="."]
+script = ExtResource("1_wmmkt")
+
+[node name="DynamicTiles" parent="." instance=ExtResource("2_toqyy")]
+position = Vector2(-128, -128)
+maximum_shrinking_stages = 10
+
+[node name="PlayerPiece" parent="." node_paths=PackedStringArray("GlobalBombs") instance=ExtResource("3_lquhd")]
+position = Vector2(-32, 288)
+id = 1
+up_action = "w"
+down_action = "s"
+left_action = "a"
+right_action = "d"
+bomb_action = "p1Interact"
+animationSet = ExtResource("5_gkl82")
+current_bomb_type = ExtResource("4_toqyy")
+GlobalBombs = NodePath("../GlobalBombManager")
+
+[node name="PlayerPiece2" parent="." node_paths=PackedStringArray("GlobalBombs") instance=ExtResource("3_lquhd")]
+position = Vector2(608, 288)
+id = 2
+up_action = "ui_up"
+down_action = "ui_down"
+left_action = "ui_left"
+right_action = "ui_right"
+bomb_action = "ui_accept"
+animationSet = ExtResource("7_nughl")
+current_bomb_type = ExtResource("4_toqyy")
+GlobalBombs = NodePath("../GlobalBombManager")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(288, 285)
+zoom = Vector2(1.1, 1.1)
+
+[node name="PowerupManager" type="Node2D" parent="." node_paths=PackedStringArray("tile_map_layer")]
+script = ExtResource("1_lquhd")
+powerup_scene = ExtResource("6_m8f3l")
+spawn_interval_min = 3.0
+spawn_interval_max = 5.0
+tile_map_layer = NodePath("../DynamicTiles")
+available_powerups = Array[ExtResource("12_8w6n6")]([ExtResource("14_sngn8"), ExtResource("15_dky8c"), ExtResource("16_e57m7"), ExtResource("17_hskjl"), ExtResource("13_ipx71")])
+available_bomb_powerups = Array[ExtResource("18_hskjl")]([ExtResource("7_t1n04"), ExtResource("4_toqyy"), ExtResource("19_ooln7")])
+
+[node name="SpawnTimer" type="Timer" parent="PowerupManager"]
+one_shot = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+z_index = 11
+material = SubResource("ShaderMaterial_m8f3l")
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="play_ui" parent="CanvasLayer" instance=ExtResource("21_ooln7")]
+
+[connection signal="timeout" from="PowerupManager/SpawnTimer" to="PowerupManager" method="_on_spawn_timer_timeout"]
