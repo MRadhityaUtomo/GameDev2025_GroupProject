@@ -22,7 +22,7 @@
 [ext_resource type="Script" uid="uid://onm7yujaucp1" path="res://resources/BombResource.gd" id="18_hskjl"]
 [ext_resource type="Resource" uid="uid://bv1qxktdrtsr5" path="res://BombTypes/SquareBomb.tres" id="19_ooln7"]
 [ext_resource type="PackedScene" uid="uid://djnjtf7d6stl1" path="res://Scenes/UI/UIScenes/play_ui.tscn" id="20_ooln7"]
-[ext_resource type="Shader" path="res://Scenes/crt2.gdshader" id="22_kath6"]
+[ext_resource type="Shader" uid="uid://b03r8gwgpxqyk" path="res://Scenes/crt.gdshader" id="22_kath6"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_276g3"]
 shader = ExtResource("1_t1n04")
@@ -31,15 +31,27 @@ shader_parameter/time_offset = 0.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_m8f3l"]
 shader = ExtResource("22_kath6")
-shader_parameter/screen_width = 1024.0
-shader_parameter/screen_height = 600.0
-shader_parameter/BarrelPower = 1.1
-shader_parameter/color_bleeding = 1.2
-shader_parameter/bleeding_range_x = 3.0
-shader_parameter/bleeding_range_y = 3.0
-shader_parameter/lines_distance = 4.0
-shader_parameter/scan_size = 2.0
-shader_parameter/scanline_alpha = 0.9
+shader_parameter/overlay = true
+shader_parameter/scanlines_opacity = 0.05
+shader_parameter/scanlines_width = 0.1
+shader_parameter/grille_opacity = 0.0
+shader_parameter/resolution = Vector2(960, 540)
+shader_parameter/pixelate = true
+shader_parameter/roll = true
+shader_parameter/roll_speed = 2.0
+shader_parameter/roll_size = 3.0
+shader_parameter/roll_variation = 5.0
+shader_parameter/distort_intensity = 0.005
+shader_parameter/noise_opacity = 0.005
+shader_parameter/noise_speed = 1.0
+shader_parameter/static_noise_intensity = 0.05
+shader_parameter/aberration = 0.00500005
+shader_parameter/brightness = 1.0
+shader_parameter/discolor = false
+shader_parameter/warp_amount = 0.5
+shader_parameter/clip_warp = true
+shader_parameter/vignette_intensity = 0.0
+shader_parameter/vignette_opacity = 0.0
 
 [node name="TileTesting" type="Node2D"]
 position = Vector2(672, 256)
