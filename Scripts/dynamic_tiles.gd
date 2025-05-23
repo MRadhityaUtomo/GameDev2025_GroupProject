@@ -106,7 +106,6 @@ func _ready():
 		print("DynamicTiles instance set to: ", instance)
 	else:
 		print("DynamicTiles instance already exists, not setting again.")
-		queue_free()
 
 func get_trap_amount():
 	return len(get_used_cells_by_id(0, Vector2i(0, 0), 3))
