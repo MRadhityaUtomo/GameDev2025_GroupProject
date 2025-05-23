@@ -25,9 +25,12 @@ enum BorderType {
 @export var border_explosion_scene: PackedScene
 
 var current_radius
-static var current_shrinking_time
+var current_shrinking_time
 var tile_instances = {}
 var current_shrinking_stage=0
+
+static var instance : DynamicTiles = null
+
 
 func set_max_radius(value):
 	max_radius = value
@@ -97,6 +100,13 @@ func _ready():
 	else:
 		# Initial setup in the editor
 		_update_tiles()
+
+	if instance == null:
+		instance = self
+		print("DynamicTiles instance set to: ", instance)
+	else:
+		print("DynamicTiles instance already exists, not setting again.")
+		queue_free()
 
 func get_trap_amount():
 	return len(get_used_cells_by_id(0, Vector2i(0, 0), 3))

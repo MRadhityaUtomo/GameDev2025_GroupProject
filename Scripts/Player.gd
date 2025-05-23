@@ -21,7 +21,7 @@ extends CharacterBody2D
 
 @export var animationSet:SpriteFrames
 
-
+var original_visibility
 
 var isInvincible = false
 var CanPlace = true
@@ -83,13 +83,11 @@ func update_sprite_direction(direction: Vector2):
 		# Flip when moving left, don't flip when moving right
 		animations.flip_h = (direction.x < 0)
 
-func invincible():
+func invincible(flicker_count: int = 10, flicker_interval: float = 0.1):
 	print("test")
 	hurtBox.disabled = true
 	isInvincible = true
-	var flicker_count = 20 
-	var flicker_interval = 0.1  
-	var original_visibility = animations.modulate.a
+	original_visibility = animations.modulate.a
 	for i in range(flicker_count):
 		animations.modulate.a = 0.2 if i % 2 == 0 else original_visibility
 		await get_tree().create_timer(flicker_interval).timeout
@@ -98,8 +96,10 @@ func invincible():
 	isInvincible = false
 
 
-func takedamage():
-	hp -= 1
+func takedamage(damage: int = 1):
+	if damage <= 0:
+		return
+	hp -= damage
 	
 	if hp <= 0:
 		Engine.time_scale = 0.3

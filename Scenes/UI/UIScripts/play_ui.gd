@@ -51,14 +51,14 @@ var p2_move_timer_current: float = 0.0
 var p2_bomb_timer_current: float = 0.0
 
 func set_expression_p1(value: String) -> void:
-	expressionP1 = value
-	if is_instance_valid(p1tall):
-		p1tall.set_expression(value)
+    expressionP1 = value
+    if is_instance_valid(p1tall):
+        p1tall.set_expression(value)
 
 func set_expression_p2(value: String) -> void:
-	expressionP2 = value
-	if is_instance_valid(p2tall):
-		p2tall.set_expression(value)
+    expressionP2 = value
+    if is_instance_valid(p2tall):
+        p2tall.set_expression(value)
 
 
 @export var heartP1: int = 5
@@ -82,18 +82,18 @@ var dead_player: int = 0 # 0 = none, 1 = P1 died, 2 = P2 died
 
 
 const MOVE_TEXTURES := {
-	"BISHOP_MOVEMENT": preload("res://Scenes/UI/UIAssets/Power/MoveBishop.png"),
-	"MoveDiagonal": preload("res://Scenes/UI/UIAssets/Power/MoveDiagonal.png"),
-	"DOUBLE_STEP_MOVEMENT": preload("res://Scenes/UI/UIAssets/Power/MoveDouble.png"),
-	"KING_MOVEMENT": preload("res://Scenes/UI/UIAssets/Power/MoveKing.png"),
-	"QUEEN_MOVEMENT": preload("res://Scenes/UI/UIAssets/Power/MoveQueen.png"),
-	"REVERSED_MOVEMENT": preload("res://Scenes/UI/UIAssets/Power/MoveReversed.png"),
+    "BISHOP_MOVEMENT": preload("res://Scenes/UI/UIAssets/Power/MoveBishop.png"),
+    "MoveDiagonal": preload("res://Scenes/UI/UIAssets/Power/MoveDiagonal.png"),
+    "DOUBLE_STEP_MOVEMENT": preload("res://Scenes/UI/UIAssets/Power/MoveDouble.png"),
+    "KING_MOVEMENT": preload("res://Scenes/UI/UIAssets/Power/MoveKing.png"),
+    "QUEEN_MOVEMENT": preload("res://Scenes/UI/UIAssets/Power/MoveQueen.png"),
+    "REVERSED_MOVEMENT": preload("res://Scenes/UI/UIAssets/Power/MoveReversed.png"),
 }
 
 const POWUP_TEXTURES := {
-	"PowUpDiagonalBomb": preload("res://Scenes/UI/UIAssets/Power/PowUpDiagonalBomb.png"),
-	"PowUpNormalBomb": preload("res://Scenes/UI/UIAssets/Power/PowUpNormalBomb.png"),
-	"PowUpWideBomb": preload("res://Scenes/UI/UIAssets/Power/PowUpWideBomb.png"),
+    "PowUpDiagonalBomb": preload("res://Scenes/UI/UIAssets/Power/PowUpDiagonalBomb.png"),
+    "PowUpNormalBomb": preload("res://Scenes/UI/UIAssets/Power/PowUpNormalBomb.png"),
+    "PowUpWideBomb": preload("res://Scenes/UI/UIAssets/Power/PowUpWideBomb.png"),
 }
 
 
@@ -103,333 +103,337 @@ var ready_2_active := false
 var countdown = 3
 var countdown_timer := Timer.new()
 var game_timer := Timer.new()
-var total_game_seconds = 6 * 20  # 5 minutes
+var total_game_seconds = 0
 
 func _ready():
-	if ui_instance == null:
-		ui_instance = self
-		set_process_mode(Node.PROCESS_MODE_ALWAYS)
-	else:
-		queue_free()
-	get_tree().paused = true
-	
-	process_mode = Node.PROCESS_MODE_ALWAYS
-	
-	tutorial.visible = true
-	cready.visible = false
-	main.visible = false
-	
-	await get_tree().process_frame
-	tutorial.pivot_offset = tutorial.size * 0.5
-	p1_win_label.pivot_offset = p1_win_label.size * 0.5
-	p2_win_label.pivot_offset = p2_win_label.size * 0.5
-	sudden_death_label.pivot_offset = sudden_death_label.size * 0.5
-	draw_label.pivot_offset = draw_label.size * 0.5
-	
-	countdown_timer.one_shot = false
-	countdown_timer.wait_time = 1.0
-	countdown_timer.connect("timeout", Callable(self, "_on_countdown_tick"))
-	add_child(countdown_timer)
+    if ui_instance == null:
+        ui_instance = self
+        set_process_mode(Node.PROCESS_MODE_ALWAYS)
+    else:
+        queue_free()
+    get_tree().paused = true
+    
+    process_mode = Node.PROCESS_MODE_ALWAYS
+    
+    tutorial.visible = true
+    cready.visible = false
+    main.visible = false
+    
+    await get_tree().process_frame
+    tutorial.pivot_offset = tutorial.size * 0.5
+    p1_win_label.pivot_offset = p1_win_label.size * 0.5
+    p2_win_label.pivot_offset = p2_win_label.size * 0.5
+    sudden_death_label.pivot_offset = sudden_death_label.size * 0.5
+    draw_label.pivot_offset = draw_label.size * 0.5
+    
+    countdown_timer.one_shot = false
+    countdown_timer.wait_time = 1.0
+    countdown_timer.connect("timeout", Callable(self, "_on_countdown_tick"))
+    add_child(countdown_timer)
 
-	game_timer.one_shot = false
-	game_timer.wait_time = 1.0
-	game_timer.connect("timeout", Callable(self, "_on_game_timer_tick"))
-	add_child(game_timer)
+    game_timer.one_shot = false
+    game_timer.wait_time = 1.0
+    game_timer.connect("timeout", Callable(self, "_on_game_timer_tick"))
+    add_child(game_timer)
 
-	_set_darken(main, true)
-	_set_darken(ready_1, true)
-	_set_darken(ready_2, true)
+    _set_darken(main, true)
+    _set_darken(ready_1, true)
+    _set_darken(ready_2, true)
 
 
-	# Hide all endgame labels by default
-	for node in [$EndGame/P1Win, $EndGame/P2Win, $EndGame/SuddenDeath, $EndGame/Draw]:
-		node.visible = false
-		node.scale = Vector2.ZERO
+    # Hide all endgame labels by default
+    for node in [$EndGame/P1Win, $EndGame/P2Win, $EndGame/SuddenDeath, $EndGame/Draw]:
+        node.visible = false
+        node.scale = Vector2.ZERO
 
-	set_process_input(true)
-	update_player_icons()
-	set_expression_p1(expressionP1)
-	set_expression_p2(expressionP2)
-	set_heart_p1(heartP1)
-	set_heart_p2(heartP2)
+    set_process_input(true)
+    update_player_icons()
+    set_expression_p1(expressionP1)
+    set_expression_p2(expressionP2)
+    set_heart_p1(heartP1)
+    set_heart_p2(heartP2)
 
-	# Initially hide all timers
-	p1_move_timer.visible = false
-	p1_bomb_timer.visible = false
-	p2_move_timer.visible = false
-	p2_bomb_timer.visible = false
+    # Initially hide all timers
+    p1_move_timer.visible = false
+    p1_bomb_timer.visible = false
+    p2_move_timer.visible = false
+    p2_bomb_timer.visible = false
+    total_game_seconds = (DynamicTiles.instance.maximum_shrinking_stages + 1) * DynamicTiles.instance.shrinking_time
+    print("maximum_shrinking_stages: ", DynamicTiles.instance.maximum_shrinking_stages)
+    print("shrinking_time: ", DynamicTiles.instance.shrinking_time)
+    print("total_game_seconds: ", total_game_seconds)
+    _update_timer_label()
 
 func _input(event):
-	if event is InputEvent and event.is_pressed():
-		if tutorial.visible:
-			if Input.is_action_pressed("p1Interact") or Input.is_action_pressed("p2Interact"):
-				audio_close.play()
-				_animate_scale(tutorial, Vector2.ZERO)
-		elif cready.visible:
-			if Input.is_action_pressed("p1Interact") and not ready_1_active:
-				audio_ready.play()
-				ready_1_active = true
-				_set_darken(ready_1, false)
-				_check_start_countdown()
-			elif Input.is_action_pressed("p2Interact") and not ready_2_active:
-				audio_ready.play()
-				ready_2_active = true
-				_set_darken(ready_2, false)
-				_check_start_countdown()
+    if event is InputEvent and event.is_pressed():
+        if tutorial.visible:
+            if Input.is_action_pressed("p1Interact") or Input.is_action_pressed("p2Interact"):
+                audio_close.play()
+                _animate_scale(tutorial, Vector2.ZERO)
+        elif cready.visible:
+            if Input.is_action_pressed("p1Interact") and not ready_1_active:
+                audio_ready.play()
+                ready_1_active = true
+                _set_darken(ready_1, false)
+                _check_start_countdown()
+            elif Input.is_action_pressed("p2Interact") and not ready_2_active:
+                audio_ready.play()
+                ready_2_active = true
+                _set_darken(ready_2, false)
+                _check_start_countdown()
 
 func _process(delta):
-	# Update movement powerup timers
-	if p1_move_timer_current > 0:
-		p1_move_timer_current -= delta
-		p1_move_timer.value = (p1_move_timer_current / p1_move_timer_duration) * 100
-		if p1_move_timer_current <= 0:
-			p1_move_timer.visible = false
-	
-	if p2_move_timer_current > 0:
-		p2_move_timer_current -= delta
-		p2_move_timer.value = (p2_move_timer_current / p2_move_timer_duration) * 100
-		if p2_move_timer_current <= 0:
-			p2_move_timer.visible = false
-	
-	# Update bomb powerup timers
-	if p1_bomb_timer_current > 0:
-		p1_bomb_timer_current -= delta
-		p1_bomb_timer.value = (p1_bomb_timer_current / p1_bomb_timer_duration) * 100
-		if p1_bomb_timer_current <= 0:
-			p1_bomb_timer.visible = false
-	
-	if p2_bomb_timer_current > 0:
-		p2_bomb_timer_current -= delta
-		p2_bomb_timer.value = (p2_bomb_timer_current / p2_bomb_timer_duration) * 100
-		if p2_bomb_timer_current <= 0:
-			p2_bomb_timer.visible = false
+    # Update movement powerup timers
+    if p1_move_timer_current > 0:
+        p1_move_timer_current -= delta
+        p1_move_timer.value = (p1_move_timer_current / p1_move_timer_duration) * 100
+        if p1_move_timer_current <= 0:
+            p1_move_timer.visible = false
+    
+    if p2_move_timer_current > 0:
+        p2_move_timer_current -= delta
+        p2_move_timer.value = (p2_move_timer_current / p2_move_timer_duration) * 100
+        if p2_move_timer_current <= 0:
+            p2_move_timer.visible = false
+    
+    # Update bomb powerup timers
+    if p1_bomb_timer_current > 0:
+        p1_bomb_timer_current -= delta
+        p1_bomb_timer.value = (p1_bomb_timer_current / p1_bomb_timer_duration) * 100
+        if p1_bomb_timer_current <= 0:
+            p1_bomb_timer.visible = false
+    
+    if p2_bomb_timer_current > 0:
+        p2_bomb_timer_current -= delta
+        p2_bomb_timer.value = (p2_bomb_timer_current / p2_bomb_timer_duration) * 100
+        if p2_bomb_timer_current <= 0:
+            p2_bomb_timer.visible = false
 
 func _check_start_countdown():
-	if ready_1_active and ready_2_active:
-		countdown = 3
-		countdown_label.text = str(countdown)
-		countdown_timer.start()
+    if ready_1_active and ready_2_active:
+        countdown = 3
+        countdown_label.text = str(countdown)
+        countdown_timer.start()
+
+func _update_timer_label():
+    var mins = total_game_seconds / 60
+    var secs = total_game_seconds % 60
+    minute_label.text = str(mins)
+    second_label.text = str(secs).pad_zeros(2)
 
 func _on_countdown_tick():
-	countdown -= 1
-	audio_count.play()
-	if countdown < 1:
-		$BGM.play()
-		countdown_timer.stop()
-		countdown_label.text = "1"
+    countdown -= 1
+    audio_count.play()
+    if countdown < 1:
+        $BGM.play()
+        countdown_timer.stop()
+        countdown_label.text = "1"
+        game_timer.start()
 
-		# Start game countdown
-		minute_label.text = "2"
-		second_label.text = "00"
-		game_timer.start()
-
-		# Show game and hide ready
-		_set_darken(main, false)
-		cready.visible = false
-		get_tree().paused = false
-	else:
-		countdown_label.text = str(countdown)
+        # Show game and hide ready
+        _set_darken(main, false)
+        cready.visible = false
+        get_tree().paused = false
+    else:
+        countdown_label.text = str(countdown)
 
 func _on_game_timer_tick():
-	total_game_seconds -= 1
-	var mins = total_game_seconds / 60
-	var secs = total_game_seconds % 60
-	minute_label.text = str(mins)
-	second_label.text = str(secs).pad_zeros(2)
+    total_game_seconds -= 1
+    _update_timer_label()
 
-	if total_game_seconds <= 0:
-		game_timer.stop()
-		show_endgame_status("SuddenDeath")
+    if total_game_seconds <= 0:
+        game_timer.stop()
+        show_endgame_status("SuddenDeath")
 
 
 
 # SHOW WHOS WIN, SUDDENT DEATH, AND DRAW
 func show_endgame_status(status: String) -> void:
-	var status_node: Node = null
-	var target_scene_path: String = ""
+    var status_node: Node = null
+    var target_scene_path: String = ""
 
-	match status:
-		"P1 Win":
-			status_node = $EndGame/P1Win
-			target_scene_path = "res://Scenes/UI/UIScenes/win_screenP1.tscn"
-		"P2 Win":
-			status_node = $EndGame/P2Win
-			target_scene_path = "res://Scenes/UI/UIScenes/win_screenP2.tscn"
-		"Draw":
-			status_node = $EndGame/Draw
-			target_scene_path = "res://Scenes/UI/UIScenes/draw_screen.tscn"
-		"SuddenDeath":
-			status_node = $EndGame/SuddenDeath
-		_:
-			push_warning("Unknown endgame status: " + status)
-			return
+    match status:
+        "P1 Win":
+            status_node = $EndGame/P1Win
+            target_scene_path = "res://Scenes/UI/UIScenes/win_screenP1.tscn"
+        "P2 Win":
+            status_node = $EndGame/P2Win
+            target_scene_path = "res://Scenes/UI/UIScenes/win_screenP2.tscn"
+        "Draw":
+            status_node = $EndGame/Draw
+            target_scene_path = "res://Scenes/UI/UIScenes/draw_screen.tscn"
+        "SuddenDeath":
+            status_node = $EndGame/SuddenDeath
+        _:
+            push_warning("Unknown endgame status: " + status)
+            return
 
-	if status_node:
-		status_node.visible = true
-		status_node.scale = Vector2.ZERO
+    if status_node:
+        status_node.visible = true
+        status_node.scale = Vector2.ZERO
 
-		var tween_in = create_tween()
-		tween_in.tween_property(status_node, "scale", Vector2.ONE, 0.5).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+        var tween_in = create_tween()
+        tween_in.tween_property(status_node, "scale", Vector2.ONE, 0.5).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
-		await tween_in.finished
-		await get_tree().create_timer(1.5).timeout  # Pause for readability
+        await tween_in.finished
+        await get_tree().create_timer(1.5).timeout  # Pause for readability
 
-		var tween_out = create_tween()
-		tween_out.tween_property(status_node, "scale", Vector2.ZERO, 0.5).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
+        var tween_out = create_tween()
+        tween_out.tween_property(status_node, "scale", Vector2.ZERO, 0.5).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
 
-		await tween_out.finished
+        await tween_out.finished
 
-		# Only change scene if not SuddenDeath
-		if target_scene_path != "":
-			get_tree_transition.change_scene_to_file(target_scene_path)
+        # Only change scene if not SuddenDeath
+        if target_scene_path != "":
+            get_tree_transition.change_scene_to_file(target_scene_path)
 
 
 
 func _animate_scale(target_node: Node, target_scale: Vector2):
-	if tween:
-		tween.kill()
-	tween = create_tween()
-	tween.tween_property(target_node, "scale", target_scale, 0.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	if target_scale == Vector2.ZERO:
-		tween.connect("finished", Callable(self, "_on_tutorial_closed"))
+    if tween:
+        tween.kill()
+    tween = create_tween()
+    tween.tween_property(target_node, "scale", target_scale, 0.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+    if target_scale == Vector2.ZERO:
+        tween.connect("finished", Callable(self, "_on_tutorial_closed"))
 
 func _on_tutorial_button_pressed():
-	# Close tutorial with animation (same as pressing F/Enter)
-	_animate_scale(tutorial, Vector2.ZERO)
-	
+    # Close tutorial with animation (same as pressing F/Enter)
+    _animate_scale(tutorial, Vector2.ZERO)
+    
 func _on_tutorial_closed():
-	tutorial.visible = false
-	tutorial.scale = Vector2.ONE
-	cready.visible = true
-	main.visible = true
-	_set_darken(main, true)
-	_set_darken(ready_1, true)
-	_set_darken(ready_2, true)
+    tutorial.visible = false
+    tutorial.scale = Vector2.ONE
+    cready.visible = true
+    main.visible = true
+    _set_darken(main, true)
+    _set_darken(ready_1, true)
+    _set_darken(ready_2, true)
 
 func _set_darken(node: Node, darken: bool):
-	if node.has_method("set_modulate"):
-		node.modulate = Color(0.5, 0.5, 0.5, 1) if darken else Color(1, 1, 1, 1)
-	elif node is CanvasItem:
-		node.modulate = Color(0.5, 0.5, 0.5, 1) if darken else Color(1, 1, 1, 1)
+    if node.has_method("set_modulate"):
+        node.modulate = Color(0.5, 0.5, 0.5, 1) if darken else Color(1, 1, 1, 1)
+    elif node is CanvasItem:
+        node.modulate = Color(0.5, 0.5, 0.5, 1) if darken else Color(1, 1, 1, 1)
 
 func update_player_icons():
-	tex_move_p1.texture = MOVE_TEXTURES.get(move_icon_p1, null)
-	tex_powup_p1.texture = POWUP_TEXTURES.get(powup_icon_p1, null)
-	tex_move_p2.texture = MOVE_TEXTURES.get(move_icon_p2, null)
-	tex_powup_p2.texture = POWUP_TEXTURES.get(powup_icon_p2, null)
+    tex_move_p1.texture = MOVE_TEXTURES.get(move_icon_p1, null)
+    tex_powup_p1.texture = POWUP_TEXTURES.get(powup_icon_p1, null)
+    tex_move_p2.texture = MOVE_TEXTURES.get(move_icon_p2, null)
+    tex_powup_p2.texture = POWUP_TEXTURES.get(powup_icon_p2, null)
 
 func set_player_icon(player: int, move: String, powup: String):
-	audio_ready.play()
-	if player == 1:
-		set_p1_move_icon(move)
-		set_p1_powup_icon(powup)
-	elif player == 2:
-		set_p2_move_icon(move)
-		set_p2_powup_icon(powup)
-	update_player_icons()
+    audio_ready.play()
+    if player == 1:
+        set_p1_move_icon(move)
+        set_p1_powup_icon(powup)
+    elif player == 2:
+        set_p2_move_icon(move)
+        set_p2_powup_icon(powup)
+    update_player_icons()
 
 func set_p1_move_icon(move: String) -> void:
-	if move == "KING_MOVEMENT":
-		audio_close.play()
-	else:
-		audio_ready.play()
-	move_icon_p1 = move
-	tex_move_p1.texture = MOVE_TEXTURES.get(move_icon_p1, null)
+    if move == "KING_MOVEMENT":
+        audio_close.play()
+    else:
+        audio_ready.play()
+    move_icon_p1 = move
+    tex_move_p1.texture = MOVE_TEXTURES.get(move_icon_p1, null)
 
 func set_p1_powup_icon(powup: String) -> void:
-	if powup == "PowUpNormalBomb":
-		audio_close.play()
-	else:
-		audio_ready.play()
-	powup_icon_p1 = powup
+    if powup == "PowUpNormalBomb":
+        audio_close.play()
+    else:
+        audio_ready.play()
+    powup_icon_p1 = powup
 
 func set_p2_move_icon(move: String) -> void:
-	if move == "KING_MOVEMENT":
-		audio_close.play()
-	else:
-		audio_ready.play()
-	move_icon_p2 = move
-	tex_move_p2.texture = MOVE_TEXTURES.get(move_icon_p2, null)
+    if move == "KING_MOVEMENT":
+        audio_close.play()
+    else:
+        audio_ready.play()
+    move_icon_p2 = move
+    tex_move_p2.texture = MOVE_TEXTURES.get(move_icon_p2, null)
 
 func set_p2_powup_icon(powup: String) -> void:
-	if powup == "PowUpNormalBomb":
-		audio_close.play()
-	else:
-		audio_ready.play()
-	powup_icon_p2 = powup
+    if powup == "PowUpNormalBomb":
+        audio_close.play()
+    else:
+        audio_ready.play()
+    powup_icon_p2 = powup
 
 
 #func _check_endgame_status():
-	#if pending_check:
-		#return
+    #if pending_check:
+        #return
 #
-	#if heartP1 <= 0 and heartP2 <= 0:
-		#show_endgame_status("Draw")
-	#elif heartP1 <= 0:
-		#pending_check = true
-		#dead_player = 1
-		#$DrawCheckTimer.start()
-	#elif heartP2 <= 0:
-		#pending_check = true
-		#dead_player = 2
-		#$DrawCheckTimer.start()
+    #if heartP1 <= 0 and heartP2 <= 0:
+        #show_endgame_status("Draw")
+    #elif heartP1 <= 0:
+        #pending_check = true
+        #dead_player = 1
+        #$DrawCheckTimer.start()
+    #elif heartP2 <= 0:
+        #pending_check = true
+        #dead_player = 2
+        #$DrawCheckTimer.start()
 #
 #func _on_draw_check_timer_timeout():
-	#pending_check = false
+    #pending_check = false
 #
-	#if heartP1 <= 0 and heartP2 <= 0:
-		#show_endgame_status("Draw")
-	#elif dead_player == 1:
-		#show_endgame_status("P2 Win")
-	#elif dead_player == 2:
-		#show_endgame_status("P1 Win")
-	#
-	#dead_player = 0
+    #if heartP1 <= 0 and heartP2 <= 0:
+        #show_endgame_status("Draw")
+    #elif dead_player == 1:
+        #show_endgame_status("P2 Win")
+    #elif dead_player == 2:
+        #show_endgame_status("P1 Win")
+    #
+    #dead_player = 0
 
 func set_heart_p1(value: int):
-	audio_close.play()
-	heartP1 = max(0, value)
-	heartP1RichTextLabel.text = str(heartP1)
-	#_check_endgame_status()
+    audio_close.play()
+    heartP1 = max(0, value)
+    heartP1RichTextLabel.text = str(heartP1)
+    #_check_endgame_status()
 
 func set_heart_p2(value: int):
-	audio_close.play()
-	heartP2 = max(0, value)
-	heartP2RichTextLabel.text = str(heartP2)
-	#_check_endgame_status()
+    audio_close.play()
+    heartP2 = max(0, value)
+    heartP2RichTextLabel.text = str(heartP2)
+    #_check_endgame_status()
 
 func start_powerup_timer(player_id: int, powerup_type: String, duration: float):
-	if player_id == 1:
-		if powerup_type.ends_with("MOVEMENT"):
-			p1_move_timer_duration = duration
-			p1_move_timer_current = duration
-			p1_move_timer.visible = true
-			p1_move_timer.value = 100
-		else:
-			p1_bomb_timer_duration = duration
-			p1_bomb_timer_current = duration
-			p1_bomb_timer.visible = true
-			p1_bomb_timer.value = 100
-	elif player_id == 2:
-		if powerup_type.ends_with("MOVEMENT"):
-			p2_move_timer_duration = duration
-			p2_move_timer_current = duration
-			p2_move_timer.visible = true
-			p2_move_timer.value = 100
-		else:
-			p2_bomb_timer_duration = duration
-			p2_bomb_timer_current = duration
-			p2_bomb_timer.visible = true
-			p2_bomb_timer.value = 100
+    if player_id == 1:
+        if powerup_type.ends_with("MOVEMENT"):
+            p1_move_timer_duration = duration
+            p1_move_timer_current = duration
+            p1_move_timer.visible = true
+            p1_move_timer.value = 100
+        else:
+            p1_bomb_timer_duration = duration
+            p1_bomb_timer_current = duration
+            p1_bomb_timer.visible = true
+            p1_bomb_timer.value = 100
+    elif player_id == 2:
+        if powerup_type.ends_with("MOVEMENT"):
+            p2_move_timer_duration = duration
+            p2_move_timer_current = duration
+            p2_move_timer.visible = true
+            p2_move_timer.value = 100
+        else:
+            p2_bomb_timer_duration = duration
+            p2_bomb_timer_current = duration
+            p2_bomb_timer.visible = true
+            p2_bomb_timer.value = 100
 
 func stop_powerup_timer(player_id: int, powerup_type: String):
-	if player_id == 1:
-		if powerup_type.ends_with("MOVEMENT"):
-			p1_move_timer.visible = false
-		else:
-			p1_bomb_timer.visible = false
-	elif player_id == 2:
-		if powerup_type.ends_with("MOVEMENT"):
-			p2_move_timer.visible = false
-		else:
-			p2_bomb_timer.visible = false
+    if player_id == 1:
+        if powerup_type.ends_with("MOVEMENT"):
+            p1_move_timer.visible = false
+        else:
+            p1_bomb_timer.visible = false
+    elif player_id == 2:
+        if powerup_type.ends_with("MOVEMENT"):
+            p2_move_timer.visible = false
+        else:
+            p2_bomb_timer.visible = false
