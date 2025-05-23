@@ -22,7 +22,7 @@
 [ext_resource type="Script" uid="uid://onm7yujaucp1" path="res://resources/BombResource.gd" id="18_hskjl"]
 [ext_resource type="Resource" uid="uid://bv1qxktdrtsr5" path="res://BombTypes/SquareBomb.tres" id="19_ooln7"]
 [ext_resource type="PackedScene" uid="uid://djnjtf7d6stl1" path="res://Scenes/UI/UIScenes/play_ui.tscn" id="20_ooln7"]
-[ext_resource type="Shader" uid="uid://b03r8gwgpxqyk" path="res://Scenes/crt.gdshader" id="22_kath6"]
+[ext_resource type="Shader" uid="uid://0lntf022h5jg" path="res://Scenes/crt(edited).gdshader" id="22_kath6"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_276g3"]
 shader = ExtResource("1_t1n04")
