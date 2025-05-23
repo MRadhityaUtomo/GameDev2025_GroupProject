@@ -341,7 +341,7 @@ func _on_shrinking_timer_timeout() -> void:
 					current_radius = new_radius
 				
 				# Signal that the border has shrunk
-				border_shrunk.emit(current_radius)
+				#border_shrunk.emit(current_radius)
 				
 			current_shrinking_stage += 1
 
@@ -395,6 +395,7 @@ func show_circle_border_warnings(center_x, center_y, radius):
 		# Update after all the new border tiles are set
 		update_edge_sprites()
 		current_radius = radius  # Update the radius AFTER creating new border
+		border_shrunk.emit(current_radius)
 	)
 	
 # Simple camera shake function
@@ -449,17 +450,10 @@ func get_random_walkable_tile_position() -> Vector2:
 
 func is_position_inside_border(pos: Vector2) -> bool:
 	var tile_pos = local_to_map(to_local(pos))
+	print(get_cell_alternative_tile(tile_pos))
+	if get_cell_source_id(tile_pos) == -1:
+		return false
+	if get_cell_source_id(tile_pos) == 0 and get_cell_alternative_tile(tile_pos) == 2:
+		return false
 	
-	if border_type == BorderType.circle:
-		var dx = tile_pos.x - center.x
-		var dy = tile_pos.y - center.y
-		var dist_sq = dx * dx + dy * dy
-		
-		# Subtract 1 to exclude border tiles
-		return dist_sq < (current_radius - 1) * (current_radius - 1)
-	elif border_type == BorderType.rectangle:
-		# Subtract 1 to exclude border tiles
-		return (abs(tile_pos.x - center.x) < current_radius - 1 and 
-				abs(tile_pos.y - center.y) < current_radius - 1)
-	
-	return false
+	return true
