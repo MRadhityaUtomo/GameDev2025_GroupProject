@@ -10,7 +10,6 @@
 [ext_resource type="Resource" uid="uid://dd4dspq0f8xc7" path="res://BombTypes/RegularBomb.tres" id="4_toqyy"]
 [ext_resource type="PackedScene" uid="uid://dp76h6yrd1brg" path="res://Scenes/border_explosion.tscn" id="5_8w6n6"]
 [ext_resource type="SpriteFrames" uid="uid://cwgr2uq3oppun" path="res://Scenes/player1anims.tres" id="5_gkl82"]
-[ext_resource type="Shader" uid="uid://b03r8gwgpxqyk" path="res://Scenes/crt.gdshader" id="5_lquhd"]
 [ext_resource type="PackedScene" uid="uid://dxwg4b4pdjf04" path="res://Scenes/power_up_tile.tscn" id="6_m8f3l"]
 [ext_resource type="SpriteFrames" uid="uid://2xyna35jkfvm" path="res://Scenes/player2anims.tres" id="7_nughl"]
 [ext_resource type="Resource" uid="uid://cf8yovq80cwhr" path="res://BombTypes/DiagBomb.tres" id="7_t1n04"]
@@ -23,6 +22,7 @@
 [ext_resource type="Script" uid="uid://onm7yujaucp1" path="res://resources/BombResource.gd" id="18_hskjl"]
 [ext_resource type="Resource" uid="uid://bv1qxktdrtsr5" path="res://BombTypes/SquareBomb.tres" id="19_ooln7"]
 [ext_resource type="PackedScene" uid="uid://djnjtf7d6stl1" path="res://Scenes/UI/UIScenes/play_ui.tscn" id="20_ooln7"]
+[ext_resource type="Shader" uid="uid://c52sljufv2aks" path="res://Scenes/crt2.gdshader" id="22_kath6"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_276g3"]
 shader = ExtResource("1_t1n04")
@@ -30,28 +30,16 @@ shader_parameter/scroll_speed = Vector2(0.05, 0.02)
 shader_parameter/time_offset = 0.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_m8f3l"]
-shader = ExtResource("5_lquhd")
-shader_parameter/overlay = true
-shader_parameter/scanlines_opacity = 0.1
-shader_parameter/scanlines_width = 0.5
-shader_parameter/grille_opacity = 0.0
-shader_parameter/resolution = Vector2(960, 540)
-shader_parameter/pixelate = true
-shader_parameter/roll = true
-shader_parameter/roll_speed = 1.0
-shader_parameter/roll_size = 10.0
-shader_parameter/roll_variation = 5.0
-shader_parameter/distort_intensity = 0.002
-shader_parameter/noise_opacity = 0.0
-shader_parameter/noise_speed = 0.0
-shader_parameter/static_noise_intensity = 0.05
-shader_parameter/aberration = 0.00500005
-shader_parameter/brightness = 1.0
-shader_parameter/discolor = false
-shader_parameter/warp_amount = 1.0
-shader_parameter/clip_warp = true
-shader_parameter/vignette_intensity = 0.0
-shader_parameter/vignette_opacity = 0.5
+shader = ExtResource("22_kath6")
+shader_parameter/screen_width = 1024.0
+shader_parameter/screen_height = 600.0
+shader_parameter/BarrelPower = 1.1
+shader_parameter/color_bleeding = 1.2
+shader_parameter/bleeding_range_x = 3.0
+shader_parameter/bleeding_range_y = 3.0
+shader_parameter/lines_distance = 4.0
+shader_parameter/scan_size = 2.0
+shader_parameter/scanline_alpha = 0.9
 
 [node name="TileTesting" type="Node2D"]
 position = Vector2(672, 256)
@@ -60,10 +48,10 @@ script = ExtResource("1_kath6")
 [node name="TextureRect" type="TextureRect" parent="."]
 texture_repeat = 2
 material = SubResource("ShaderMaterial_276g3")
-offset_left = -672.0
-offset_top = -248.0
-offset_right = 1160.0
-offset_bottom = 776.0
+offset_left = -706.0
+offset_top = -269.0
+offset_right = 1280.0
+offset_bottom = 838.0
 texture = ExtResource("2_8w6n6")
 expand_mode = 1
 metadata/_edit_group_ = true
@@ -124,8 +112,11 @@ one_shot = true
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
 z_index = 11
 material = SubResource("ShaderMaterial_m8f3l")
-offset_right = 1920.0
-offset_bottom = 1080.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="play_ui" parent="CanvasLayer" instance=ExtResource("20_ooln7")]
 
